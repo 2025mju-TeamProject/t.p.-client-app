@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import RecommendCard from '@components/profile/RecommendCard';
+import RecommendCard from '../../components/profile/RecommendCard';
 
 const HomeScreen = () => {
     return (
