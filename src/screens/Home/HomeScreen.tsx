@@ -1,15 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Text, StyleSheet, ScrollView } from 'react-native';
 import RecommendCard from '../../components/profile/RecommendCard';
+import TopMyProfileCard from "../../components/profile/TopMyProfileCard";
 
 const HomeScreen = () => {
     return (
         <ScrollView style={styles.container}>
             {/* 상단 프로필 */}
-            <View style={styles.header}>
-                <Text style={styles.username}>고구마탕님</Text>
-                <Text style={styles.profileTag}>여성 · #23세 · #ENFP</Text>
-            </View>
+            <TopMyProfileCard
+                name="고구마탕님"
+                gender="여성"
+                age={23}
+                ddee="#호랑이띠"
+                mbti="#ENFP"
+            />
 
             {/* 오늘 추천 */}
             <Text style={styles.sectionTitle}>오늘 추천</Text>
@@ -57,8 +61,9 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     sectionTitle: {
-        fontSize: 18,
-        fontWeight: '600',
-        marginBottom: 12,
+        fontSize: 32,
+        fontWeight: '700',
+        marginTop: 25,
+        marginBottom: 20,
     },
 });
