@@ -6,8 +6,8 @@ import ROUTES from '../../constants/routes';
 const LoginScreen = ({navigation}: any) => {
   const {login} = useAuth();
   const handleLogin = () => {
-    login('John Doe');
-    navigation.replace(ROUTES.HOME);
+    login('Jane Doe');
+    navigation.navigate(ROUTES.HOME);
   };
 
   return (

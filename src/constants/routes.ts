@@ -1,5 +1,5 @@
 const ROUTES = {
-  LOGIN: '로그인',
-  HOME: 'bleet',
+  LOGIN: 'Login',
+  HOME: 'Home',
 } as const;
 export default ROUTES;
