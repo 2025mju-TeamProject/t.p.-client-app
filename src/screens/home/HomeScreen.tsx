@@ -3,7 +3,7 @@ import { Text, StyleSheet, ScrollView } from 'react-native';
 import RecommendCard from '../../components/profile/RecommendCard';
 import TopMyProfileCard from "../../components/profile/TopMyProfileCard";
 
-const HomeScreen = () => {
+function HomeScreen(){
     return (
         <ScrollView style={styles.container}>
             {/* 상단 프로필 */}

@@ -7,11 +7,14 @@ import {RootStackParamList} from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const RootNavigator = () => (
-  <Stack.Navigator>
-      <Stack.Screen name={ROUTES.LOGIN} component={LoginScreen} />
-      <Stack.Screen name={ROUTES.HOME} component={HomeScreen} />
-  </Stack.Navigator>
-);
+function RootNavigator(){
+
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name={ROUTES.LOGIN} component={LoginScreen} />
+            <Stack.Screen name={ROUTES.HOME} component={HomeScreen} />
+        </Stack.Navigator>
+    )
+}
 
 export default RootNavigator;

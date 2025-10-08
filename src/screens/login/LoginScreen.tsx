@@ -3,7 +3,7 @@ import {View, Text, Button, StyleSheet} from 'react-native';
 import {useAuth} from '../../context/AuthContext';
 import ROUTES from '../../constants/routes';
 
-const LoginScreen = ({navigation}: any) => {
+function LoginScreen({navigation}: any){
   const {login} = useAuth();
   const handleLogin = () => {
     login('Jane Doe');
