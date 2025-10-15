@@ -14,8 +14,19 @@ function AppButton({title, onPress}: Props) {
 }
 
 const styles = StyleSheet.create({
-  button: {backgroundColor: colors.primary, padding: 12, borderRadius: 8},
-  text: {color: '#fff', fontWeight: 'bold', fontSize: 16},
+    button: {
+        backgroundColor: colors.primary,
+        padding: 12,
+        borderRadius: 6,
+        alignItems: 'center',
+        width: 130
+    },
+
+    text: {
+        color: colors.background,
+        fontWeight: 'bold',
+        fontSize: 16
+    },
 });
 
 export default AppButton;
