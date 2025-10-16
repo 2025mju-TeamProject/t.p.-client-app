@@ -15,7 +15,10 @@ function LoginScreen({navigation}: any) {
         //Todo 로그인 api 연결
 
         login('Jane Doe');
-        navigation.replace(ROUTES.BOTTOM);
+        navigation.reset({
+          index: 0,
+          routes: [{name: ROUTES.BOTTOM}]
+        })
     };
 
     return (
