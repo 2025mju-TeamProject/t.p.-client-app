@@ -1,11 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from '../screens/login/LoginScreen';
+import LoginScreen from '../screens/start/LoginScreen';
 import ROUTES from '../constants/routes';
 import { RootStackParamList } from './types';
 import BottomNavigator from './BottomNavigator';
-import StartScreen from '../screens/login/StartScreen';
-import SigninScreen from '../screens/login/SigninScreen';
+import StartScreen from '../screens/start/StartScreen';
+import SigninScreen from '../screens/start/SigninScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
