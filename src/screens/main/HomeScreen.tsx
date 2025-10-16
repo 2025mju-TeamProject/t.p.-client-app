@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, ScrollView } from 'react-native';
-import RecommendCard from '../../../components/profile/RecommendCard';
-import TopMyProfileCard from "../../../components/profile/TopMyProfileCard";
+import RecommendCard from '../../components/profile/RecommendCard';
+import TopMyProfileCard from "../../components/profile/TopMyProfileCard";
 
 function HomeScreen(){
     return (
@@ -25,7 +25,7 @@ function HomeScreen(){
                     distance="경기도 (1km)"
                     job="회사원"
                     hashtags={['커피', 'INTP', '헬스', '카페']}
-                    image={require('../../../assets/sample-profile.png')}
+                    image={require('../../assets/sample-profile.png')}
                 />
                 <RecommendCard
                     name="사과탕"
@@ -33,7 +33,7 @@ function HomeScreen(){
                     distance="서울 (3km)"
                     job="디자이너"
                     hashtags={['영화', 'ENFP', '맛집']}
-                    image={require('../../../assets/sample-profile.png')}
+                    image={require('../../assets/sample-profile.png')}
                 />
             </ScrollView>
         </ScrollView>
