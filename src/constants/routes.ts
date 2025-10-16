@@ -5,5 +5,7 @@ const ROUTES = {
     BOTTOM: 'Bot',
     SEARCH: 'Search',
     SIGNIN: 'Signin',
+    CHATLIST: 'ChatList',
+    CHAT: 'Chat',
 } as const;
 export default ROUTES;

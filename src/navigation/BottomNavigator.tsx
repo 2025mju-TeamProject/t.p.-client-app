@@ -2,8 +2,9 @@ import React from 'react';
 import HomeScreen from '../screens/main/HomeScreen';
 import ROUTES from '../constants/routes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import SearchScreen from '../screens/main/SearchScreen';
+import ChatListScreen from '../screens/main/chat/ChatListScreen';
 
 function RootNavigator(){
   const Tab = createBottomTabNavigator();
@@ -14,18 +15,27 @@ function RootNavigator(){
         name={ROUTES.HOME}
         component={HomeScreen}
         options={{
-          title: '홈',
+          title: '',
           tabBarIcon: ({color, size}) => (
-            <Icon name="home" color={color} size={size} />
+            <Icon name="home-sharp" color={color} size={size} />
           ),
         }}/>
       <Tab.Screen
         name={ROUTES.SEARCH}
         component={SearchScreen}
         options={{
-          title: '검색',
+          title: '',
           tabBarIcon: ({color, size}) => (
             <Icon name="search" color={color} size={size} />
+          ),
+        }}/>
+      <Tab.Screen
+        name={ROUTES.CHATLIST}
+        component={ChatListScreen}
+        options={{
+          title: '',
+          tabBarIcon: ({color, size}) => (
+            <Icon name="chatbubble-sharp" color={color} size={size} />
           ),
         }}/>
     </Tab.Navigator>

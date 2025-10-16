@@ -5,4 +5,6 @@ export type RootStackParamList = {
   Bot: undefined;
   Start: undefined;
   Signin: undefined;
+  Chat: undefined;
+  ChatList: undefined;
 };
