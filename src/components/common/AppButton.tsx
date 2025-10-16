@@ -4,11 +4,14 @@ import colors from '../../constants/colors';
 
 type Props = { title: string; onPress: () => void };
 
-const AppButton = ({title, onPress}: Props) => (
-  <TouchableOpacity style={styles.button} onPress={onPress}>
-    <Text style={styles.text}>{title}</Text>
-  </TouchableOpacity>
-);
+function AppButton({title, onPress}: Props) {
+
+    return (
+        <TouchableOpacity style={styles.button} onPress={onPress}>
+            <Text style={styles.text}>{title}</Text>
+        </TouchableOpacity>
+    )
+}
 
 const styles = StyleSheet.create({
     button: {

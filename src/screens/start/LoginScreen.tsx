@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TextInput} from 'react-native';
 import {useAuth} from '../../context/AuthContext';
 import ROUTES from '../../constants/routes';
 import AppButton from "../../components/common/AppButton";
@@ -15,7 +15,10 @@ function LoginScreen({navigation}: any) {
         //Todo 로그인 api 연결
 
         login('Jane Doe');
-        navigation.replace(ROUTES.HOME);
+        navigation.reset({
+          index: 0,
+          routes: [{name: ROUTES.BOTTOM}]
+        })
     };
 
     return (
@@ -65,7 +68,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 20,
         textAlign: "left",
-        placeholderAlign: "left",
         borderBottomWidth: 1,
         borderBottomColor: 'gray',
     },
