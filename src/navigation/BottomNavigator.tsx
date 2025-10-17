@@ -3,8 +3,9 @@ import HomeScreen from '../screens/main/HomeScreen';
 import ROUTES from '../constants/routes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import SearchScreen from '../screens/main/SearchScreen';
 import ChatListScreen from '../screens/main/chat/ChatListScreen';
+import SettingScreen from '../screens/main/setting/SettingScreen';
+import LikeScreen from '../screens/main/like/LikeScreen';
 
 function RootNavigator() {
   const Tab = createBottomTabNavigator();
@@ -18,10 +19,12 @@ function RootNavigator() {
 
           if (route.name === 'Home') {
             iconName = focused ? 'home-sharp' : 'home-outline';
-          } else if (route.name === 'Search') {
+          } else if (route.name === 'Like') {
             iconName = focused ? 'heart-sharp' : 'heart-outline';
           } else if (route.name === 'ChatList') {
             iconName = focused ? 'chatbubble-sharp' : 'chatbubble-outline';
+          } else if (route.name === 'Settings') {
+            iconName = focused ? 'settings-sharp' : 'settings-outline';
           }
           return <Icon name={iconName} size={size} color={color} />;
         },
@@ -38,8 +41,8 @@ function RootNavigator() {
         }}
       />
       <Tab.Screen
-        name={ROUTES.SEARCH}
-        component={SearchScreen}
+        name={ROUTES.LIKE}
+        component={LikeScreen}
         options={{
           title: '관심',
         }}
@@ -50,6 +53,13 @@ function RootNavigator() {
         options={{
           headerShown: false,
           title: '채팅',
+        }}
+      />
+      <Tab.Screen
+        name={ROUTES.SETTINGS}
+        component={SettingScreen}
+        options={{
+          title: '설정',
         }}
       />
     </Tab.Navigator>
