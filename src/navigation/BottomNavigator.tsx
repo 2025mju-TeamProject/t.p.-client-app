@@ -33,7 +33,7 @@ function RootNavigator(){
         name={ROUTES.CHATLIST}
         component={ChatListScreen}
         options={{
-          title: '',
+          headerShown: false,
           tabBarIcon: ({color, size}) => (
             <Icon name="chatbubble-sharp" color={color} size={size} />
           ),
