@@ -9,7 +9,7 @@ interface ProfileCardProps {
   mbti: string;
 }
 
-const RecommendCard: React.FC<ProfileCardProps> = ({
+const TopMyPofileCard: React.FC<ProfileCardProps> = ({
   name,
   gender,
   age,
@@ -27,7 +27,7 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
   );
 };
 
-export default RecommendCard;
+export default TopMyPofileCard;
 
 const styles = StyleSheet.create({
   container: {

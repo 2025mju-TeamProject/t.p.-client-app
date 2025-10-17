@@ -15,6 +15,7 @@ function RootNavigator(){
         name={ROUTES.HOME}
         component={HomeScreen}
         options={{
+          headerShown: false,
           title: '',
           tabBarIcon: ({color, size}) => (
             <Icon name="home-sharp" color={color} size={size} />

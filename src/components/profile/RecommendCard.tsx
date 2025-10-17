@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 
 interface ProfileCardProps {
   name: string;
@@ -7,8 +7,11 @@ interface ProfileCardProps {
   distance: string;
   job: string;
   hashtags: string[];
-  image: any;
+  imagePath: string;
+  padding: number;
 }
+
+const winWidth = Dimensions.get('window').width;
 
 const RecommendCard: React.FC<ProfileCardProps> = ({
   name,
@@ -16,10 +19,18 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
   distance,
   job,
   hashtags,
-  image,
+  imagePath,
+  padding,
 }) => {
+  const image = require('../../assets/sample-profile2.jpg');
+
   return (
-    <View style={styles.cardWrapper}>
+    <View
+      style={[
+        styles.cardWrapper,
+        padding == 1 ? {marginRight: 0} : {marginRight: 24}, // 마지막 아이템만 marginBottom 40
+      ]} >
+
       {/*프로필 카드*/}
       <View style={styles.profileCard}>
         <Image source={image} style={styles.image} />
@@ -50,13 +61,12 @@ export default RecommendCard;
 
 const styles = StyleSheet.create({
   cardWrapper: {
-    width: 240,
-    marginRight: 16,
+    width: winWidth - 48,
   },
   aiCard: {
-    width: 240,
+    width: '100%',
     marginTop: 12,
-    backgroundColor: '#fff',
+    backgroundColor: '#F6F6F6',
     padding: 16,
     borderRadius: 16,
     shadowColor: '#000',
@@ -73,7 +83,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   profileCard: {
-    width: 240,
+    width: '100%',
     backgroundColor: '#fff',
     borderRadius: 16,
     overflow: 'hidden',
@@ -83,8 +93,9 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 280,
+    height: 383,
     resizeMode: 'cover',
+    borderRadius: 16,
   },
   infoBox: {
     padding: 14,
