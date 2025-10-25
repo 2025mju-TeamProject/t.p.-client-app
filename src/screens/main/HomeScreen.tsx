@@ -41,10 +41,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   header: {
-    height: 93,
+    height: 132,
     marginHorizontal : 24,
-    borderBottomWidth: 1,
     backgroundColor: '#fff',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
   username: {
     fontSize: 22,
@@ -58,20 +59,20 @@ const styles = StyleSheet.create({
     height: 60,
     textAlignVertical: 'bottom',
     color: 'black',
-    fontSize: 22,
+    fontSize: 28,
     fontFamily: 'S-Core Dream',
-    fontWeight: '700',
-    lineHeight: 30.8,
+    fontWeight: 700,
+    marginBottom: 3,
   },
   subTitle: {
     // 매일 08시, 19시에 소개해 드려요.
-    height: 18,
     textAlignVertical: 'bottom',
     color: '#9C9C9C',
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: 'NanumSquareOTF',
     fontWeight: '700',
     lineHeight: 14,
+    marginBottom: 20,
   },
 });
 
