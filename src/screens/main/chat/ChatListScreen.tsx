@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ChatListItem from '../../../components/chat/ChatListItem';
+import ROUTES from '../../../constants/routes';
 
-function ChatListScreen() {
+function ChatListScreen({navigation}: any) {
   const chatList = getItems()
+
+  function navigateToChatScreen() {
+    navigation.navigate(ROUTES.CHAT);
+  }
 
   return (
     <View style={styles.container}>
@@ -14,8 +19,8 @@ function ChatListScreen() {
           renderItem={({ item }) =>
             <ChatListItem
               title={item.title}
-              onPress={() => {}} />}
-          />
+              onPress={navigateToChatScreen} /> }
+            />
       </View>
     </View>
   );
@@ -58,8 +63,4 @@ function getItems() {
     { title: 'chat7' },
     { title: 'chat8' },
   ]
-}
-
-const navToChat = (title: string) =>{
-  postMessage({title});
 }

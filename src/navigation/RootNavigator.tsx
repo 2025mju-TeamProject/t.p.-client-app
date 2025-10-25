@@ -4,6 +4,7 @@ import ROUTES from '../constants/routes';
 import { RootStackParamList } from './types';
 import BottomNavigator from './BottomNavigator';
 import StartNavigator from './StartNavigator';
+import ChatScreen from '../screens/main/chat/ChatScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -19,6 +20,14 @@ function RootNavigator() {
         options={{
           headerShadowVisible: false,
           headerShown: false,
+        }} />
+      <Stack.Screen
+        name={ROUTES.CHAT}
+        component={ChatScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: true,
+          title: '채팅방 이름',
         }} />
     </Stack.Navigator>
   );

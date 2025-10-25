@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text } from 'react-native';
 function ChatScreen() {
   return (
     <ScrollView style={styles.container}>
-      <Text>채팅</Text>
+      <Text style={{height: 1000}}>채팅방</Text>
     </ScrollView>
   )
 }
