@@ -7,4 +7,6 @@ export type RootStackParamList = {
   Signin: undefined;
   Chat: undefined;
   ChatList: undefined;
+  Like: undefined;
+  Settings: undefined;
 };

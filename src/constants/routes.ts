@@ -7,5 +7,7 @@ const ROUTES = {
     SIGNIN: 'Signin',
     CHATLIST: 'ChatList',
     CHAT: 'Chat',
+    LIKE: 'Like',
+    SETTINGS: 'Settings',
 } as const;
 export default ROUTES;
