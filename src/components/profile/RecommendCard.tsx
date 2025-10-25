@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
-import * as child_process from 'node:child_process';
-import { alignEnum } from 'react-native-svg/lib/typescript/lib/extract/extractViewBox';
 import ProfileTag from './ProfileTag';
 
 interface ProfileCardProps {
