@@ -1,11 +1,21 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-function ChatScreen() {
+function ChatScreen({route}: any) {
+
+  const {chatId} = route.params;
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={{height: 1000}}>채팅방</Text>
-    </ScrollView>
+    <>
+
+      <ScrollView style={styles.container}>
+        <Text style={{height: 1000}}>채팅방</Text>
+      </ScrollView>
+
+      <View>
+
+      </View>
+    </>
   )
 }
 

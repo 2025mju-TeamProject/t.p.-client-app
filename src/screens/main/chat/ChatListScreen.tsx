@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 import ChatListItem from '../../../components/chat/ChatListItem';
 import ROUTES from '../../../constants/routes';
 
-function ChatListScreen({navigation}: any) {
-  const chatList = getItems()
+function ChatListScreen({ navigation }: any) {
+  const chatList = getItems();
 
-  function navigateToChatScreen() {
-    navigation.navigate(ROUTES.CHAT);
+  function navigateToChatScreen(item: any) {
+    navigation.navigate(ROUTES.CHAT, { chatId: item });
   }
+
+
 
   return (
     <View style={styles.container}>
@@ -16,11 +18,12 @@ function ChatListScreen({navigation}: any) {
       <View style={styles.list}>
         <FlatList
           data={chatList}
-          renderItem={({ item }) =>
+          renderItem={({ item }) => (
             <ChatListItem
               title={item.title}
-              onPress={navigateToChatScreen} /> }
-            />
+              onPress={() => navigateToChatScreen(item.title)} />
+          )}
+        />
       </View>
     </View>
   );
@@ -62,5 +65,5 @@ function getItems() {
     { title: 'chat6' },
     { title: 'chat7' },
     { title: 'chat8' },
-  ]
+  ];
 }
