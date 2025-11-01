@@ -8,7 +8,7 @@ function ChatListItem({title, onPress}: Props) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image
-        source={require('../../assets/sample-profile2.jpg')}
+        source={require('../../../assets/sample-profile2.jpg')}
         style={styles.profileImage}/>
 
       <View style={styles.textContainer}>

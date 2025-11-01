@@ -26,7 +26,7 @@ function RootNavigator() {
         component={ChatScreen}
         options={{
           headerShadowVisible: false,
-          headerShown: true,
+          headerShown: false,
           title: '채팅방 이름',
         }} />
     </Stack.Navigator>

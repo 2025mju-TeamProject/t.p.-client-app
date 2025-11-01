@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import ChatListItem from '../../../components/chat/ChatListItem';
 import ROUTES from '../../../constants/routes';
 import colors from '../../../constants/colors';
@@ -12,11 +12,9 @@ function ChatListScreen({ navigation }: any) {
     navigation.navigate(ROUTES.CHAT, { chatId: item });
   }
 
-
-
   return (
-    <View style={styles.container}>
-      <Header title="채팅"></Header>
+    <SafeAreaView style={styles.container}>
+      <Header title="채팅" />
 
       <View style={styles.list}>
         <FlatList
@@ -24,11 +22,12 @@ function ChatListScreen({ navigation }: any) {
           renderItem={({ item }) => (
             <ChatListItem
               title={item.title}
-              onPress={() => navigateToChatScreen(item.title)} />
+              onPress={() => navigateToChatScreen(item.title)}
+            />
           )}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -39,6 +38,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fafafa',
+    paddingBottom: 100,
   },
 
   head: {
@@ -55,9 +55,7 @@ const styles = StyleSheet.create({
     marginLeft: 24,
   },
 
-  list: {
-
-  },
+  list: {},
 
   item: {
     height: 100,
