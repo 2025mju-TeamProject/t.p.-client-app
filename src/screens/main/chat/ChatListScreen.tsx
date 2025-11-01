@@ -1,7 +1,9 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import ChatListItem from '../../../components/chat/ChatListItem';
 import ROUTES from '../../../constants/routes';
+import colors from '../../../constants/colors';
+import Header from '../../../components/common/Header';
 
 function ChatListScreen({ navigation }: any) {
   const chatList = getItems();
@@ -14,7 +16,8 @@ function ChatListScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.head}></View>
+      <Header title="채팅"></Header>
+
       <View style={styles.list}>
         <FlatList
           data={chatList}
@@ -39,12 +42,21 @@ const styles = StyleSheet.create({
   },
 
   head: {
-    flex: 1,
-    backgroundColor: 'black',
+    justifyContent: 'flex-end',
+    height: 107,
+    backgroundColor: colors.background,
+  },
+
+  headText: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 14,
+    marginLeft: 24,
   },
 
   list: {
-    flex: 3,
+
   },
 
   item: {
@@ -57,7 +69,7 @@ const styles = StyleSheet.create({
 
 function getItems() {
   return [
-    { title: 'chat1' },
+    { title: '감자맛탕 29세' },
     { title: 'chat2' },
     { title: 'chat3' },
     { title: 'chat4' },

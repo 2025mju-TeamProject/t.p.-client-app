@@ -44,6 +44,7 @@ function RootNavigator() {
         name={ROUTES.LIKE}
         component={LikeScreen}
         options={{
+          headerShown: false,
           title: '관심',
         }}
       />
@@ -59,6 +60,7 @@ function RootNavigator() {
         name={ROUTES.SETTINGS}
         component={SettingScreen}
         options={{
+          headerShown: false,
           title: '설정',
         }}
       />
