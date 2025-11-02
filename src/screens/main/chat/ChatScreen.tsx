@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../../../constants/colors';
+import ChatBubble from '../../../components/chat/ChatBubble';
 
 function ChatScreen({ navigation, route }: any) {
   const { chatId } = route.params;
   const [text, setText] = useState('');
+  const content = getContent()
 
   return (
     <>
@@ -37,7 +39,10 @@ function ChatScreen({ navigation, route }: any) {
       </View>
 
       <ScrollView style={styles.container}>
-        <Text style={{ height: 1000 }}>채팅방</Text>
+        <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
+        <ChatBubble time={'14:05'} text={chatId} isOpponent={false} />
+        <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
+
       </ScrollView>
 
       <TextInput style={styles.textInput} value={text} onChangeText={setText} />
@@ -52,7 +57,7 @@ export default ChatScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#ffffff',
     paddingHorizontal: 20,
     paddingTop: 20,
   },
@@ -62,6 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingHorizontal: 24,
     paddingBottom: 8,
+    backgroundColor: '#ffffff',
   },
   headerContainer: {
     width: '100%',
@@ -91,3 +97,37 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+function getContent() {
+  return [
+    {
+      text: '안녕하세요~',
+      isOpponent: false,
+    },
+    {
+      text: '안녕하세요',
+      isOpponent: true,
+    },
+    {
+      text:
+        ' 감자깡은 사교적이고 자유로운 기운이 강해 처음엔 나와 속도가 다를 수 있지' +
+        '만, 그 밝고 활발한 에너지가 내 삶에 새' +
+        '로운 활력을 줄 것 같아요. ',
+      isOpponent: false,
+    },
+    {
+      text: ' 감자깡은 사교적이고 자유로운 기운이 강해 처음엔 나와 속도가 다를 수 있지' +
+        '만, 그 밝고 활발한 에너지가 내 삶에 새' +
+        '로운 활력을 줄 것 같아요. ',
+      isOpponent: true,
+    },
+    {
+      text: '반갑습니다반갑습니다',
+      isOpponent: false,
+    },
+    {
+      text: '반갑습니다',
+      isOpponent: false,
+    },
+  ];
+}
