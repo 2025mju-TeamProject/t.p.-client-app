@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, StyleSheet, ScrollView, View, FlatList, SafeAreaView, StatusBar } from 'react-native';
+import { Text, StyleSheet, ScrollView, View, FlatList, SafeAreaView } from 'react-native';
 import RecommendCard from '../../components/profile/RecommendCard';
 
-function HomeScreen() {
+function HomeScreen({navigation}: any) {
   const userList = getItems();
 
   return (
@@ -27,7 +27,7 @@ function HomeScreen() {
               hashtags={item.hashtags}
               imagePath={item.image}
               padding={index == userList.length - 1 ? 1 : 0}
-
+              onPress={() => navigation.navigate('Detail')}
             />
           )}
         />

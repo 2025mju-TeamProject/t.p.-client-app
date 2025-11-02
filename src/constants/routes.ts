@@ -9,5 +9,6 @@ const ROUTES = {
     CHAT: 'Chat',
     LIKE: 'Like',
     SETTINGS: 'Settings',
+    DETAIL: 'Detail',
 } as const;
 export default ROUTES;
