@@ -1,4 +1,4 @@
-// ChatInput.tsx
+
 import React, { useState } from "react";
 import {
   View,
@@ -7,7 +7,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
-  Text,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
