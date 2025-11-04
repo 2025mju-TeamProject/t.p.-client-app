@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ScrollView,
@@ -11,14 +11,27 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../../../constants/colors';
 import ChatBubble from '../../../components/chat/ChatBubble';
+import OneOptionModal from '../../../components/modals/OneOptionModal';
+import Modal from 'react-native-modal';
 
 function ChatScreen({ navigation, route }: any) {
   const { chatId } = route.params;
   const [text, setText] = useState('');
-  const content = getContent()
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const content = getContent();
+
+  useEffect(() => {}, []);
+
+  function showModal() {
+    setIsModalVisible(true);
+  }
+
+  function closeModal() {
+    setIsModalVisible(false);
+  }
 
   return (
-    <>
+    <View>
       {/*헤더*/}
       <View style={styles.header}>
         <View style={styles.headerContainer}>
@@ -32,23 +45,39 @@ function ChatScreen({ navigation, route }: any) {
           />
           <Text style={styles.headerText}>{chatId}</Text>
 
-          <TouchableOpacity onPress={() => {}} style={{ marginLeft: 'auto' }}>
+          <TouchableOpacity
+            onPress={() => {
+              showModal();
+            }}
+            style={{ marginLeft: 'auto' }}
+          >
             <Icon name="ellipsis-horizontal-sharp" size={25} />
           </TouchableOpacity>
         </View>
       </View>
 
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={() => setIsModalVisible(false)}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+      >
+        <OneOptionModal
+          title={'이 회원을 차단할까요?'}
+          subTitle={'나중에 차단 해제를 할 수 없어요.'}
+          optionText={'확인'}
+        />
+      </Modal>
       <ScrollView style={styles.container}>
         <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
         <ChatBubble time={'14:05'} text={chatId} isOpponent={false} />
         <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
-
       </ScrollView>
 
       <TextInput style={styles.textInput} value={text} onChangeText={setText} />
 
       {/*채팅*/}
-    </>
+    </View>
   );
 }
 
@@ -56,7 +85,7 @@ export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 1000,
     backgroundColor: '#ffffff',
     paddingHorizontal: 20,
     paddingTop: 20,
@@ -66,7 +95,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     paddingHorizontal: 24,
-    paddingBottom: 8,
     backgroundColor: '#ffffff',
   },
   headerContainer: {
@@ -116,7 +144,8 @@ function getContent() {
       isOpponent: false,
     },
     {
-      text: ' 감자깡은 사교적이고 자유로운 기운이 강해 처음엔 나와 속도가 다를 수 있지' +
+      text:
+        ' 감자깡은 사교적이고 자유로운 기운이 강해 처음엔 나와 속도가 다를 수 있지' +
         '만, 그 밝고 활발한 에너지가 내 삶에 새' +
         '로운 활력을 줄 것 같아요. ',
       isOpponent: true,
