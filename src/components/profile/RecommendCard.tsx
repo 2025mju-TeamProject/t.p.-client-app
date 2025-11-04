@@ -24,8 +24,8 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
   padding,
 }) => {
 
-  const image = require('../../assets/sample-profile2.jpg');
-  const cupiImage = require('../../assets/cupi.png');
+  const image = require('../../../assets/sample-profile2.jpg');
+  const cupiImage = require('../../../assets/cupi.png');
 
   return (
     <View

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, ScrollView, View, FlatList } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import RecommendCard from '../../components/profile/RecommendCard';
 
 function HomeScreen() {
@@ -10,12 +10,14 @@ function HomeScreen() {
       {/* 오늘 추천 */}
       <View style={styles.header}>
         <Text style={styles.sectionTitle}>오늘 추천</Text>
-        <Text style={styles.subTitle}>매일 오전 7시, 오후 7시에 소개해 드려요.</Text>
+        <Text style={styles.subTitle}>
+          매일 오전 7시, 오후 7시에 소개해 드려요.
+        </Text>
       </View>
       <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingHorizontal: 25}}
+        contentContainerStyle={{ paddingHorizontal: 25 }}
         data={userList}
         renderItem={({ item, index }) => (
           <RecommendCard
@@ -26,7 +28,6 @@ function HomeScreen() {
             hashtags={item.hashtags}
             imagePath={item.image}
             padding={index == userList.length - 1 ? 1 : 0}
-
           />
         )}
       />
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 132,
-    marginHorizontal : 24,
+    marginHorizontal: 24,
     backgroundColor: '#fff',
     flexDirection: 'column',
     justifyContent: 'flex-end',
@@ -79,54 +80,52 @@ const styles = StyleSheet.create({
 function getItems() {
   return [
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
-
-
   ];
 }

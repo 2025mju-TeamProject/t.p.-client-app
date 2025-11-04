@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import ChatListItem from '../../../components/chat/ChatListItem';
+import ROUTES from '../../../constants/routes';
+import colors from '../../../constants/colors';
+import Header from '../../../components/common/Header';
 
-function ChatListScreen() {
-  const chatList = getItems()
+function ChatListScreen({ navigation }: any) {
+  const chatList = getItems();
+
+  function navigateToChatScreen(item: any) {
+    navigation.navigate(ROUTES.CHAT, { chatId: item });
+  }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.head}></View>
+    <SafeAreaView style={styles.container}>
+      <Header title="채팅" />
+
       <View style={styles.list}>
         <FlatList
           data={chatList}
-          renderItem={({ item }) =>
+          renderItem={({ item }) => (
             <ChatListItem
               title={item.title}
-              onPress={() => {}} />}
-          />
+              onPress={() => navigateToChatScreen(item.title)}
+            />
+          )}
+        />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -28,16 +38,24 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fafafa',
+    paddingBottom: 100,
   },
 
   head: {
-    flex: 1,
-    backgroundColor: 'black',
+    justifyContent: 'flex-end',
+    height: 107,
+    backgroundColor: colors.background,
   },
 
-  list: {
-    flex: 3,
+  headText: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 14,
+    marginLeft: 24,
   },
+
+  list: {},
 
   item: {
     height: 100,
@@ -49,7 +67,7 @@ const styles = StyleSheet.create({
 
 function getItems() {
   return [
-    { title: 'chat1' },
+    { title: '감자맛탕 29세' },
     { title: 'chat2' },
     { title: 'chat3' },
     { title: 'chat4' },
@@ -57,9 +75,5 @@ function getItems() {
     { title: 'chat6' },
     { title: 'chat7' },
     { title: 'chat8' },
-  ]
-}
-
-const navToChat = (title: string) =>{
-  postMessage({title});
+  ];
 }

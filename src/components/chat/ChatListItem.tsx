@@ -1,14 +1,21 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/EvilIcons';
+import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
+import colors from '../../constants/colors';
 
 type Props = { title: string; onPress: () => void };
 
 function ChatListItem({title, onPress}: Props) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Icon name="user" size={50} color="black" />
-      <Text style={styles.text}>{title}</Text>
+      <Image
+        source={require('../../../assets/sample-profile2.jpg')}
+        style={styles.profileImage}/>
+
+      <View style={styles.textContainer}>
+        <Text style={styles.titleText}>{title}</Text>
+        <Text>안녕하세요~</Text>
+      </View>
+      <Text style={styles.timeText}>14:18</Text>
     </TouchableOpacity>
   )
 }
@@ -21,10 +28,33 @@ const styles = StyleSheet.create({
     height: 100,
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'green',
+    paddingHorizontal: 24,
+    paddingVertical: 18,
+    backgroundColor: '#ffffff',
   },
-  text: {
-    fontSize: 30,
+  textContainer: {
+    height: '100%',
+  },
+  titleText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 7,
+  },
+  recentChatText: {
+    fontSize: 12,
+    color: colors.gray,
+  },
+  timeText: {
+    fontSize: 10,
+    color: colors.gray,
+    alignSelf: 'flex-start',
+    marginLeft: 'auto',
+    marginTop: 5,
+  },
+  profileImage: {
+    width: 54,
+    height: 54,
+    borderRadius: 50,
+    marginRight: 14,
   }
 })
