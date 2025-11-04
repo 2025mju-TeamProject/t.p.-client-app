@@ -31,8 +31,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 180,
     paddingHorizontal: 12,
+    paddingVertical: 12,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 18,
@@ -40,16 +41,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 27,
+    marginTop: 12,
   },
   subTitle: {
     fontSize: 13,
-    marginTop: 19,
   },
   button: {
     width: '100%',
     height: 44,
-    marginTop: 24,
     backgroundColor: colors.pink,
     borderRadius: 12,
     justifyContent: 'center',
