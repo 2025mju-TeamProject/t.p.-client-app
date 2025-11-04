@@ -1,16 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../../../constants/colors';
 import ChatBubble from '../../../components/chat/room/ChatBubble';
