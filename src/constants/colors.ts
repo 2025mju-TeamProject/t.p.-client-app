@@ -3,4 +3,5 @@ export default {
   background: '#FFFFFF',
   black: '#000000',
   gray: '#828282',
+  pink: '#F70054'
 };
