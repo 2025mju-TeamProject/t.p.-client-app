@@ -11,27 +11,62 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../../../constants/colors';
 import ChatBubble from '../../../components/chat/ChatBubble';
-import OneOptionModal from '../../../components/modals/OneOptionModal';
 import Modal from 'react-native-modal';
+import MenuModal from '../../../components/modals/MenuModal';
+import TwoOptionModal from '../../../components/modals/TwoOptionModal';
+
+type option = {
+  text: string;
+  onClick: () => void;
+};
 
 function ChatScreen({ navigation, route }: any) {
   const { chatId } = route.params;
   const [text, setText] = useState('');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const content = getContent();
+  const modalOption: Array<option> = [
+    {
+      text: '채팅방 나가기',
+      onClick: () => {showModal()},
+
+    },
+    {
+      text: '신고',
+      onClick: () => {setIsMenuVisible(false);},
+    },
+  ]
 
   useEffect(() => {}, []);
 
+  function showMenu() {
+    setIsMenuVisible(true);
+  }
+
+  function closeMenu() {
+    setIsMenuVisible(false);
+  }
+
   function showModal() {
+    closeMenu();
     setIsModalVisible(true);
   }
 
   function closeModal() {
+    closeMenu();
     setIsModalVisible(false);
   }
 
+  function blockUser() {
+    setIsModalVisible(false);
+    setIsMenuVisible(false);
+
+    //todo 차단 api 연결
+  }
+
   return (
-    <View>
+    <View style={styles.container}>
       {/*헤더*/}
       <View style={styles.header}>
         <View style={styles.headerContainer}>
@@ -47,7 +82,7 @@ function ChatScreen({ navigation, route }: any) {
 
           <TouchableOpacity
             onPress={() => {
-              showModal();
+              showMenu();
             }}
             style={{ marginLeft: 'auto' }}
           >
@@ -56,20 +91,7 @@ function ChatScreen({ navigation, route }: any) {
         </View>
       </View>
 
-      <Modal
-        isVisible={isModalVisible}
-        onBackdropPress={() => setIsModalVisible(false)}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-      >
-        <OneOptionModal
-          title={'이 회원을 차단할까요?'}
-          subTitle={'나중에 차단 해제를 할 수 없어요.'}
-          optionText={'확인'}
-          onClick={closeModal}
-        />
-      </Modal>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.scrollContainer}>
         <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
         <ChatBubble time={'14:05'} text={chatId} isOpponent={false} />
         <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
@@ -77,7 +99,32 @@ function ChatScreen({ navigation, route }: any) {
 
       <TextInput style={styles.textInput} value={text} onChangeText={setText} />
 
-      {/*채팅*/}
+      {/*채팅방 나가기 모달*/}
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={() => setIsModalVisible(false)}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown">
+        <TwoOptionModal
+          title={'채팅을 종료할까요?'}
+          subTitle={'채팅방을 나가면 다시 복구할 수 없어요.'}
+          optionText1={'나가기'}
+          optionText2={'취소'}
+          onClick1={blockUser}
+          onClick2={closeModal} />
+      </Modal>
+
+
+      {/*메뉴*/}
+      <Modal
+        isVisible={isMenuVisible}
+        onBackdropPress={() => setIsModalVisible(false)}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        style={{ justifyContent: 'flex-end', marginBottom: 100}}>
+        <MenuModal
+          options={modalOption} cancle={closeMenu} />
+      </Modal>
     </View>
   );
 }
@@ -86,10 +133,16 @@ export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+    height: 'auto',
+    backgroundColor: '#ffffff',
+  },
+  scrollContainer: {
     height: 1000,
     backgroundColor: '#ffffff',
     paddingHorizontal: 20,
     paddingTop: 20,
+    flexDirection: 'column',
   },
   header: {
     height: 87,
@@ -128,6 +181,8 @@ const styles = StyleSheet.create({
 });
 
 function getContent() {
+  //todo 채팅 가져오기 api 연결
+
   return [
     {
       text: '안녕하세요~',
