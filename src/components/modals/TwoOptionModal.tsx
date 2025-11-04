@@ -11,7 +11,7 @@ type Props = {
   onClick2: () => void;
 };
 
-function OneOptionModal({ title, subTitle, optionText1, optionText2, onClick1, onClick2 }: Props) {
+function TwoOptionModal({ title, subTitle, optionText1, optionText2, onClick1, onClick2 }: Props) {
 
   return (
     <View style={styles.container}>
@@ -31,7 +31,7 @@ function OneOptionModal({ title, subTitle, optionText1, optionText2, onClick1, o
   );
 }
 
-export default OneOptionModal;
+export default TwoOptionModal;
 
 const styles = StyleSheet.create({
   container: {
