@@ -1,5 +1,13 @@
 import React from 'react';
-import { Text, StyleSheet, ScrollView, View, FlatList, SafeAreaView, StatusBar } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  ScrollView,
+  View,
+  FlatList,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
 import RecommendCard from '../../components/profile/RecommendCard';
 
 function HomeScreen() {
@@ -45,7 +53,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 132,
-    marginHorizontal : 24,
+    marginHorizontal: 24,
     backgroundColor: '#fff',
     flexDirection: 'column',
     justifyContent: 'flex-end',
@@ -82,54 +90,52 @@ const styles = StyleSheet.create({
 function getItems() {
   return [
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
     {
-      name: "감자맛탕",
+      name: '감자맛탕',
       age: 29,
-      distance: "경기도 (1km)",
-      job: "회사원",
+      distance: '경기도 (1km)',
+      job: '회사원',
       hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: ('../../assets/sample-profile2.jpg')
+      image: '../../assets/sample-profile2.jpg',
     },
-
-
   ];
 }

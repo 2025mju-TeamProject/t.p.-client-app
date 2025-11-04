@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Modal from 'react-native-modal';
 import colors from '../../constants/colors';
 
 type option = {
