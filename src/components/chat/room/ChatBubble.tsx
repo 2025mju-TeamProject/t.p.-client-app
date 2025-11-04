@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Dimensions } from 'react-native';
-import colors from '../../constants/colors';
+import colors from '../../../constants/colors';
 
 type Props = { text: String; time: String; isOpponent: boolean };
 
