@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  StyleSheet,
-  ScrollView,
-  View,
-  FlatList,
-  SafeAreaView,
-  StatusBar,
-} from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import RecommendCard from '../../components/profile/RecommendCard';
 
 function HomeScreen() {
