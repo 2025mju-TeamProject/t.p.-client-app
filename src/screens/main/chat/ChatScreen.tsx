@@ -66,6 +66,7 @@ function ChatScreen({ navigation, route }: any) {
           title={'이 회원을 차단할까요?'}
           subTitle={'나중에 차단 해제를 할 수 없어요.'}
           optionText={'확인'}
+          onClick={closeModal}
         />
       </Modal>
       <ScrollView style={styles.container}>

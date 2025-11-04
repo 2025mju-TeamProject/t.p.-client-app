@@ -7,19 +7,17 @@ type Props = {
   title: String;
   subTitle: String;
   optionText: string;
+  onClick: () => void;
 };
 
-function OneOptionModal({
-  title,
-  subTitle,
-  optionText,
-}: Props) {
+function OneOptionModal({ title, subTitle, optionText, onClick }: Props) {
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.subTitle}>{subTitle}</Text>
 
-      <TouchableOpacity onPress={() => {}} style={styles.button}>
+      <TouchableOpacity onPress={() => {onClick()}} style={styles.button}>
         <Text style={{ color: 'white' }}>{optionText}</Text>
       </TouchableOpacity>
     </View>
