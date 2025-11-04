@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,10 +13,11 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../../../constants/colors';
-import ChatBubble from '../../../components/chat/ChatBubble';
+import ChatBubble from '../../../components/chat/room/ChatBubble';
 import Modal from 'react-native-modal';
 import MenuModal from '../../../components/modals/MenuModal';
 import TwoOptionModal from '../../../components/modals/TwoOptionModal';
+import ChatInput from '../../../components/chat/room/ChatInput';
 
 type option = {
   text: string;
@@ -37,8 +41,14 @@ function ChatScreen({ navigation, route }: any) {
       onClick: () => {setIsMenuVisible(false);},
     },
   ]
+  const scrollViewRef = useRef<ScrollView | null>(null);
+  const scrollToBottom = () => {
+    scrollViewRef.current?.scrollToEnd({ animated: true });
+  };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
 
   function showMenu() {
     setIsMenuVisible(true);
@@ -66,7 +76,7 @@ function ChatScreen({ navigation, route }: any) {
   }
 
   return (
-    <View style={styles.container}>
+    <>
       {/*헤더*/}
       <View style={styles.header}>
         <View style={styles.headerContainer}>
@@ -91,14 +101,20 @@ function ChatScreen({ navigation, route }: any) {
         </View>
       </View>
 
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView style={styles.scrollContainer} >
         <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
         <ChatBubble time={'14:05'} text={chatId} isOpponent={false} />
         <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
+        <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
+        <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
+        <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
+        <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
+        <ChatBubble time={'14:05'} text={chatId} isOpponent={true} />
+        <ChatBubble time={'14:05'} text={'last'} isOpponent={true} />
       </ScrollView>
 
-      <TextInput style={styles.textInput} value={text} onChangeText={setText} />
 
+      <ChatInput />
       {/*채팅방 나가기 모달*/}
       <Modal
         isVisible={isModalVisible}
@@ -114,7 +130,6 @@ function ChatScreen({ navigation, route }: any) {
           onClick2={closeModal} />
       </Modal>
 
-
       {/*메뉴*/}
       <Modal
         isVisible={isMenuVisible}
@@ -125,7 +140,7 @@ function ChatScreen({ navigation, route }: any) {
         <MenuModal
           options={modalOption} cancle={closeMenu} />
       </Modal>
-    </View>
+    </>
   );
 }
 
@@ -138,10 +153,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   scrollContainer: {
-    height: 1000,
+    height: 'auto',
     backgroundColor: '#ffffff',
     paddingHorizontal: 20,
-    paddingTop: 20,
     flexDirection: 'column',
   },
   header: {
@@ -170,13 +184,6 @@ const styles = StyleSheet.create({
   chat: {
     height: 100,
     backgroundColor: colors.primary,
-  },
-  textInput: {
-    width: 300,
-    height: 100,
-    borderColor: '#aaa',
-    textAlignVertical: 'top', // Android에서 위부터 입력
-    padding: 10,
   },
 });
 
