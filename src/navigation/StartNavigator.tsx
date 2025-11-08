@@ -24,6 +24,7 @@ function StartNavigator() {
         component={LoginScreen}
         options={{
           headerShadowVisible: false,
+          headerShown: false,
           title: '',
 
         }} />
