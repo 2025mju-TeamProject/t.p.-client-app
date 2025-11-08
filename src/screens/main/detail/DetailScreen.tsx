@@ -79,6 +79,24 @@ function DetailScreen({ navigation }: any) {
         />
       </View>
 
+      <View style={styles.likeIcon}>
+        <IconButton
+          iconName={'heart'}
+          color={colors.white}
+          size={30}
+          onClick={() => {}}
+        />
+      </View>
+
+      <View style={styles.messageIcon}>
+        <IconButton
+          iconName={'chatbox-sharp'}
+          color={colors.white}
+          size={30}
+          onClick={() => {}}
+        />
+      </View>
+
       {/*모달*/}
       <Modal
         isVisible={isModalVisible}
@@ -130,5 +148,30 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 55,
     right: 18,
+  },
+  likeIcon: {
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    backgroundColor: colors.darkGray,
+    opacity: 0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 24,
+    left: 24,
+    right: 24,
+  },
+  messageIcon: {
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    backgroundColor: colors.darkGray,
+    opacity: 0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 24,
+    right: 24,
   },
 });
