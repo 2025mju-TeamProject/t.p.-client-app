@@ -13,7 +13,7 @@ function ChatListScreen({ navigation }: any) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="채팅" />
 
       <View style={styles.list}>
@@ -27,7 +27,7 @@ function ChatListScreen({ navigation }: any) {
           )}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

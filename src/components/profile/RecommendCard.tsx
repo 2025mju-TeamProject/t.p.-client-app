@@ -4,7 +4,6 @@ import {
   Image,
   StyleSheet,
   Text,
-  Touchable,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -28,8 +27,6 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
   age,
   distance,
   job,
-  hashtags,
-  imagePath,
   padding,
   onPress,
 }) => {
