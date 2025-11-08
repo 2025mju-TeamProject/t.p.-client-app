@@ -13,7 +13,10 @@
     "paths": {
       "@components/*": ["components/*"],
       "@screens/*": ["screens/*"],
+      "@context/*": ["context/*"],
+      "@navigation/*": ["navigation/*"],
       "@utils/*": ["utils/*"],
+      "@services/*": ["services/*"],
       "@constants/*": ["constants/*"]
     }
   },

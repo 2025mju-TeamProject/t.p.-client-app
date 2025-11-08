@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 import {useAuth} from '../../context/AuthContext';
 import ROUTES from '../../constants/routes';
-import AppButton from "../../components/common/AppButton";
+import AppButton from "../../components/buttons/AppButton";
 
 function LoginScreen({navigation}: any) {
 

@@ -5,6 +5,7 @@ import { RootStackParamList } from './types';
 import BottomNavigator from './BottomNavigator';
 import StartNavigator from './StartNavigator';
 import ChatScreen from '../screens/main/chat/ChatScreen';
+import DetailScreen from '../screens/main/detail/DetailScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -12,7 +13,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name={ROUTES.START}
+        name={ROUTES.STARTNAV}
         component={StartNavigator} />
       <Stack.Screen
         name={ROUTES.BOTTOM}
@@ -27,7 +28,13 @@ function RootNavigator() {
         options={{
           headerShadowVisible: false,
           headerShown: false,
-          title: '채팅방 이름',
+        }} />
+      <Stack.Screen
+        name={ROUTES.DETAIL}
+        component={DetailScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: false,
         }} />
     </Stack.Navigator>
   );

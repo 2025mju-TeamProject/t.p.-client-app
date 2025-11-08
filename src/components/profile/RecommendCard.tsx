@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import ProfileTag from './ProfileTag';
 
 interface ProfileCardProps {
@@ -10,6 +17,7 @@ interface ProfileCardProps {
   hashtags: string[];
   imagePath: string;
   padding: number;
+  onPress: () => void;
 }
 
 const winWidth = Dimensions.get('window').width;
@@ -19,53 +27,55 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
   age,
   distance,
   job,
-  hashtags,
-  imagePath,
   padding,
+  onPress,
 }) => {
 
   const image = require('../../../assets/sample-profile2.jpg');
   const cupiImage = require('../../../assets/cupi.png');
 
   return (
-    <View
-      style={[
-        styles.cardWrapper,
-        padding == 1 ? { marginRight: 0 } : { marginRight: 24 }, // 마지막 아이템만 marginBottom 40
-      ]}
-    >
-      {/*프로필 카드*/}
-      <View style={styles.profileCard}>
-        <Image source={image} style={styles.image} />
-      </View>
-
-      {/*하단 카드*/}
-      <View style={styles.infoBox}>
-        {/*상단 태그*/}
-        <View style={styles.tagContainer}>
-          <View style={{marginRight: 10}}>
-            <ProfileTag text="궁합점수 80점"/>
-          </View>
-          <View style={{marginRight: 0}}>
-            <ProfileTag text="최근 접속"/>
-          </View>
+    <TouchableOpacity onPress={onPress} activeOpacity={1.0}>
+      <View
+        style={[
+          styles.cardWrapper,
+          padding == 1 ? { marginRight: 0 } : { marginRight: 24 }, // 마지막 아이템만 marginBottom 40
+          {marginBottom: 16}
+        ]}
+      >
+        {/*프로필 카드*/}
+        <View style={styles.profileCard}>
+          <Image source={image} style={styles.image} />
         </View>
 
-        <Text style={styles.name}>{name} {age}세</Text>
-        <Text style={styles.subInfo}>{`${distance} / ${job}`}</Text>
+        {/*하단 카드*/}
+        <View style={styles.infoBox}>
+          {/*상단 태그*/}
+          <View style={styles.tagContainer}>
+            <View style={{marginRight: 10}}>
+              <ProfileTag text="궁합점수 80점"/>
+            </View>
+            <View style={{marginRight: 0}}>
+              <ProfileTag text="최근 접속"/>
+            </View>
+          </View>
 
-        {/*쿠피의 한줄평*/}
-        <View style={styles.aiCard}>
-          <Image source={cupiImage} style={styles.cupiImage} />
-          <Text style={styles.aiTitle}>쿠피의 한 줄평</Text>
+          <Text style={styles.name}>{name} {age}세</Text>
+          <Text style={styles.subInfo}>{`${distance} / ${job}`}</Text>
+
+          {/*쿠피의 한줄평*/}
+          <View style={styles.aiCard}>
+            <Image source={cupiImage} style={styles.cupiImage} />
+            <Text style={styles.aiTitle}>쿠피의 한 줄평</Text>
+          </View>
+
+          <Text style={styles.aiDesc}>
+            감자맛탕 님과의 궁합은 서로의 관심사와 성격이 잘 맞는 편입니다. 대화의
+            흐름이 자연스럽고 유머 코드도 비슷해요.
+          </Text>
         </View>
-
-        <Text style={styles.aiDesc}>
-          감자맛탕 님과의 궁합은 서로의 관심사와 성격이 잘 맞는 편입니다. 대화의
-          흐름이 자연스럽고 유머 코드도 비슷해요.
-        </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

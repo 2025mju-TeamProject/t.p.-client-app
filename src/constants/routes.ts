@@ -1,5 +1,6 @@
 const ROUTES = {
     START: 'Start',
+    STARTNAV: 'StartNAV',
     LOGIN: 'Login',
     HOME: 'Home',
     BOTTOM: 'Bot',
@@ -9,5 +10,6 @@ const ROUTES = {
     CHAT: 'Chat',
     LIKE: 'Like',
     SETTINGS: 'Settings',
+    DETAIL: 'Detail',
 } as const;
 export default ROUTES;

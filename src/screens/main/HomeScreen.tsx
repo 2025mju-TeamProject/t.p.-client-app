@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import RecommendCard from '../../components/profile/RecommendCard';
 
-function HomeScreen() {
+function HomeScreen({navigation}: any) {
   const userList = getItems();
 
   return (
@@ -28,6 +28,7 @@ function HomeScreen() {
             hashtags={item.hashtags}
             imagePath={item.image}
             padding={index == userList.length - 1 ? 1 : 0}
+            onPress={() => navigation.navigate('Detail')}
           />
         )}
       />
@@ -39,6 +40,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
+    height: 'auto',
     backgroundColor: '#fff',
   },
   header: {
