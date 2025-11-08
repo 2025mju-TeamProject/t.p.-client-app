@@ -119,6 +119,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     paddingTop: 40,
+    backgroundColor: '#ffffff',
+
   },
   backIcon: {
     position: 'absolute',

@@ -43,6 +43,7 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
         style={[
           styles.cardWrapper,
           padding == 1 ? { marginRight: 0 } : { marginRight: 24 }, // 마지막 아이템만 marginBottom 40
+          {marginBottom: 16}
         ]}
       >
         {/*프로필 카드*/}

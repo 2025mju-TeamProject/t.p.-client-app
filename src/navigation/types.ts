@@ -10,4 +10,5 @@ export type RootStackParamList = {
   Like: undefined;
   Settings: undefined;
   Detail: undefined;
+  StartNAV: undefined;
 };

@@ -1,5 +1,6 @@
 const ROUTES = {
     START: 'Start',
+    STARTNAV: 'StartNAV',
     LOGIN: 'Login',
     HOME: 'Home',
     BOTTOM: 'Bot',

@@ -13,7 +13,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
-        name={ROUTES.START}
+        name={ROUTES.STARTNAV}
         component={StartNavigator} />
       <Stack.Screen
         name={ROUTES.BOTTOM}
