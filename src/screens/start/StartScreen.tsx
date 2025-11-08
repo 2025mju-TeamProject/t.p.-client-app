@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import AppButton from '../../components/common/AppButton';
+import AppButton from '../../components/buttons/AppButton';
 import ROUTES from '../../constants/routes';
 
 function StartScreen({navigation}: any) {

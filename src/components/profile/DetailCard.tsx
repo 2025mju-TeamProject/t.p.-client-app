@@ -6,14 +6,19 @@ import {
   StyleSheet,
   View,
   Text,
+  Dimensions,
 } from 'react-native';
+import ProfileTag from '../../components/profile/ProfileTag';
+
+
+const windowWidth = Dimensions.get('window').width;
 
 function DetailCard() {
   const imageList = getImages();
 
+
   return (
     <ScrollView style={styles.container}>
-      <Text>awnd</Text>
       <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={true}
@@ -22,6 +27,11 @@ function DetailCard() {
           <Image source={item.image} style={styles.image} />
         )}
       />
+
+      <View style={styles.section}>
+        <ProfileTag text={'궁합점수 80점'} />
+        <ProfileTag text={'IT 개발직'} />
+      </View>
     </ScrollView>
   );
 }
@@ -39,8 +49,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   image: {
-    width: '100%',
+    width: windowWidth,
     height: 450,
+  },
+  section: {
+    width: '100%',
+    height: 'auto',
+    paddingHorizontal: 24,
+    paddingTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
 });
 
