@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Modal from 'react-native-modal';
 import DetailCard from '../../../components/profile/DetailCard';
 import IconButton from '../../../components/buttons/IconButton';
@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: 40,
     backgroundColor: '#ffffff',
-
   },
   backIcon: {
     position: 'absolute',
