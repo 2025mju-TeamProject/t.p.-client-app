@@ -2,7 +2,11 @@ import ROUTES from '../../constants/routes';
 
 function StartScreen({ navigation }: any) {
   function navigateToLoginScreen() {
-    navigation.navigate(ROUTES.LOGIN);
+    // navigation.navigate(ROUTES.LOGIN);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: ROUTES.LOGIN }],
+    });
   }
 
   return (

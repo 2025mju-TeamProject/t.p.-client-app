@@ -32,7 +32,7 @@ function LoginScreen({ navigation }: any) {
     }
 
     login('Jane Doe');
-    navigateToHomeScreen()
+    //navigateToHomeScreen()
     navigation.reset({
       index: 0,
       routes: [{ name: ROUTES.BOTTOM }],

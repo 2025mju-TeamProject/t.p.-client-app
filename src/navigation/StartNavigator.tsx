@@ -33,6 +33,7 @@ function StartNavigator() {
         component={SigninScreen}
         options={{
           headerShadowVisible: false,
+          headerShown: false,
           title: '',
         }} />
     </Stack.Navigator>
