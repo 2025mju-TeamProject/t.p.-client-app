@@ -1,4 +1,4 @@
-import React, { JSX } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 
 function IntroductionScreen() {
@@ -6,7 +6,7 @@ function IntroductionScreen() {
     <View>
       <Text>생일</Text>
     </View>
-  )
+  );
 }
 
 export default IntroductionScreen;

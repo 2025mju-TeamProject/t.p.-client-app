@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import StartScreen from '@screens/start/StartScreen';
 
 function WriteProfileScreen() {
   return (
@@ -9,9 +8,7 @@ function WriteProfileScreen() {
         indicatorStyle={undefined}
         horizontal={true}
         scrollEnabled={false}
-        >
-
-      </ScrollView>
+      ></ScrollView>
     </ScrollView>
   );
 }
