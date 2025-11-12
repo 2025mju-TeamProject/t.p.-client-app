@@ -4,7 +4,7 @@ import ROUTES from '../constants/routes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ChatListScreen from '../screens/main/chat/ChatListScreen';
-import SettingScreen from '../screens/main/setting/SettingScreen';
+import ProfileScreen from '../screens/main/profile/ProfileScreen';
 import LikeScreen from '../screens/main/like/LikeScreen';
 
 function RootNavigator() {
@@ -23,8 +23,8 @@ function RootNavigator() {
             iconName = focused ? 'heart-sharp' : 'heart-outline';
           } else if (route.name === 'ChatList') {
             iconName = focused ? 'chatbubble-sharp' : 'chatbubble-outline';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'settings-sharp' : 'settings-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person-sharp' : 'person-outline';
           }
           return <Icon name={iconName} size={size} color={color} />;
         },
@@ -58,10 +58,10 @@ function RootNavigator() {
       />
       <Tab.Screen
         name={ROUTES.SETTINGS}
-        component={SettingScreen}
+        component={ProfileScreen}
         options={{
           headerShown: false,
-          title: '설정',
+          title: '프로필',
         }}
       />
     </Tab.Navigator>
