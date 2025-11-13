@@ -57,7 +57,7 @@ function RootNavigator() {
         }}
       />
       <Tab.Screen
-        name={ROUTES.SETTINGS}
+        name={ROUTES.PROFILE}
         component={ProfileScreen}
         options={{
           headerShown: false,

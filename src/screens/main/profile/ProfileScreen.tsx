@@ -20,7 +20,7 @@ function ProfileScreen({ navigation }: any) {
     <ScrollView style={styles.container}>
       <Header title="프로필" />
 
-      <View style={{ marginTop: 80 }}>
+      <View style={{ marginTop: 0 }}>
         <View style={styles.profileCard}>
           <Image source={user.avatar} style={styles.avatar} />
           <Text style={styles.nickname}>{user.nickname}</Text>
@@ -31,7 +31,7 @@ function ProfileScreen({ navigation }: any) {
         <View style={styles.list}>
           <ListItem icon="create-outline" label="프로필 편집" onPress={goEdit} />
           <ListItem icon="eye-outline" label="프로필 미리보기" onPress={goPreview} />
-          <ListItem icon="settings-outline" label="설정" onPress={goSettings} isLast />
+          <ListItem icon="settings-outline" label="설정" onPress={goSettings}/>
         </View>
       </View>
     </ScrollView>
@@ -66,12 +66,12 @@ function ListItem({
   );
 }
 
-const AVATAR = 120;
+const AVATAR = 200;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#ffffff',
     paddingBottom: 100,
   },
   profileCard: {
@@ -87,31 +87,27 @@ const styles = StyleSheet.create({
     backgroundColor: '#e9e9e9',
   },
   nickname: {
-    marginTop: 12,
-    fontSize: 18,
+    marginTop: 18,
+    fontSize: 22,
     fontWeight: '600',
     color: '#111',
+    marginBottom: 20,
   },
-  divider: {
-    height: 1,
-    backgroundColor: '#E5E7EB',
-    marginHorizontal: 16,
-    marginTop: 12,
-    marginBottom: 8,
-  },
+
   list: {
     backgroundColor: colors.background,
+    borderTopColor: '#D9D9D9',
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
   item: {
-    paddingHorizontal: 20,
-    height: 56,
+    paddingHorizontal: 36,
+    height: 64,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomColor: '#EFEFEF',
+    borderBottomColor: '#D9D9D9',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  itemLast: { borderBottomWidth: 0 },
   itemLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  itemText: { fontSize: 16, color: '#202124' },
+  itemText: { fontSize: 15, color: '#111111' },
 });
