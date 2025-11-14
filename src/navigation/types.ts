@@ -9,7 +9,7 @@ export type RootStackParamList = {
   ChatList: undefined;
   Like: undefined;S
   Profile: undefined;
-  SETTINGS: undefined;
+  Settings: undefined;
   Detail: undefined;
   StartNAV: undefined;
 };
