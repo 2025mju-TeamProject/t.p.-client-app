@@ -9,6 +9,7 @@ const ROUTES = {
     CHATLIST: 'ChatList',
     CHAT: 'Chat',
     LIKE: 'Like',
+    PROFILE: 'Profile',
     SETTINGS: 'Settings',
     DETAIL: 'Detail',
 } as const;
