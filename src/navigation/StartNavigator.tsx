@@ -5,6 +5,7 @@ import ROUTES from '../constants/routes';
 import { RootStackParamList } from './types';
 import StartScreen from '../screens/start/StartScreen';
 import SigninScreen from '../screens/start/SigninScreen';
+import WriteProfileScreen from '../screens/start/WriteProfileScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
