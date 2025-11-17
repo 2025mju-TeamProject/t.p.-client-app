@@ -6,6 +6,7 @@ import BottomNavigator from './BottomNavigator';
 import StartNavigator from './StartNavigator';
 import ChatScreen from '../screens/main/chat/ChatScreen';
 import DetailScreen from '../screens/main/detail/DetailScreen';
+import SettingScreen from '../screens/main/profile/SettingScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -32,6 +33,13 @@ function RootNavigator() {
       <Stack.Screen
         name={ROUTES.DETAIL}
         component={DetailScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: false,
+        }} />
+        <Stack.Screen
+        name={ROUTES.SETTINGS}
+        component={SettingScreen}
         options={{
           headerShadowVisible: false,
           headerShown: false,
