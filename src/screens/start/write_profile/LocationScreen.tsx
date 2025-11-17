@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-function InterestScreen() {
+function IntroductionScreen() {
   return (
     <View>
-      <Text>관심사</Text>
+      <Text>지역</Text>
     </View>
-  )
+  );
 }
 
-export default InterestScreen;
+export default IntroductionScreen;

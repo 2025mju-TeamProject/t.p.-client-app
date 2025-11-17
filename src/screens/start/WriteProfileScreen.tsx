@@ -1,26 +1,105 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View, Text } from 'react-native';
-import LoginScreen from '../../screens/start/LoginScreen';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import BirthdayScreen from '../../screens/start/write_profile/BirthdayScreen';
+import GenderScreen from '../../screens/start/write_profile/GenderScreen';
+import AppButton from '../../components/buttons/AppButton';
+import colors from '../../constants/colors';
+import PagerView from 'react-native-pager-view';
+import InterestScreen from '../../screens/start/write_profile/InterestScreen';
+import MbtiScreen from '../../screens/start/write_profile/MbtiScreen';
+import JobScreen from '../../screens/start/write_profile/JobScreen';
+import LocationScreen from '../../screens/start/write_profile/LocationScreen';
+import ImageScreen from '../../screens/start/write_profile/ImageScreen';
+import IntroductionScreen from '../../screens/start/write_profile/IntroductionScreen';
 
 function WriteProfileScreen() {
+  const pagerRef = useRef<PagerView>(null);
+  const [page, setPage] = useState<number>(0);
+  const [gender, setGender] = useState<string>('');
+
+  const totalPages = 8;
+
+  function goNext() {
+    if (!pagerRef.current) return;
+    if (page >= totalPages - 1) return;
+
+    pagerRef.current.setPage(page + 1);
+  }
+
+  function goBack() {
+    if (!pagerRef.current) return;
+    if (page <= 0) return;
+
+    pagerRef.current.setPage(page - 1);
+  }
+
   return (
     <View style={styles.container}>
+      {/* 헤더 */}
       <View style={styles.header}>
-        <Text>헤더</Text>
+        //<Text style={{ color: 'black' }}>{gender}</Text>
       </View>
-      <ScrollView style={styles.scrollView}>
-        <ScrollView
-          indicatorStyle={undefined}
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          scrollEnabled={false}
-          style={styles.screenContainer} >
-          <LoginScreen />
-          <LoginScreen />
-        </ScrollView>
-      </ScrollView>
-      <View style={styles.bottom}>
-        <Text >skndkan</Text>
+
+      {/* 페이지 뷰 */}
+      <PagerView
+        ref={pagerRef}
+        style={styles.pager}
+        initialPage={0}
+        scrollEnabled={false}
+        onPageSelected={e => setPage(e.nativeEvent.position)}
+      >
+        <View key="gender">
+          <GenderScreen
+            choosed={gender}
+            onPress={value => {
+              setGender(value);
+            }} />
+        </View>
+
+        <View key="birthday">
+          <BirthdayScreen />
+        </View>
+
+        <View key="interset">
+          <InterestScreen />
+        </View>
+
+        <View key="mbti">
+          <MbtiScreen />
+        </View>
+
+        <View key="job">
+          <JobScreen />
+        </View>
+
+        <View key="location">
+          <LocationScreen />
+        </View>
+
+        <View key="image">
+          <ImageScreen />
+        </View>
+
+        <View key="introduction">
+          <IntroductionScreen />
+        </View>
+      </PagerView>
+
+      {/* 하단 버튼  */}
+      <View style={styles.bottomTab}>
+        <AppButton
+          title="이전"
+          tintColors={{ true: colors.pink, false: '#B1B1B1' }}
+          onPress={goBack}
+          isAbled={true}
+        />
+
+        <AppButton
+          title="다음"
+          tintColors={{ true: colors.pink, false: '#B1B1B1' }}
+          onPress={goNext}
+          isAbled={true}
+        />
       </View>
     </View>
   );
@@ -29,31 +108,31 @@ function WriteProfileScreen() {
 export default WriteProfileScreen;
 
 const styles = StyleSheet.create({
-  header: {
-    width: '100%',
-    height: 70,
-    backgroundColor: 'black',
-  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
   },
-  scrollView: {
+  header: {
     width: '100%',
-    height: 'auto',
+    height: 70,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
   },
-  screenContainer: {
-    width: 'auto',
-    height: 'auto',
+  pager: {
+    flex: 1,
   },
-  bottom: {
+  bottomTab: {
     width: '100%',
     height: 126,
-    position: 'relative',
-    bottom: 0,
-    left: 0,
-    right: 0,
-  }
+    flexDirection: 'column',
+    paddingHorizontal: 24,
+    paddingTop: 20,
+    backgroundColor: '#ffffff',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 10,
+  },
 });

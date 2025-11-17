@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 function ImageScreen() {
   return (
     <View>
-      <Text>생일</Text>
+      <Text>이미지</Text>
     </View>
   )
 }

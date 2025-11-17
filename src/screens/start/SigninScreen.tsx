@@ -28,7 +28,7 @@ const termTitle = [
   '개인정보 처리방침 동의'
 ] as const;
 
-function SigninScreen() {
+function SigninScreen({ navigation }: any) {
   const [id, setId] = useState('');
   const [passwd, setPasswd] = useState('');
   const [checkPasswd, setCheckPasswd] = useState('');
@@ -83,6 +83,12 @@ function SigninScreen() {
   function showTerm(value: number) {
     setTermIndex(value);
     setModalVisible(true);
+  }
+
+  function trySignin() {
+    //todo 회원가입 api 연결
+    navigation.navigate('WriteProfile');
+
   }
 
   return (
@@ -226,11 +232,13 @@ function SigninScreen() {
         <AppButton
           title={'확인'}
           tintColors={{ true: colors.pink, false: '#B1B1B1' }}
-          onPress={() => {}}
-          isAbled={next}
+          onPress={trySignin}
+          //isAbled={next}
+          isAbled={true}
         />
       </View>
 
+      {/*모달*/}
       <Modal
         isVisible={isModalVisible}
         onBackdropPress={() => setModalVisible(false)}

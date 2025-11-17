@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 function IntroductionScreen() {
   return (
     <View>
-      <Text>생일</Text>
+      <Text>소개글</Text>
     </View>
   );
 }

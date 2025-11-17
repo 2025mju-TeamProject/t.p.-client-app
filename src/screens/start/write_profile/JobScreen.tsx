@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 function JobScreen() {
   return (
     <View>
-      <Text>생일</Text>
+      <Text>직업</Text>
     </View>
   )
 }

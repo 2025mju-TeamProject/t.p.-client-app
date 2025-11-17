@@ -27,11 +27,20 @@ function StartNavigator() {
           headerShadowVisible: false,
           headerShown: false,
           title: '',
-
         }} />
+
       <Stack.Screen
         name={ROUTES.SIGNIN}
         component={SigninScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: false,
+          title: '',
+        }} />
+
+      <Stack.Screen
+        name={ROUTES.WRITEPROFFILE}
+        component={WriteProfileScreen}
         options={{
           headerShadowVisible: false,
           headerShown: false,
