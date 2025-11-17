@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -24,6 +24,14 @@ function LoginScreen({ navigation }: any) {
   const [canLogin, setCanLogin] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  useEffect(() => {
+    const ok =
+      id.length > 0 &&
+      passwd.length > 0
+
+    setCanLogin(ok)
+  }, [id, passwd]);
+
   const handleLogin = () => {
     //Todo 로그인 api 연결
     if (id != '0000') {
@@ -41,22 +49,11 @@ function LoginScreen({ navigation }: any) {
 
   const onIdInput = (value: string) => {
     setId(value);
-    checkCanLogin();
   };
 
   const onPasswdInput = (value: string) => {
     setPasswd(value);
-    checkCanLogin();
   };
-
-  function checkCanLogin() {
-    if (id.length <= 0 || passwd.length <= 0) {
-      //Todo 길이 바꿀것
-      setCanLogin(false);
-      return;
-    }
-    setCanLogin(true);
-  }
 
   function navigateToSigninScreen() {
     navigation.navigate(ROUTES.SIGNIN);
