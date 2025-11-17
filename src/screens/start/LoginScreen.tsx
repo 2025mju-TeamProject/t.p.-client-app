@@ -154,7 +154,7 @@ function LoginScreen({ navigation }: any) {
       </View>
 
       {/*회원가입*/}
-      <View style={[styles.section, { marginTop: 18 }]}>
+      <View style={[styles.section, { marginTop: 18, marginBottom: 200 }]}>
         <Text style={[styles.subTitle, { marginRight: 4 }]}>
           아직 회원이 아니신가요?
         </Text>
