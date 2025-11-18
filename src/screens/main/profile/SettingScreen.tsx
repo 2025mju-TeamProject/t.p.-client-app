@@ -13,15 +13,13 @@ function SettingScreen({ navigation }: any) {
   const MenuItem = ({ title }: { title: string }) => (
     <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
       <Text style={styles.menuText}>{title}</Text>
-      <Ionicons name="chevron-forward" size={20} color="#999" />
+      <Ionicons name="chevron-forward" size={20} color="#B1B1B1" />
     </TouchableOpacity>
   );
 
   return (
-    <ScrollView style={styles.container}
-    contentContainerStyle={{paddingBottom: 60}}>
-
-      {/* 뒤로가기 + 제목 */}
+    <View style={styles.container}>
+      {/* 고정 헤더 영역 */}
       <View style={styles.header}>
         <TouchableOpacity onPress={goBack} style={styles.backButton}>
           <Ionicons name="chevron-back" size={28} color="#000" />
@@ -29,37 +27,40 @@ function SettingScreen({ navigation }: any) {
         <Text style={styles.headerTitle}>설정</Text>
       </View>
 
-      {/* 알림 섹션 */}
-      <Text style={styles.sectionTitle}>알림</Text>
-      <MenuItem title="알림 설정" />
+      {/* 아래 내용만 스크롤 */}
+      <ScrollView
+        style={styles.scrollArea}
+        contentContainerStyle={{ paddingBottom: 40 }}
+      >
+        {/* 알림 섹션 */}
+        <Text style={styles.sectionTitle}>알림</Text>
+        <MenuItem title="알림 설정" />
 
-      <View style={styles.divider} />
+        <View style={styles.divider} />
 
-      {/* 운영 섹션 */}
-      <Text style={styles.sectionTitle}>운영</Text>
-      <MenuItem title="공지사항" />
-      <MenuItem title="고객센터" />
-      <MenuItem title="이용약관" />
-      <MenuItem title="개인정보처리방침" />
+        {/* 운영 섹션 */}
+        <Text style={styles.sectionTitle}>운영</Text>
+        <MenuItem title="공지사항" />
+        <MenuItem title="고객센터" />
+        <MenuItem title="이용약관" />
+        <MenuItem title="개인정보처리방침" />
 
-      <View style={styles.divider} />
+        <View style={styles.divider} />
 
-      {/* 계정 섹션 */}
-      <Text style={styles.sectionTitle}>계정</Text>
-      <MenuItem title="로그아웃" />
-      <MenuItem title="계정삭제" />
+        {/* 계정 섹션 */}
+        <Text style={styles.sectionTitle}>계정</Text>
+        <MenuItem title="로그아웃" />
+        <MenuItem title="계정삭제" />
 
-      {/* 앱 정보 */}
-      <View style={{ padding: 20 }}>
-        <Text style={styles.versionText}>APP Version 1.0.0</Text>
-        <Text style={styles.versionText}>CODE Version 0</Text>
-      </View>
-
-    </ScrollView>
+        {/* 앱 정보 */}
+        <View style={{ padding: 20 /* 상하좌우 여백*/ }}>
+          <Text style={styles.versionText}>APP Version 1.0.0</Text>
+          <Text style={styles.versionText}>CODE Version 0</Text>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
-
-export default SettingScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -72,10 +73,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 15,
     paddingHorizontal: 10,
-    marginTop: 23,
+    marginTop: 36,
   },
   backButton: {
-    paddingRight: 5,
+    paddingRight: 3,
+    paddingLeft: 3,
   },
   headerTitle: {
     fontSize: 22,
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: '#979797',
-    marginTop: 25,
+    marginTop: 24,
     marginBottom: 10,
     paddingHorizontal: 20,
   },
@@ -102,10 +104,10 @@ const styles = StyleSheet.create({
 
   menuText: {
     fontSize: 17,
-    color: '#000',
+    color: '#111111',
   },
 
-  divider: {
+  divider: { /* 영역 나누는 회색 직선 */
     height: 1,
     backgroundColor: '#D9D9D9',
     marginTop: 10,
@@ -115,7 +117,9 @@ const styles = StyleSheet.create({
   },
 
   versionText: {
-    color: '#aaa',
-    fontSize: 13,
+    color: '#B1B1B1',
+    fontSize: 12,
   },
 });
+
+export default SettingScreen;
