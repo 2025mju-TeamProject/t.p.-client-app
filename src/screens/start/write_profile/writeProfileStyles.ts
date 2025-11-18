@@ -12,11 +12,15 @@ export default StyleSheet.create({
   section: {
     width: width,
     height: 'auto',
-    flexWrap: 'wrap',
     paddingHorizontal: 24,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+  },
+  rowSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 0,
   },
   title: {
     fontSize: 26,
@@ -28,4 +32,14 @@ export default StyleSheet.create({
     fontWeight: 700,
     color: '#9c9c9c'
   },
+  text: {
+    fontSize: 12,
+    fontWeight: 400,
+    color: 'black'
+  },
+  boldText: {
+    fontSize: 12,
+    fontWeight: 800,
+    color: 'black'
+  }
 })

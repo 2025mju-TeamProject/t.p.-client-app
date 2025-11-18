@@ -37,7 +37,7 @@ function WriteProfileScreen() {
     <View style={styles.container}>
       {/* 헤더 */}
       <View style={styles.header}>
-        //<Text style={{ color: 'black' }}>{gender}</Text>
+        {/*<Text style={{ color: 'black' }}>{gender}</Text>*/}
       </View>
 
       {/* 페이지 뷰 */}
