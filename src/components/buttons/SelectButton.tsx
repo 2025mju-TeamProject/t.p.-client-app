@@ -1,5 +1,12 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  StyleProp,
+  View,
+  ViewStyle,
+} from 'react-native';
 import colors from '../../constants/colors';
 
 type Props = {
@@ -7,15 +14,15 @@ type Props = {
   tintColors: { true: string; false: string };
   isSelected?: boolean;
   onPress: () => void;
+  style?: StyleProp<ViewStyle>;
 };
 
-function SelectButton({ title, tintColors, isSelected, onPress }: Props) {
+function SelectButton({ title, tintColors, isSelected, onPress, style = null }: Props) {
   return (
     <TouchableOpacity
-      style={[
-        styles.button,
-        { backgroundColor: isSelected ? tintColors.true : tintColors.false },
-      ]}
+      style={ style === null ?
+        [styles.button, { backgroundColor: isSelected ? tintColors.true : tintColors.false },] :
+        [style, { backgroundColor: isSelected ? tintColors.true : tintColors.false }]}
       onPress={onPress}
     >
       <Text style={[styles.text, {color: isSelected ? 'white' : 'black'}]}>{title}</Text>

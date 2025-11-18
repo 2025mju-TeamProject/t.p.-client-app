@@ -17,10 +17,13 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  rowSection: {
-    flexDirection: 'row',
+  columnSection: {
+    width: width,
+    height: 'auto',
+    paddingHorizontal: 24,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingHorizontal: 0,
   },
   title: {
     fontSize: 26,

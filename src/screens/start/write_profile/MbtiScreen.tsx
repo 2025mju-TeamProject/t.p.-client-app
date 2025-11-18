@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import styles from './writeProfileStyles';
 import SelectButton from '../../../components/buttons/SelectButton';
 
@@ -13,7 +13,7 @@ function MbtiScreen() {
   useEffect(() => {
     if (ei === -1 || sn === -1 || tf === -1 || jp === -1) return;
     refreshMBTI();
-  }, [ei, sn, tf, jp]);
+  }, [ei, sn, tf, jp, refreshMBTI]);
 
   return (
     <View style={styles.container}>
@@ -211,3 +211,14 @@ function MbtiScreen() {
 }
 
 export default MbtiScreen;
+
+const localStyle = StyleSheet.create({
+  button: {
+    flex: 1,
+    height: 46,
+    borderRadius: 12,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderWidth: 1,
+  },
+})
