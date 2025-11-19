@@ -229,13 +229,16 @@ function SigninScreen({ navigation }: any) {
 
       {/*아래 하단 바*/}
       <View style={styles.bottomTab}>
-        <AppButton
-          title={'확인'}
-          tintColors={{ true: colors.pink, false: '#B1B1B1' }}
-          onPress={trySignin}
-          //isAbled={next}
-          isAbled={true}
-        />
+        <View style={{ height: 46 }}>
+          <AppButton
+            title={'확인'}
+            tintColors={{ true: colors.pink, false: '#B1B1B1' }}
+            onPress={trySignin}
+            //isAbled={next}
+            isAbled={true}
+          />
+        </View>
+
       </View>
 
       {/*모달*/}

@@ -38,6 +38,7 @@ function InterestScreen() {
         <View style={[styles.section, {marginTop: 10, flexWrap: 'wrap', gap: 8}]}>
           {sportsItems.map((item, index) => (
             <SelectButton
+              key={item}
               title={item}
               isSelected={selected.includes(item)}
               onPress={() => handleSelected(item)}
@@ -52,6 +53,7 @@ function InterestScreen() {
         <View style={[styles.section, {marginTop: 10, flexWrap: 'wrap', gap: 8}]}>
           {activityItems.map((item, index) => (
             <SelectButton
+              key={item}
               title={item}
               isSelected={selected.includes(item)}
               onPress={() => handleSelected(item)}
@@ -66,6 +68,7 @@ function InterestScreen() {
         <View style={[styles.section, {marginTop: 10, flexWrap: 'wrap', gap: 8}]}>
           {artItems.map((item, index) => (
             <SelectButton
+              key={item}
               title={item}
               isSelected={selected.includes(item)}
               onPress={() => handleSelected(item)}
@@ -80,6 +83,7 @@ function InterestScreen() {
         <View style={[styles.section, {marginTop: 10, marginBottom: 30, flexWrap: 'wrap', gap: 8}]}>
           {livingItems.map((item, index) => (
             <SelectButton
+              key={item}
               title={item}
               isSelected={selected.includes(item)}
               onPress={() => handleSelected(item)}
