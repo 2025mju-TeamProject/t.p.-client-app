@@ -1,5 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  StyleProp,
+} from 'react-native';
 import colors from '../../constants/colors';
 
 type Props = {
@@ -7,26 +13,35 @@ type Props = {
   tintColors: { true: string; false: string };
   isAbled?: boolean;
   onPress: () => void;
+  buttonStyle?: StyleProp<ViewStyle>;
+  textColor?: string;
 };
 
-function AppButton({ title, tintColors, isAbled, onPress }: Props) {
+function AppButton({
+  title,
+  tintColors,
+  isAbled,
+  onPress,
+  buttonStyle = null,
+  textColor = colors.background,
+}: Props) {
   return (
     <TouchableOpacity
       style={[
-        styles.button,
+        buttonStyle === null ? styles.button : buttonStyle,
         { backgroundColor: isAbled ? tintColors.true : tintColors.false },
       ]}
       onPress={onPress}
       disabled={!isAbled}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, {color: textColor}]}>{title}</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    width: '100%',
+    flex: 1,
     height: 46,
     borderRadius: 12,
     justifyContent: 'center',
@@ -34,7 +49,6 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    color: colors.background,
     fontWeight: 'bold',
     fontSize: 16,
   },

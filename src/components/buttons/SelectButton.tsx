@@ -29,14 +29,21 @@ function SelectButton({
 }: Props) {
   return (
     <TouchableOpacity
-      style={ style === null ?
-        [styles.button, { backgroundColor: isSelected ? tintColors.true : tintColors.false },] :
-        [style, { backgroundColor: isSelected ? tintColors.true : tintColors.false }]}
+      style={[
+        style === null ? styles.button : style,
+        { backgroundColor: isSelected ? tintColors.true : tintColors.false },
+      ]}
       onPress={onPress}
     >
-      <Text style={ textStyle === null ?
-        [styles.text, {color: isSelected ? 'white' : 'black'}] :
-        [textStyle, {color: isSelected ? 'white' : 'black'}]}>{title}</Text>
+      <Text
+        style={
+          textStyle === null
+            ? [styles.text, { color: isSelected ? 'white' : 'black' }]
+            : [textStyle, { color: isSelected ? 'white' : 'black' }]
+        }
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 }

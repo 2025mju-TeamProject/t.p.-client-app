@@ -53,7 +53,8 @@ function WriteProfileScreen() {
             choosed={gender}
             onPress={value => {
               setGender(value);
-            }} />
+            }}
+          />
         </View>
 
         <View key="birthday">
@@ -86,20 +87,33 @@ function WriteProfileScreen() {
       </PagerView>
 
       {/* 하단 버튼  */}
-      <View style={styles.bottomTab}>
-        <AppButton
-          title="이전"
-          tintColors={{ true: colors.pink, false: '#B1B1B1' }}
-          onPress={goBack}
-          isAbled={true}
-        />
+      <View style={[styles.bottomTab, {gap: 10}]}>
+        {page > 0 && (
+          <>
+            <AppButton
+              title="이전"
+              tintColors={{ true: '#f4f4f4', false: '#B1B1B1' }}
+              onPress={goBack}
+              isAbled={true}
+              buttonStyle={styles.backButton}
+              textColor={'#434343'} />
 
-        <AppButton
-          title="다음"
-          tintColors={{ true: colors.pink, false: '#B1B1B1' }}
-          onPress={goNext}
-          isAbled={true}
-        />
+            <AppButton
+              title="다음"
+              tintColors={{ true: colors.pink, false: '#B1B1B1' }}
+              onPress={goNext}
+              isAbled={true} />
+          </>
+        )}
+        {page == 0 && (
+          <AppButton
+            title="다음"
+            tintColors={{ true: colors.pink, false: '#B1B1B1' }}
+            onPress={goNext}
+            isAbled={true}
+          />
+        )}
+
       </View>
     </View>
   );
@@ -125,7 +139,7 @@ const styles = StyleSheet.create({
   bottomTab: {
     width: '100%',
     height: 126,
-    flexDirection: 'column',
+    flexDirection: 'row',
     paddingHorizontal: 24,
     paddingTop: 20,
     backgroundColor: '#ffffff',
@@ -134,5 +148,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 10,
+  },
+  backButton: {
+    width: 101,
+    height: 46,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f4f4f4',
   },
 });
