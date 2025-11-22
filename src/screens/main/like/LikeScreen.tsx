@@ -2,8 +2,9 @@ import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ROUTES from '../../../constants/routes';
 
-function LikeScreen() {
+function LikeScreen({navigation}: any) {
   const pageRef = useRef<PagerView>(null);
   const [page, setPage] = useState<number>(0);
   const receiveItems: Array<listProps> = getItems();
@@ -14,6 +15,10 @@ function LikeScreen() {
 
     setPage(page);
     pageRef.current.setPage(page);
+  }
+
+  function navigateToDetail(userId: number) {
+    navigation.navigate(ROUTES.DETAIL)
   }
 
   return (
@@ -65,7 +70,9 @@ function LikeScreen() {
                 name={item.name}
                 age={item.age}
                 tag={item.tag}
-                time={item.time} />
+                time={item.time}
+                onClick={() => navigateToDetail(0)}
+              />
             )}
             ListFooterComponent={
               <View style={styles.footer}>
@@ -84,7 +91,9 @@ function LikeScreen() {
                 name={item.name}
                 age={item.age}
                 tag={item.tag}
-                time={item.time} />
+                time={item.time}
+                onClick={() => navigateToDetail(0)}
+              />
             )}
             ListFooterComponent={
               <View style={styles.footer}>
@@ -158,11 +167,15 @@ type listProps = {
   age: number;
   tag: string;
   time: string;
+  onClick?: () => void;
 }
 
-export function ListItem({image, name, age, tag, time}: listProps) {
+export function ListItem({image, name, age, tag, time, onClick = () => {}}: listProps) {
   return (
-    <View style={styles.listContainer}>
+    <TouchableOpacity
+      style={styles.listContainer}
+      onPress={onClick}
+    >
       <View>
         <Image
           style={{width:54, height: 54, borderRadius: 50}}
@@ -182,7 +195,7 @@ export function ListItem({image, name, age, tag, time}: listProps) {
       <View style={{height: '100%', justifyContent: 'flex-start'}}>
         <Text style={{fontSize: 10, fontWeight: 400, color: '#828282'}}>{time}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
