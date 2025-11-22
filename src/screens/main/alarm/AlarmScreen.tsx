@@ -172,7 +172,6 @@ export function ListItem({
         </View>
       </View>
 
-      // 시간
       <View style={{ height: '100%', justifyContent: 'flex-start' }}>
         <Text style={{ fontSize: 10, fontWeight: 400, color: '#828282' }}>
           {time}
