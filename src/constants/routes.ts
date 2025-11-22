@@ -13,5 +13,6 @@ const ROUTES = {
   PROFILE: 'Profile',
   SETTINGS: 'Settings',
   DETAIL: 'Detail',
+  ALARM: 'Alarm',
 } as const;
 export default ROUTES;

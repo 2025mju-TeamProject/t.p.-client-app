@@ -49,7 +49,7 @@ function DetailCard() {
           <View style={styles.bubbleSection}>
             <Image
               source={require('../../../assets/cupi.png')}
-              style={{ marginRight: 3 }}
+              style={{ marginRight: 7, width: 30, height: 25,  }}
             />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
               쿠피의 한 줄평

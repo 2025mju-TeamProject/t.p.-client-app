@@ -13,4 +13,5 @@ export type RootStackParamList = {
   Detail: undefined;
   StartNAV: undefined;
   WriteProfile: undefined;
+  Alarm: undefined;
 };
