@@ -1,4 +1,4 @@
-import React, { JSX, useState } from 'react';
+import React, { JSX, use, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import styles from './writeProfileStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -19,19 +19,21 @@ type Props = {
 
 function BirthdayScreen() {
   const [noTime, setNoTime] = useState<boolean>(false);
+  const [openPicker, setOpenPicker] = useState<
+    null | 'year' | 'month' | 'day' | 'hour' | 'minute'
+  >(null);
 
   // 전체 생일 상태
   const [birthday, setBirthday] = useState<Birthday>({
-    year: null,
-    month: null,
-    day: null,
-    hour: null,
-    minute: null,
+    year: 0,
+    month: 0,
+    day: 0,
+    hour: 0,
+    minute: 0,
     knowTime: false,
   });
 
   // 연
-  const [yearOpen, setYearOpen] = useState(false);
   const [yearValue, setYearValue] = useState<number | null>(null);
   const yearItems = Array.from({ length: 2006 - 1980 + 1 }, (_, i) => ({
     label: `${1980 + i}`,
@@ -39,7 +41,6 @@ function BirthdayScreen() {
   }));
 
   // 월
-  const [monthOpen, setMonthOpen] = useState(false);
   const [monthValue, setMonthValue] = useState<number | null>(null);
   const monthItems = Array.from({ length: 12 }, (_, i) => ({
     label: `${i + 1}`,
@@ -47,7 +48,6 @@ function BirthdayScreen() {
   }));
 
   // 일
-  const [dayOpen, setDayOpen] = useState(false);
   const [dayValue, setDayValue] = useState<number | null>(null);
   const dayItems = Array.from({ length: 31 }, (_, i) => ({
     label: `${i + 1}`,
@@ -55,7 +55,6 @@ function BirthdayScreen() {
   }));
 
   // 시
-  const [hourOpen, setHourOpen] = useState(false);
   const [hourValue, setHourValue] = useState<number | null>(null);
   const hourItems = Array.from({ length: 12 }, (_, i) => ({
     label: `${i + 1}`,
@@ -63,12 +62,19 @@ function BirthdayScreen() {
   }));
 
   // 분
-  const [minuteOpen, setMinuteOpen] = useState(false);
   const [minuteValue, setMinuteValue] = useState<number | null>(null);
-  const minuteItems = Array.from({ length: 59 }, (_, i) => ({
-    label: `${i + 1}`,
-    value: i + 1,
+  const minuteItems = Array.from({ length: 60 }, (_, i) => ({
+    label: `${i}`,
+    value: i,
   }));
+
+  useEffect(() => {
+    if(noTime) {
+      setOpenPicker(null);
+      setHourValue(null);
+      setMinuteValue(null);
+    }
+  }, [noTime]);
 
   return (
     <View style={styles.container}>
@@ -82,165 +88,70 @@ function BirthdayScreen() {
         </Text>
       </View>
 
-      <View style={[styles.section, { marginTop: 40 }]}>
+      <View style={[styles.section, { marginTop: 30 }]}>
         <Text style={styles.text}>생년월일</Text>
       </View>
-
-      {/*연 월 일*/}
-      <View
-        style={[
-          styles.section,
-          {
-            marginTop: 5,
-            flexDirection: 'row',
-            zIndex: 3000, // 드롭다운 겹침 방지
-          },
-        ]}
-      >
-        {/* 연 */}
+      <View style={[styles.section, { marginTop: 5, gap: 10 }]}>
         <DropDownPicker
-          open={yearOpen}
           value={yearValue}
           items={yearItems}
-          setOpen={open => {
-            setYearOpen(open);
-            if (open) {
-              setMonthOpen(false);
-              setDayOpen(false);
-              setHourOpen(false);
-              setMinuteOpen(false);
-            }
-          }}
-          setValue={callback => {
-            const val = callback(yearValue) as number | null;
-            setYearValue(val);
-            setBirthday(prev => ({ ...prev, year: val }));
-          }}
-          setItems={() => {}}
-          placeholder="연"
-          style={{ height: 50, borderRadius: 12, width: 94 }}
-          dropDownContainerStyle={{ borderRadius: 12, width: 94 }}
-          zIndex={3000}
-          zIndexInverse={1000}
+          open={openPicker === 'year'}
+          setOpen={open => setOpenPicker(open ? 'year' : null)}
+          setValue={result => setYearValue(result)}
+          placeholder={'연'}
+          placeholderStyle={{ color: '#B1B1B1' }}
+          containerStyle={{ width: '33%' }}
         />
 
-        {/* 월 */}
         <DropDownPicker
-          open={monthOpen}
           value={monthValue}
           items={monthItems}
-          setOpen={open => {
-            setMonthOpen(open);
-            if (open) {
-              setYearOpen(false);
-              setDayOpen(false);
-              setHourOpen(false);
-              setMinuteOpen(false);
-            }
-          }}
-          setValue={callback => {
-            const val = callback(monthValue) as number | null;
-            setMonthValue(val);
-            setBirthday(prev => ({ ...prev, month: val }));
-          }}
-          setItems={() => {}}
-          placeholder="월"
-          style={{ height: 50, borderRadius: 12, width: 94 }}
-          dropDownContainerStyle={{ borderRadius: 12, width: 94 }}
-          zIndex={2000}
-          zIndexInverse={2000}
+          open={openPicker === 'month'}
+          setOpen={open => setOpenPicker(open ? 'month' : null)}
+          setValue={result => setMonthValue(result)}
+          placeholder={'월'}
+          placeholderStyle={{ color: '#B1B1B1' }}
+          containerStyle={{ width: '30%' }}
         />
 
-        {/* 일 */}
         <DropDownPicker
-          open={dayOpen}
           value={dayValue}
           items={dayItems}
-          setOpen={open => {
-            setDayOpen(open);
-            if (open) {
-              setYearOpen(false);
-              setMonthOpen(false);
-              setHourOpen(false);
-              setMinuteOpen(false);
-            }
-          }}
-          setValue={callback => {
-            const val = callback(dayValue) as number | null;
-            setDayValue(val);
-            setBirthday(prev => ({ ...prev, day: val }));
-          }}
-          setItems={() => {}}
-          placeholder="일"
-          style={{ height: 50, borderRadius: 12, width: 94 }}
-          dropDownContainerStyle={{ borderRadius: 12, width: 94 }}
-          zIndex={1000}
-          zIndexInverse={3000}
+          open={openPicker === 'day'}
+          setOpen={open => setOpenPicker(open ? 'day' : null)}
+          setValue={result => setDayValue(result)}
+          placeholder={'일'}
+          placeholderStyle={{ color: '#B1B1B1' }}
+          containerStyle={{ width: '30%' }}
         />
       </View>
 
-      <View
-        style={[
-          styles.section,
-          {
-            marginTop: 5,
-            flexDirection: 'row',
-            zIndex: 100, // 드롭다운 겹침 방지
-          },
-        ]}
-      >
-        {/* 시 */}
+      <View style={[styles.section, { marginTop: 30 }]}>
+        <Text style={styles.text}>태어난 시간</Text>
+      </View>
+      <View style={[styles.section, { marginTop: 5, gap: 10, }]}>
         <DropDownPicker
-          open={hourOpen}
           value={hourValue}
           items={hourItems}
-          setOpen={open => {
-            setHourOpen(open);
-            if (open) {
-              setYearOpen(false);
-              setMonthOpen(false);
-              setDayOpen(false);
-              setMinuteOpen(false);
-            }
-          }}
-          setValue={callback => {
-            const val = callback(hourValue) as number | null;
-            setHourValue(val);
-            setBirthday(prev => ({ ...prev, hour: val }));
-          }}
-          setItems={() => {}}
-          placeholder="시"
-          style={{ height: 50, borderRadius: 12, width: 94 }}
-          dropDownContainerStyle={{ borderRadius: 12, width: 94 }}
-          zIndex={3000}
-          zIndexInverse={1000}
+          open={openPicker === 'hour' && !noTime}
+          setOpen={open => !noTime && setOpenPicker(open ? 'hour' : null)}
+          setValue={result => setHourValue(result)}
+          placeholder={'시'}
+          placeholderStyle={{ color: '#B1B1B1' }}
+          style={{zIndex: 1}}
+          containerStyle={{ width: '30%' }}
         />
 
-        {/* 분 */}
         <DropDownPicker
-          open={minuteOpen}
           value={minuteValue}
           items={minuteItems}
-          setOpen={open => {
-            setMinuteOpen(open);
-            if (open) {
-              setYearOpen(false);
-              setDayOpen(false);
-              setMonthOpen(false);
-              setHourOpen(false);
-            }
-          }}
-          setValue={callback => {
-            const val = callback(minuteValue) as number | null;
-            setMinuteValue(val);
-            setBirthday(prev => ({ ...prev, minute: val }));
-          }}
-          setItems={() => {}}
-          placeholder="분"
-          style={{ height: 50, borderRadius: 12, width: 94 }}
-          dropDownContainerStyle={{ borderRadius: 12, width: 94 }}
-          zIndex={2000}
-          zIndexInverse={2000}
+          open={openPicker === 'minute' && !noTime}
+          setOpen={open => !noTime && setOpenPicker(open ? 'minute' : null)}
+          setValue={result => setMinuteValue(result)}
+          placeholder={'분'}
+          placeholderStyle={{ color: '#B1B1B1' }}
+          style={{zIndex: 1}}
+          containerStyle={{ width: '30%' }}
         />
       </View>
 
@@ -259,11 +170,8 @@ function BirthdayScreen() {
 export default BirthdayScreen;
 
 const localStyles = StyleSheet.create({
-  dropdown: {
-
-  },
+  dropdown: {},
   dropdownContainer: {
     flexGrow: 1,
-
   },
-})
+});
