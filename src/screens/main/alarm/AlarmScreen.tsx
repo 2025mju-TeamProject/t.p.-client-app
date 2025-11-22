@@ -29,9 +29,8 @@ function AlarmScreen({ navigation }: any) {
         renderItem={({ item }) => (
           <ListItem
             image={item.image}
-            name={item.name}
-            age={item.age}
-            tag={item.tag}
+            title={item.title}
+            content={item.content}
             time={item.time}
             onClick={() => {}}
           />
@@ -114,64 +113,66 @@ const styles = StyleSheet.create({
 
 type listProps = {
   image: any;
-  name: string;
-  age: number;
-  tag: string;
+  title: string;
+  content: string;
   time: string;
   onClick?: () => void;
 };
 
 export function ListItem({
-  image,
-  name,
-  age,
-  tag,
+  image = null,
+  title,
+  content,
   time,
   onClick = () => {},
 }: listProps) {
   return (
     <TouchableOpacity style={styles.listContainer} onPress={onClick}>
-      <View>
-        <Image
-          style={{ width: 54, height: 54, borderRadius: 50 }}
-          source={image}
-        />
+      <View
+        style={{
+          width: 54,
+          height: 54,
+          borderRadius: 50,
+        }}
+      >
+        {image ? (
+          <Image
+            style={{ width: 54, height: 54, borderRadius: 50 }}
+            source={image}
+          />
+        ) : (
+          <View style={{ width: 54, height: 54, borderRadius: 50, backgroundColor: '#D9D9D9' }} />
+        )}
       </View>
+
       <View
         style={{
           marginLeft: 10,
           flex: 1,
           marginRight: 'auto',
-          justifyContent: 'space-evenly',
+          justifyContent: 'flex-start',
           alignItems: 'flex-start',
         }}
       >
         <View
           style={{
-            flex: 1,
             flexDirection: 'row',
-            height: '50%',
             alignItems: 'center',
           }}
         >
-          <Text style={{ fontSize: 14, fontWeight: 700 }}>{name}</Text>
-          <Text> · </Text>
-          <Text style={{ fontSize: 14, fontWeight: 700 }}>{age}세</Text>
+          <Text style={{ fontSize: 14, fontWeight: 700 }}>{title}</Text>
         </View>
         <View
           style={{
-            flex: 1,
             flexDirection: 'row',
-            height: '50%',
             alignItems: 'center',
           }}
         >
-          <Text style={{ fontSize: 12, fontWeight: 400, color: '#828282' }}>
-            {tag}
-          </Text>
+          <Text style={{ fontSize: 12, fontWeight: 400, color: '#828282' }}>{content}</Text>
         </View>
       </View>
 
+      // 시간
       <View style={{ height: '100%', justifyContent: 'flex-start' }}>
         <Text style={{ fontSize: 10, fontWeight: 400, color: '#828282' }}>
           {time}
@@ -185,79 +186,58 @@ function getItems() {
   return new Array<listProps>(
     {
       image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
+      title: '하트를 받았어요',
+      content:
+        '감자탕님에게 하트를 받았어요❤️ \n' +
+        '지금 바로 프로필을 확인해 보세요!',
+      time: '지금',
+    },
+    {
+      image: '',
+      title: '프로필을 수정해 주세요!',
+      content:
+        '사진을 심사 기준에 맞게 수정해 주세요. \n' +
+        '클릭하면 수정 화면으로 이동합니다',
       time: '지금',
     },
     {
       image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
+      title: '하트를 받았어요',
+      content:
+        '감자탕님에게 하트를 받았어요❤️ \n' +
+        '지금 바로 프로필을 확인해 보세요!',
       time: '지금',
     },
     {
       image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
+      title: '하트를 받았어요',
+      content:
+        '감자탕님에게 하트를 받았어요❤️ \n' +
+        '지금 바로 프로필을 확인해 보세요!',
       time: '지금',
     },
     {
       image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
+      title: '하트를 받았어요',
+      content:
+        '감자탕님에게 하트를 받았어요❤️ \n' +
+        '지금 바로 프로필을 확인해 보세요!',
       time: '지금',
     },
     {
       image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
+      title: '하트를 받았어요',
+      content:
+        '감자탕님에게 하트를 받았어요❤️ \n' +
+        '지금 바로 프로필을 확인해 보세요!',
       time: '지금',
     },
     {
       image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
-      time: '지금',
-    },
-    {
-      image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
-      time: '지금',
-    },
-    {
-      image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
-      time: '지금',
-    },
-    {
-      image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
-      time: '지금',
-    },
-    {
-      image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
-      time: '지금',
-    },
-    {
-      image: require('../../../../assets/sample-profile2.jpg'),
-      name: 'last',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
+      title: '하트를 받았어요',
+      content:
+        '감자탕님에게 하트를 받았어요❤️ \n' +
+        '지금 바로 프로필을 확인해 보세요!',
       time: '지금',
     },
   );
