@@ -5,6 +5,7 @@ import ROUTES from '../constants/routes';
 import { RootStackParamList } from './types';
 import StartScreen from '../screens/start/StartScreen';
 import SigninScreen from '../screens/start/SigninScreen';
+import WriteProfileScreen from '../screens/start/WriteProfileScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -24,14 +25,25 @@ function StartNavigator() {
         component={LoginScreen}
         options={{
           headerShadowVisible: false,
+          headerShown: false,
           title: '',
-
         }} />
+
       <Stack.Screen
         name={ROUTES.SIGNIN}
         component={SigninScreen}
         options={{
           headerShadowVisible: false,
+          headerShown: false,
+          title: '',
+        }} />
+
+      <Stack.Screen
+        name={ROUTES.WRITEPROFFILE}
+        component={WriteProfileScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: false,
           title: '',
         }} />
     </Stack.Navigator>

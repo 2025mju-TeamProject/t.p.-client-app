@@ -45,7 +45,7 @@ function RootNavigator() {
         component={LikeScreen}
         options={{
           headerShown: false,
-          title: '관심',
+          title: '하트',
         }}
       />
       <Tab.Screen
