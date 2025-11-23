@@ -85,13 +85,13 @@ const styles = StyleSheet.create({
   aiTitle: {
     fontWeight: '700',
     fontSize: 16,
-    marginBottom: 8,
+    marginBottom: 2,
     marginTop: 8,  // 가운데 정렬해도 안 맞아서, 걍 위에 여백을 추가함
     marginLeft: 2,
   },
   aiCard: {
     marginBottom: 8,
-    marginTop: 19,
+    marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },
