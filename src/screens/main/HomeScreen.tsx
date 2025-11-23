@@ -11,11 +11,16 @@ import RecommendCard from '../../components/profile/RecommendCard';
 import PagerView from 'react-native-pager-view';
 import Icon from 'react-native-vector-icons/Octicons';
 import ROUTES from '../../constants/routes';
+import { Image } from 'react-native';
+
+
 
 function HomeScreen({ navigation }: any) {
   const userList = getItems();
   const pageRef = useRef<PagerView>(null);
   const [page, setPage] = useState<number>(0);
+
+  const [pressed, setPressed] = useState(false);
 
   const totalPages = userList.length;
 
@@ -29,9 +34,21 @@ function HomeScreen({ navigation }: any) {
             매일 오전 7시, 오후 7시에 소개해 드려요.
           </Text>
 
-          <TouchableOpacity style={styles.alarmIcon} onPress={() => navigation.navigate(ROUTES.ALARM)}>
-            <Icon name={'bell'} size={25} color="#434343" style={{transform: [{scaleX: 1.2}]}}/>
-            <View style={styles.alarmDot} />
+          <TouchableOpacity
+            style={styles.alarmIcon}
+            onPress={() => navigation.navigate(ROUTES.ALARM)}
+            onPressIn={() => setPressed(true)}
+            onPressOut={() => setPressed(false)}
+          >
+            <Image
+                source={
+                    pressed
+                        ? require('../../../assets/icons/alarm_unread_pressed.png')
+                        : require('../../../assets/icons/alarm_unread.png')
+                }
+                style={{ width:30, height:30 }}
+            />
+            <View style={styles.alarmDot}/>
           </TouchableOpacity>
         </View>
       </View>
