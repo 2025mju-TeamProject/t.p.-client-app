@@ -134,15 +134,6 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
-  alarmDot: {
-    position: 'absolute',
-    top: 6,
-    right: 10,
-    width: 8,
-    height: 8,
-    borderRadius: 50,
-    backgroundColor: '#FF8C86'
-  },
   pager: {
     flex: 1,
   },
