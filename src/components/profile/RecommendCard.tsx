@@ -112,11 +112,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   cupiImage: {
-    width: 20,
-    height: 20,
+    width: 32,
+    height: 32,
     marginRight: 2,
-    resizeMode: 'cover',
-    borderRadius: 16,
+    resizeMode: 'contain',
+    borderRadius: 25,
   },
   infoBox: {
     width: '100%',

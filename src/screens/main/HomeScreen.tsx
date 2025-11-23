@@ -13,8 +13,6 @@ import Icon from 'react-native-vector-icons/Octicons';
 import ROUTES from '../../constants/routes';
 import { Image } from 'react-native';
 
-
-
 function HomeScreen({ navigation }: any) {
   const userList = getItems();
   const pageRef = useRef<PagerView>(null);
