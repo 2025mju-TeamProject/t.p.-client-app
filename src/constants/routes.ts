@@ -11,6 +11,8 @@ const ROUTES = {
   CHAT: 'Chat',
   LIKE: 'Like',
   PROFILE: 'Profile',
+  PROFILE_EDIT: 'Interest',
+  // PROFILE_PREVIEW: 'MyProfile'
   SETTINGS: 'Settings',
   DETAIL: 'Detail',
   ALARM: 'Alarm',
