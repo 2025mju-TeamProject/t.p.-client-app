@@ -1,5 +1,3 @@
-루트네비게이터
-
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ROUTES from '../constants/routes';
@@ -11,7 +9,7 @@ import DetailScreen from '../screens/main/detail/DetailScreen';
 import SettingScreen from '../screens/main/profile/SettingScreen';
 import AlarmScreen from '../screens/main/alarm/AlarmScreen';
 import InterestScreen from '../screens/start/write_profile/InterestScreen'
-// import Myprofile from '...'
+import Myprofile from '../screens/main/detail/MyDetailScreen'
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
