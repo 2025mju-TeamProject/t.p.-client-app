@@ -9,7 +9,7 @@ import DetailScreen from '../screens/main/detail/DetailScreen';
 import SettingScreen from '../screens/main/profile/SettingScreen';
 import AlarmScreen from '../screens/main/alarm/AlarmScreen';
 import InterestScreen from '../screens/start/write_profile/InterestScreen'
-import Myprofile from '../screens/main/detail/MyDetailScreen'
+import MyDetailScreen from '../screens/main/detail/MyDetailScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -63,7 +63,7 @@ function RootNavigator() {
         }} />
         <Stack.Screen
         name={ROUTES.PROFILE_PREVIEW}
-        component={ProfilePreview}
+        component={MyDetailScreen}
         options={{
           headerShadowVisible: false,
           headerShown: false,
