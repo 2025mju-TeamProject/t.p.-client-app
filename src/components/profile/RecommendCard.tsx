@@ -13,7 +13,6 @@ interface ProfileCardProps {
   name: string;
   age: number;
   distance: string;
-  job: string;
   hashtags: string[];
   imagePath: string;
   onPress: () => void;
@@ -25,7 +24,6 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
   name,
   age,
   distance,
-  job,
   onPress,
 }) => {
 
@@ -49,16 +47,18 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
         <View style={styles.infoBox}>
           {/*상단 태그*/}
           <View style={styles.tagContainer}>
-            <View style={{marginRight: 10}}>
-              <ProfileTag text="궁합점수 80점"/>
+            <View style={{marginRight: 8}}>
+              <ProfileTag text="경기도 용인시"/>
             </View>
-            <View style={{marginRight: 0}}>
-              <ProfileTag text="최근 접속"/>
+            <View style={{marginRight: 8}}>
+              <ProfileTag text="IT·개발직"/>
+            </View>
+            <View style={{marginRight: 8}}>
+              <ProfileTag text="INTJ"/>
             </View>
           </View>
 
-          <Text style={styles.name}>{name} {age}세</Text>
-          <Text style={styles.subInfo}>{`${distance} / ${job}`}</Text>
+          <Text style={styles.name}>{name}  {age}세</Text>
 
           {/*쿠피의 한줄평*/}
           <View style={styles.aiCard}>
@@ -86,11 +86,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
     marginBottom: 8,
+    marginTop: 8,  // 가운데 정렬해도 안 맞아서, 걍 위에 여백을 추가함
+    marginLeft: 2,
   },
   aiCard: {
     marginBottom: 8,
     marginTop: 19,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   aiDesc: {
     color: '#555',
@@ -129,16 +132,14 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   name: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: '700',
     color: '#111',
   },
-  subInfo: {
-    marginTop: 4,
-    color: '#666',
-  },
+
+  // 태그랑 이름 사이 여백
   tagContainer: {
     flexDirection: 'row',
-    marginBottom: 18,
+    marginBottom: 14,
   },
 });
