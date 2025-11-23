@@ -7,6 +7,7 @@ import StartNavigator from './StartNavigator';
 import ChatScreen from '../screens/main/chat/ChatScreen';
 import DetailScreen from '../screens/main/detail/DetailScreen';
 import SettingScreen from '../screens/main/profile/SettingScreen';
+import AlarmScreen from '../screens/main/alarm/AlarmScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -33,6 +34,13 @@ function RootNavigator() {
       <Stack.Screen
         name={ROUTES.DETAIL}
         component={DetailScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: false,
+        }} />
+      <Stack.Screen
+        name={ROUTES.ALARM}
+        component={AlarmScreen}
         options={{
           headerShadowVisible: false,
           headerShown: false,

@@ -16,7 +16,6 @@ interface ProfileCardProps {
   job: string;
   hashtags: string[];
   imagePath: string;
-  padding: number;
   onPress: () => void;
 }
 
@@ -27,7 +26,6 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
   age,
   distance,
   job,
-  padding,
   onPress,
 }) => {
 
@@ -39,7 +37,6 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
       <View
         style={[
           styles.cardWrapper,
-          padding == 1 ? { marginRight: 0 } : { marginRight: 24 }, // 마지막 아이템만 marginBottom 40
           {marginBottom: 16}
         ]}
       >
