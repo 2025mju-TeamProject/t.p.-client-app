@@ -12,7 +12,7 @@ const ROUTES = {
   LIKE: 'Like',
   PROFILE: 'Profile',
   PROFILE_EDIT: 'Interest',
-  // PROFILE_PREVIEW: 'MyProfile'
+  PROFILE_PREVIEW: 'ProfilePreview',
   SETTINGS: 'Settings',
   DETAIL: 'Detail',
   ALARM: 'Alarm',

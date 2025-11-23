@@ -1,3 +1,5 @@
+루트네비게이터
+
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ROUTES from '../constants/routes';
@@ -8,6 +10,8 @@ import ChatScreen from '../screens/main/chat/ChatScreen';
 import DetailScreen from '../screens/main/detail/DetailScreen';
 import SettingScreen from '../screens/main/profile/SettingScreen';
 import AlarmScreen from '../screens/main/alarm/AlarmScreen';
+import InterestScreen from '../screens/start/write_profile/InterestScreen'
+// import Myprofile from '...'
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -48,6 +52,20 @@ function RootNavigator() {
         <Stack.Screen
         name={ROUTES.SETTINGS}
         component={SettingScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: false,
+        }} />
+        <Stack.Screen
+        name={ROUTES.PROFILE_EDIT}
+        component={InterestScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: false,
+        }} />
+        <Stack.Screen
+        name={ROUTES.PROFILE_PREVIEW}
+        component={ProfilePreview}
         options={{
           headerShadowVisible: false,
           headerShown: false,
