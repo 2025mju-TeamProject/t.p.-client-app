@@ -1,3 +1,5 @@
+// 내가 내 프로필 화면을 볼 때 화면
+
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -5,7 +7,7 @@ function MyProfileScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        사용자가 직접 사용자의 프로필을 보는 페이지
+        사용자가 직접 사용자의 프로필을 보는 페이지: DitailScreen 디자인 수정 후 UI 구성 예정(11/24)
       </Text>
     </View>
   );

@@ -1,3 +1,5 @@
+// 상대방의 프로필을 볼 때 화면
+
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Modal from 'react-native-modal';
