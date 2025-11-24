@@ -8,6 +8,8 @@ import ChatScreen from '../screens/main/chat/ChatScreen';
 import DetailScreen from '../screens/main/detail/DetailScreen';
 import SettingScreen from '../screens/main/profile/SettingScreen';
 import AlarmScreen from '../screens/main/alarm/AlarmScreen';
+import InterestScreen from '../screens/start/write_profile/InterestScreen'
+import MyDetailScreen from '../screens/main/detail/MyDetailScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -48,6 +50,20 @@ function RootNavigator() {
         <Stack.Screen
         name={ROUTES.SETTINGS}
         component={SettingScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: false,
+        }} />
+        <Stack.Screen
+        name={ROUTES.PROFILE_EDIT}
+        component={InterestScreen}
+        options={{
+          headerShadowVisible: false,
+          headerShown: false,
+        }} />
+        <Stack.Screen
+        name={ROUTES.PROFILE_PREVIEW}
+        component={MyDetailScreen}
         options={{
           headerShadowVisible: false,
           headerShown: false,

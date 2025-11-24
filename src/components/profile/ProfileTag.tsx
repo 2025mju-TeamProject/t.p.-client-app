@@ -15,10 +15,10 @@ export default ProfileTag;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingHorizontal: 11,
+    paddingVertical: 6,
     backgroundColor: '#DADADA',
-    borderRadius: 9,
+    borderRadius: 18,
   },
   text: {
     fontSize: 12,

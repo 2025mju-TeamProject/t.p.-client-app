@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '600',
     color: '#111',
-    marginBottom: 20,
+    marginBottom: 30,
   },
 
   list: {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   item: {
-    paddingHorizontal: 36,
+    paddingHorizontal: 26,
     height: 64,
     flexDirection: 'row',
     alignItems: 'center',

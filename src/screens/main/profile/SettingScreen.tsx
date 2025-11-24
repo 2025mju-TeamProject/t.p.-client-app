@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
 
   menuText: {
-    fontSize: 17,
+    fontSize: 15,
     color: '#111111',
   },
 
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 12,
     marginRight: 12,
-    marginBottom: 10,
+    marginBottom: 2,
   },
 
   versionText: {
