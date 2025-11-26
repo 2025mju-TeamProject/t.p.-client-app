@@ -19,10 +19,18 @@ function HomeScreen({ navigation }: any) {
   const userList = getItems();
   const pageRef = useRef<PagerView>(null);
   const [page, setPage] = useState<number>(0);
+  const [hasAlarm, setHasAlarm] = useState(true);
 
   const [pressed, setPressed] = useState(false);
 
   const totalPages = userList.length;
+
+  // 서버 연동 시 아래 useEffect 활성화하면 됨
+  // useEffect(() => {
+  //   fetch('/alarm/unread')
+  //     .then(res => res.json())
+  //     .then(data => setHasAlarm(data.hasUnread));
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -31,7 +39,7 @@ function HomeScreen({ navigation }: any) {
         title="오늘 추천"
         subtitle="매일 오전 7시, 오후 7시에 소개해 드려요."
         onPressAlarm={() => navigation.navigate(ROUTES.ALARM)}
-        pressed={pressed}
+        hasAlarm={hasAlarm}
       />
 
       <PagerView

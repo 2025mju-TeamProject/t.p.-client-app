@@ -27,7 +27,7 @@ export default function LikeHeader({ title, subtitle}: Props) {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-end',
-    height: 125,
+    height: 129,
     backgroundColor: colors.background,
     paddingHorizontal: 24,
     paddingBottom: 14,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     fontSize: 12,
-    color: '#9C9C9C',
-    marginTop: 6,
+    color: '#797979',
+    marginTop: 8,
   },
 });

@@ -6,11 +6,13 @@ type Props = {
   title: string;
   subtitle?: string;
   onPressAlarm?: () => void;
+  hasAlarm?: boolean;
 };
 
-export default function HeaderHome({ title, subtitle, onPressAlarm }: Props) {
+export default function HeaderHome({ title, subtitle, onPressAlarm, hasAlarm }: Props) {
   return (
     <View style={styles.container}>
+      {/* 타이틀 */}
       <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>
         {title}
       </Text>
@@ -26,7 +28,11 @@ export default function HeaderHome({ title, subtitle, onPressAlarm }: Props) {
       {onPressAlarm && (
         <TouchableOpacity style={styles.alarmIcon} onPress={onPressAlarm}>
           <Image
-            source={require('../../../assets/icons/alarm_unread.png')}
+            source={
+              hasAlarm
+                ? require('../../../assets/icons/alarm_unread.png') // 안읽음
+                : require('../../../assets/icons/alarm_read.png')   // 읽음
+            }
             style={{ width: 28, height: 28 }}
           />
         </TouchableOpacity>
@@ -38,7 +44,7 @@ export default function HeaderHome({ title, subtitle, onPressAlarm }: Props) {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-end',
-    height: 125,
+    height: 129,
     backgroundColor: colors.background,
     paddingHorizontal: 24,
     paddingBottom: 14,
@@ -49,12 +55,12 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     fontSize: 12,
-    color: '#9C9C9C',
-    marginTop: 6,
+    color: '#797979',
+    marginTop: 8,
   },
   alarmIcon: {
     position: 'absolute',
     right: 24,
-    bottom: 14,
+    top: 58,
   },
 });
