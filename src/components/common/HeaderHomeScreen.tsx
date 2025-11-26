@@ -8,7 +8,7 @@ type Props = {
   onPressAlarm?: () => void;
 };
 
-export default function HomeHeader({ title, subtitle, onPressAlarm }: Props) {
+export default function HeaderHome({ title, subtitle, onPressAlarm }: Props) {
   return (
     <View style={styles.container}>
       <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>

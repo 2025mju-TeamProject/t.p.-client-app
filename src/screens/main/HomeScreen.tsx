@@ -12,7 +12,7 @@ import PagerView from 'react-native-pager-view';
 import Icon from 'react-native-vector-icons/Octicons';
 import ROUTES from '../../constants/routes';
 import { Image } from 'react-native';
-import HeaderHomeScreen from '../../components/common/HeaderHomeScreen';
+import HomeHeader from '../../components/common/HeaderHomeScreen';
 
 
 function HomeScreen({ navigation }: any) {
@@ -27,7 +27,7 @@ function HomeScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
 
-      <HeaderHomeScreen
+      <HomeHeader
         title="오늘 추천"
         subtitle="매일 오전 7시, 오후 7시에 소개해 드려요."
         onPressAlarm={() => navigation.navigate(ROUTES.ALARM)}

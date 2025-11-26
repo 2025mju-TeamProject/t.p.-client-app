@@ -5,10 +5,9 @@ import colors from '../../constants/colors';
 type Props = {
   title: string;
   subtitle?: string;
-  onPressAlarm?: () => void;
 };
 
-export default function HomeHeader({ title, subtitle, onPressAlarm }: Props) {
+export default function LikeHeader({ title, subtitle}: Props) {
   return (
     <View style={styles.container}>
       <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>
