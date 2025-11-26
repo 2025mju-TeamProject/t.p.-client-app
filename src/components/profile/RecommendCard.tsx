@@ -87,11 +87,11 @@ const styles = StyleSheet.create({
     width: winWidth - 48,
   },
   aiTitle: {
-    fontWeight: '700',
     fontSize: 17,
     marginBottom: 2,
     marginTop: 4,
     marginLeft: 3,
+    fontFamily: 'SCDream6',
   },
   aiCard: {
     marginBottom: 10,
