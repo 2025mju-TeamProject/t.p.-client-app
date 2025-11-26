@@ -15,21 +15,11 @@ export default function HomeHeader({ title, subtitle, onPressAlarm }: Props) {
         {title}
       </Text>
 
-      {/* 서브타이틀 */}
+      {/* 서브타이틀이 필요하면 */}
       {subtitle && (
         <Text style={[styles.subTitle, { fontFamily: 'NanumSquareR' }]}>
           {subtitle}
         </Text>
-      )}
-
-      {/* 알림 아이콘 */}
-      {onPressAlarm && (
-        <TouchableOpacity style={styles.alarmIcon} onPress={onPressAlarm}>
-          <Image
-            source={require('../../../assets/icons/alarm_unread.png')}
-            style={{ width: 28, height: 28 }}
-          />
-        </TouchableOpacity>
       )}
     </View>
   );
@@ -51,10 +41,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#9C9C9C',
     marginTop: 6,
-  },
-  alarmIcon: {
-    position: 'absolute',
-    right: 24,
-    bottom: 14,
   },
 });

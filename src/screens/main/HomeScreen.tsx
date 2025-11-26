@@ -25,12 +25,15 @@ function HomeScreen({ navigation }: any) {
   const totalPages = userList.length;
 
   return (
-  <HeaderHomeScreen
-    title="오늘 추천"
-    subtitle="매일 오전 7시, 오후 7시에 소개해 드려요."
-    onPressAlarm={() => navigation.navigate(ROUTES.ALARM)}
-    pressed={pressed}
-  />
+    <View style={styles.container}>
+
+      <HeaderHomeScreen
+        title="오늘 추천"
+        subtitle="매일 오전 7시, 오후 7시에 소개해 드려요."
+        onPressAlarm={() => navigation.navigate(ROUTES.ALARM)}
+        pressed={pressed}
+      />
+
       <PagerView
         ref={pageRef}
         style={styles.pager}
@@ -39,10 +42,10 @@ function HomeScreen({ navigation }: any) {
       >
         {userList.map(item => (
           <ScrollView
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
             key={item.userId}
             style={styles.page}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
           >
             <RecommendCard
               name={item.name}
@@ -56,6 +59,7 @@ function HomeScreen({ navigation }: any) {
           </ScrollView>
         ))}
       </PagerView>
+
     </View>
   );
 }
