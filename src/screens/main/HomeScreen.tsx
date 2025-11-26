@@ -12,6 +12,8 @@ import PagerView from 'react-native-pager-view';
 import Icon from 'react-native-vector-icons/Octicons';
 import ROUTES from '../../constants/routes';
 import { Image } from 'react-native';
+import HeaderHomeScreen from '../../components/common/HeaderHomeScreen';
+
 
 function HomeScreen({ navigation }: any) {
   const userList = getItems();
@@ -23,33 +25,12 @@ function HomeScreen({ navigation }: any) {
   const totalPages = userList.length;
 
   return (
-    <View style={styles.container}>
-      {/* 오늘 추천 */}
-      <View style={styles.header}>
-        <View style={styles.titleSection}>
-          <Text style={styles.title}>오늘 추천</Text>
-          <Text style={styles.subTitle}>
-            매일 오전 7시, 오후 7시에 소개해 드려요.
-          </Text>
-
-          <TouchableOpacity
-            style={styles.alarmIcon}
-            onPress={() => navigation.navigate(ROUTES.ALARM)}
-            onPressIn={() => setPressed(true)}
-            onPressOut={() => setPressed(false)}
-          >
-            <Image
-                source={
-                    pressed
-                        ? require('../../../assets/icons/alarm_unread_pressed.png')
-                        : require('../../../assets/icons/alarm_unread.png')
-                }
-                style={{ width:30, height:30 }}
-            />
-            <View style={styles.alarmDot}/>
-          </TouchableOpacity>
-        </View>
-      </View>
+  <HeaderHomeScreen
+    title="오늘 추천"
+    subtitle="매일 오전 7시, 오후 7시에 소개해 드려요."
+    onPressAlarm={() => navigation.navigate(ROUTES.ALARM)}
+    pressed={pressed}
+  />
       <PagerView
         ref={pageRef}
         style={styles.pager}
@@ -109,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   title: {
-    color: 'black',
+    color: '#111',
     fontSize: 28,
     fontFamily: 'S-Core Dream',
     fontWeight: 700,
