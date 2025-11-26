@@ -2,14 +2,16 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import colors from '../../constants/colors';
 
-type Props = {title: String};
+type Props = { title: string };
 
-function Header({title}: Props)  {
+function Header({ title }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>
+        {title}
+      </Text>
     </View>
-  )
+  );
 }
 
 export default Header;
@@ -22,9 +24,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
     color: 'black',
     marginBottom: 14,
     marginLeft: 24,
-  }
-})
+  },
+});
