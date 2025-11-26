@@ -58,12 +58,13 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
             </View>
           </View>
 
+        {/* 사용자 이름 + 나이 */}
         <Text style={styles.name}>
-          {name}{'  '}
-          <Text style={styles.age}>{age}세</Text>
+          {name}{''}
+          <Text style={styles.age}> {age}세</Text>
         </Text>
 
-          {/*쿠피의 한줄평*/}
+          {/* 쿠피의 한줄평 */}
           <View style={styles.aiCard}>
             <Image source={cupiImage} style={styles.cupiImage} />
             <Text style={styles.aiTitle}>쿠피의 한 줄평</Text>
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 17,
     marginBottom: 2,
-    marginTop: 4,  // 가운데 정렬해도 안 맞아서, 걍 위에 여백을 추가함
+    marginTop: 4,
     marginLeft: 3,
   },
   aiCard: {
@@ -134,16 +135,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 5,
   },
-  name: {
-    fontSize: 26,
-    fontWeight: '700',
-    color: '#111',
-  },
-  age: {
+    name: {
+      fontSize: 26,
+      color: '#111',
+      fontFamily: 'SCDream7',
+    },
+    age: {
       fontSize: 23,
-      fontWeight: '700',
-      color: "#111",
-  },
+      color: '#111',
+      fontFamily: 'SCDream7',
+    },
 
   // 태그랑 이름 사이 여백
   tagContainer: {

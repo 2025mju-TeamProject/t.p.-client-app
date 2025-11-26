@@ -42,31 +42,35 @@ function HomeScreen({ navigation }: any) {
         hasAlarm={hasAlarm}
       />
 
-      <PagerView
-        ref={pageRef}
-        style={styles.pager}
-        initialPage={0}
-        onPageSelected={e => setPage(e.nativeEvent.position)}
-      >
-        {userList.map(item => (
-          <ScrollView
-            key={item.userId}
-            style={styles.page}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-          >
-            <RecommendCard
-              name={item.name}
-              age={item.age}
-              distance={item.distance}
-              job={item.job}
-              hashtags={item.hashtags}
-              imagePath={item.image}
-              onPress={() => navigation.navigate('Detail')}
-            />
-          </ScrollView>
-        ))}
-      </PagerView>
+        <PagerView
+          ref={pageRef}
+          style={styles.pager}
+          initialPage={0}
+          onPageSelected={e => setPage(e.nativeEvent.position)}
+        >
+          {userList.map(item => (
+            <ScrollView
+              key={item.userId}
+              style={styles.page}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+            >
+
+              {/* 프로필 카드 */}
+              <RecommendCard
+                name={item.name}
+                age={item.age}
+                distance={item.distance}
+                job={item.job}
+                hashtags={item.hashtags}
+                imagePath={item.image}
+                onPress={() => navigation.navigate('Detail')}
+              />
+
+            </ScrollView>
+          ))}
+        </PagerView>
+
 
     </View>
   );
@@ -89,7 +93,6 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 22,
-    fontWeight: '700',
   },
   profileTag: {
     color: '#666',
@@ -104,7 +107,6 @@ const styles = StyleSheet.create({
   title: {
     color: '#111',
     fontSize: 28,
-    fontFamily: 'S-Core Dream',
     fontWeight: 700,
   },
   subTitle: {
