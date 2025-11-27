@@ -147,8 +147,8 @@ function WriteProfileScreen({ navigation }: any) {
           </View>
 
           <View style={{justifyContent: 'space-between', gap: 10, marginHorizontal: 24}}>
-            <Text style={{fontSize: 16, fontWeight: 800}}>쿠피는 무슨일을 하나요?</Text>
-            <Text style={{fontSize: 13, fontWeight: 700, color: '#434343'}}>{'\‘쿠피\’는 회원님이 지금까지 입력한 모든 정보인 성별, 생일, 관심사, mbti, 직업, 지역을 기반으로 프로필 소개글을 대신 작성해줘요.'}</Text>
+            <Text style={{fontSize: 16}}>쿠피는 무슨일을 하나요?</Text>
+            <Text style={{fontSize: 13, color: '#434343'}}>{'\‘쿠피\’는 회원님이 지금까지 입력한 모든 정보인 성별, 생일, 관심사, mbti, 직업, 지역을 기반으로 프로필 소개글을 대신 작성해줘요.'}</Text>
           </View>
         </View>
       </Modal>
@@ -234,12 +234,10 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 19,
-    fontWeight: 800,
     color: '#FF4239'
   },
   modalSubtitle: {
     fontSize: 13,
-    fontWeight: 700,
     color: '#434343'
   }
 });

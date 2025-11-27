@@ -19,7 +19,7 @@ function GenderScreen({ onPress, choosed }: Props) {
   return (
     <View style={styles.container}>
       <View style={[styles.section, { marginTop: 30 }]}>
-        <Text style={styles.title}>성별을 알려주세요.</Text>
+        <Text style={styles.title}>성별과 닉네임을 알려주세요.</Text>
       </View>
 
       <View style={[styles.section, { marginTop: 5 }]}>

@@ -27,13 +27,16 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    fontWeight: 700,
     color: 'black',
+    fontFamily: 'SCDream7',
+    lineHeight: 34,
+    letterSpacing: -1.7,
   },
   subTitle: {
     fontSize: 12,
-    fontWeight: 700,
-    color: '#9c9c9c'
+    lineHeight: 17,
+    color: '#979797',
+    fontFamily: 'NanumSquareR',
   },
   text: {
     fontSize: 12,
