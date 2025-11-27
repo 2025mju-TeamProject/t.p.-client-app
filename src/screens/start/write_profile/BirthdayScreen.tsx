@@ -187,6 +187,10 @@ function BirthdayScreen() {
           containerStyle={{ width: '30%', zIndex: 2000 }}
           dropDownContainerStyle={{ pickerDropdownStyle, zIndex: 2000 }}
 
+          // 활&비활 상태
+          style={noTime ? disabledPickerStyle : activePickerStyle}
+          dropDownContainerStyle={noTime ? disabledDropdown : activeDropdown}
+          arrowIconStyle={{ tintColor: noTime ? '#979797' : '#111' }}
         />
 
         {/* 분 */}
@@ -202,6 +206,13 @@ function BirthdayScreen() {
           style={pickerStyle}
           containerStyle={{ width: '30%', zIndex: 1000 }}
           dropDownContainerStyle={{pickerDropdownStyle, zIndex: 1000 }}
+
+          // 활&비활 상태
+          style={noTime ? disabledPickerStyle : activePickerStyle}
+          dropDownContainerStyle={noTime ? disabledDropdown : activeDropdown}
+          arrowIconStyle={{ tintColor: noTime ? '#979797' : '#111' }}
+
+
         />
       </View>
 
@@ -246,3 +257,35 @@ const localStyles = StyleSheet.create({
     marginRight: 10,
   },
 });
+
+// 활성화&비활성 드롭박스 스타일
+const activePickerStyle = {
+  borderRadius: 12,
+  height: 46,
+  borderColor: '#111',
+  backgroundColor: 'white',
+  paddingLeft: 15,
+  paddingHorizontal: 12,
+};
+
+const disabledPickerStyle = {
+  borderRadius: 12,
+  height: 46,
+  borderColor: '#E3E3E3',
+  backgroundColor: '#FAFAFA',
+  paddingLeft: 15,
+  paddingHorizontal: 12,
+};
+
+const activeDropdown = {
+  borderRadius: 12,
+  borderColor: '#111',
+  backgroundColor: 'white',
+};
+
+const disabledDropdown = {
+  borderRadius: 12,
+  borderColor: '#FAFAFA',
+  backgroundColor: '#F2F2F2',
+};
+
