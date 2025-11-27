@@ -94,40 +94,41 @@ function SigninScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={[styles.section, { marginTop: 104 }]}>
-          <Text style={[styles.title]}>회원가입</Text>
+        <View style={[styles.section, { marginTop: 70 }]}>
+          <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>회원가입</Text>
         </View>
         <View style={styles.section}>
-          <Text style={[styles.subTitle]}>사랑에 빠지실 준비가 되었나요?</Text>
+            <Text
+              style={[
+                styles.subTitle,{ fontFamily: 'NanumSquareR' }]}>사랑에 빠질 준비가 되었나요?
+            </Text>
         </View>
 
         {/*아이디*/}
         <View
-          style={[
-            styles.section,
-            { marginTop: 33, marginLeft: 1, justifyContent: 'flex-start' },
-          ]}
-        >
-          <Text style={[styles.subTitle, { color: 'black' }]}>아이디</Text>
+          style={[styles.section,
+            { marginTop: 20, marginLeft: 1, justifyContent: 'flex-start' },]}>
+          <Text style={[styles.subTitle, { fontFamily: 'NanumSquareB' }, { color: 'black' }]}>아이디</Text>
         </View>
 
-        <View style={[styles.section, { marginTop: 5 }]}>
+        <View style={[styles.section,
+            { fontFamily: 'NanumSquareB' }, { color: '#111' }, { marginTop: 5 }]}>
           <TextInput
             onChangeText={onIdInput}
             value={id}
-            style={styles.textInput}
             placeholder={'아이디 입력(6~20자 영어 소문자, 숫자)'}
+            style={[styles.textInput,{ fontFamily: 'NanumSquareR'}, { fontSize: 12 }]}
+            placeholderTextColor = "#979797"
           ></TextInput>
         </View>
 
         {/*비밀번호*/}
         <View
-          style={[
-            styles.section,
-            { marginTop: 33, marginLeft: 1, justifyContent: 'flex-start' },
-          ]}
+          style={[ styles.section,
+            { marginTop: 30, marginLeft: 1, justifyContent: 'flex-start' },]}
         >
-          <Text style={[styles.subTitle, { color: 'black' }]}>비밀번호</Text>
+          <Text style={[styles.subTitle,
+              { fontFamily: 'NanumSquareB' }, { color: 'black' }]}>비밀번호</Text>
         </View>
 
         <View style={[styles.section, { marginTop: 5 }]}>
@@ -137,19 +138,18 @@ function SigninScreen({ navigation }: any) {
             value={passwd}
             style={styles.textInput}
             placeholder={'비밀번호 입력(문자, 숫자, 특수문자 포함 8~20자)'}
+            style={[styles.textInput,{ fontFamily: 'NanumSquareR'}, { fontSize: 12 }]}
+            placeholderTextColor = "#979797"
           />
         </View>
 
         {/*비밀번호 확인*/}
         <View
-          style={[
-            styles.section,
-            { marginTop: 33, marginLeft: 1, justifyContent: 'flex-start' },
-          ]}
+          style={[ styles.section,
+            { marginTop: 30, marginLeft: 1, justifyContent: 'flex-start' },]}
         >
-          <Text style={[styles.subTitle, { color: 'black' }]}>
-            비밀번호 확인
-          </Text>
+          <Text style={[styles.subTitle,
+              { fontFamily: 'NanumSquareB' }, { color: 'black' }]}>비밀번호 확인</Text>
         </View>
 
         <View style={[styles.section, { marginTop: 5 }]}>
@@ -159,17 +159,18 @@ function SigninScreen({ navigation }: any) {
             value={checkPasswd}
             style={styles.textInput}
             placeholder={'비밀번호 확인(문자, 숫자, 특수문자 포함 8~20자)'}
+            style={[styles.textInput,{ fontFamily: 'NanumSquareR'}, { fontSize: 12 }]}
+            placeholderTextColor = "#979797"
           />
         </View>
 
         {/*휴대폰 번호*/}
         <View
-          style={[
-            styles.section,
-            { marginTop: 33, marginLeft: 1, justifyContent: 'flex-start' },
-          ]}
+          style={[ styles.section,
+            { marginTop: 30, marginLeft: 1, justifyContent: 'flex-start' },]}
         >
-          <Text style={[styles.subTitle, { color: 'black' }]}>휴대폰 번호</Text>
+          <Text style={[styles.subTitle,
+              { fontFamily: 'NanumSquareB' }, { color: 'black' }]}>휴대폰 번호</Text>
         </View>
 
         <View style={[styles.section, { marginTop: 5 }]}>
@@ -179,48 +180,60 @@ function SigninScreen({ navigation }: any) {
             value={phone}
             style={styles.textInput}
             placeholder={"'-' 없이 숫자만 입력"}
+            style={[styles.textInput,{ fontFamily: 'NanumSquareR'}, { fontSize: 12 }]}
+            placeholderTextColor = "#979797"
           />
         </View>
 
         {/*약관*/}
-        <View style={[styles.section, { marginTop: 33 }]}>
-          <CheckBox
-            value={term1}
-            onValueChange={newValue => onTerm1Input(newValue)}
-            tintColors={{ true: 'black', false: '#AAA' }}
-          />
-          <Text style={[styles.subTitle, { color: 'black' }]}>
+        <View style={[styles.section, { marginTop: 30 }]}>
+
+          <TouchableOpacity
+            onPress={() => onTerm1Input(!term1)}
+            style={[
+              styles.checkbox, { borderColor: term1 ? '#111' : '#C7C7C7' }, ]}>
+            {term1 && (
+              <Icon name="checkmark" size={16} color="#111" />
+            )}
+          </TouchableOpacity>
+          <Text style={[styles.subTitle, { color: 'black', fontSize: 13, fontFamily: 'NanumSquareB'}]}>
             (필수) 만 19세 이상입니다.
           </Text>
         </View>
 
-        <View style={[styles.section, { marginTop: 5 }]}>
-          <CheckBox
-            value={term2}
-            onValueChange={newValue => onTerm2Input(newValue)}
-            tintColors={{ true: 'black', false: '#AAA' }}
-          />
-          <Text style={[styles.subTitle, { color: 'black' }]}>
+        <View style={[styles.section, { marginTop: 10 }]}>
+          <TouchableOpacity
+            onPress={() => onTerm1Input(!term1)}
+            style={[
+              styles.checkbox, { borderColor: term1 ? '#111' : '#C7C7C7' }, ]}>
+            {term1 && (
+              <Icon name="checkmark" size={16} color="#111" />
+            )}
+          </TouchableOpacity>
+          <Text style={[styles.subTitle, { color: 'black', fontSize: 13, fontFamily: 'NanumSquareB'}]}>
             (필수) 서비스 이용 약관 동의
           </Text>
           <TouchableOpacity onPress={() => showTerm(1)}>
-            <Text style={[styles.subTitle, { marginLeft: 5, color: 'red' }]}>
+            <Text style={[styles.subTitle, { marginLeft: 5, color: 'red', fontSize: 13, fontFamily: 'NanumSquareB' }]}>
               [보기]
             </Text>
           </TouchableOpacity>
         </View>
 
-        <View style={[styles.section, { marginTop: 5, marginBottom: 5 }]}>
-          <CheckBox
-            value={term3}
-            onValueChange={newValue => onTerm3Input(newValue)}
-            tintColors={{ true: 'black', false: '#AAA' }}
-          />
-          <Text style={[styles.subTitle, { color: 'black' }]}>
+        <View style={[styles.section, { marginTop: 10 }]}>
+          <TouchableOpacity
+            onPress={() => onTerm1Input(!term1)}
+            style={[
+              styles.checkbox, { borderColor: term1 ? '#111' : '#C7C7C7' }, ]}>
+            {term1 && (
+              <Icon name="checkmark" size={16} color="#111" />
+            )}
+          </TouchableOpacity>
+          <Text style={[styles.subTitle, { color: 'black', fontSize: 13, fontFamily: 'NanumSquareB'}]}>
             (필수) 개인정보 처리방침 동의
           </Text>
           <TouchableOpacity onPress={() => showTerm(2)}>
-            <Text style={[styles.subTitle, { marginLeft: 5, color: 'red' }]}>
+            <Text style={[styles.subTitle, { marginLeft: 5, color: 'red', fontSize: 13, fontFamily: 'NanumSquareB' }]}>
               [보기]
             </Text>
           </TouchableOpacity>
@@ -286,21 +299,21 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
   },
   subTitle: {
     fontSize: 12,
-    fontWeight: 'bold',
-    color: '#9c9c9c',
+    marginTop: 10,
+    color: '#979797',
   },
   textInput: {
     width: '100%',
     height: 46,
-    borderWidth: 2,
-    borderColor: '#e3e3e3',
+    borderWidth: 1,
+    borderColor: '#111111',
     borderRadius: 12,
     paddingHorizontal: 15,
   },
+
   bottomTab: {
     width: '100%',
     height: 126,
@@ -333,4 +346,13 @@ const styles = StyleSheet.create({
   modalText: {
     fontSize: 16,
   },
+  checkbox: {
+    width: 19,
+    height: 19,
+    borderWidth: 1,
+    borderRadius: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  }
 });
