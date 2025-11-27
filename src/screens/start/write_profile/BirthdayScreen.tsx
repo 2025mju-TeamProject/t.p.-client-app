@@ -1,8 +1,8 @@
-import React, { JSX, use, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import styles from './writeProfileStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
-import CheckBox from '@react-native-community/checkbox';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 type Birthday = {
   year: number;
@@ -69,7 +69,7 @@ function BirthdayScreen() {
   }));
 
   useEffect(() => {
-    if(noTime) {
+    if (noTime) {
       setOpenPicker(null);
       setHourValue(null);
       setMinuteValue(null);
@@ -78,90 +78,129 @@ function BirthdayScreen() {
 
   return (
     <View style={styles.container}>
+      {/* 타이틀 */}
       <View style={[styles.section, { marginTop: 30 }]}>
-        <Text style={styles.title}>생년월일을 알려주세요</Text>
+        <Text style={styles.title}>생년월일을 알려주세요.</Text>
       </View>
+
       <View style={[styles.section, { marginTop: 5 }]}>
-        <Text style={styles.subTitle}>
-          {'생년월일은 추후 변경할 수 없으니 정확히 입력해 주세요.\n' +
-            '태어난 시간은 추후 변경이 가능합니다'}
+        <Text style={styles.subTitle}>추후 변경이 불가능한 항목입니다.</Text>
+      </View>
+
+      {/* 생년월일 */}
+      <View style={[styles.section, { marginTop: 30 }]}>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: '#111' },
+          ]}
+        >
+          생년월일
         </Text>
       </View>
 
-      <View style={[styles.section, { marginTop: 30 }]}>
-        <Text style={styles.text}>생년월일</Text>
-      </View>
       <View style={[styles.section, { marginTop: 5, gap: 10 }]}>
         <DropDownPicker
           value={yearValue}
           items={yearItems}
           open={openPicker === 'year'}
-          setOpen={open => setOpenPicker(open ? 'year' : null)}
-          setValue={result => setYearValue(result)}
+          setOpen={(open) => setOpenPicker(open ? 'year' : null)}
+          setValue={setYearValue}
           placeholder={'연'}
           placeholderStyle={{ color: '#B1B1B1' }}
+          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '33%' }}
+          style={{ paddingLeft: 15 }}
         />
 
         <DropDownPicker
           value={monthValue}
           items={monthItems}
           open={openPicker === 'month'}
-          setOpen={open => setOpenPicker(open ? 'month' : null)}
-          setValue={result => setMonthValue(result)}
+          setOpen={(open) => setOpenPicker(open ? 'month' : null)}
+          setValue={setMonthValue}
           placeholder={'월'}
           placeholderStyle={{ color: '#B1B1B1' }}
+          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
+          style={{ paddingLeft: 15 }}
         />
 
         <DropDownPicker
           value={dayValue}
           items={dayItems}
           open={openPicker === 'day'}
-          setOpen={open => setOpenPicker(open ? 'day' : null)}
-          setValue={result => setDayValue(result)}
+          setOpen={(open) => setOpenPicker(open ? 'day' : null)}
+          setValue={setDayValue}
           placeholder={'일'}
           placeholderStyle={{ color: '#B1B1B1' }}
+          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
+          style={{ paddingLeft: 15 }}
         />
       </View>
 
+      {/* 태어난 시간 */}
       <View style={[styles.section, { marginTop: 30 }]}>
-        <Text style={styles.text}>태어난 시간</Text>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: '#111' },
+          ]}
+        >
+          태어난 시간
+        </Text>
       </View>
-      <View style={[styles.section, { marginTop: 5, gap: 10, }]}>
+
+      <View style={[styles.section, { marginTop: 5, gap: 10 }]}>
         <DropDownPicker
           value={hourValue}
           items={hourItems}
           open={openPicker === 'hour' && !noTime}
-          setOpen={open => !noTime && setOpenPicker(open ? 'hour' : null)}
-          setValue={result => setHourValue(result)}
+          setOpen={(open) => !noTime && setOpenPicker(open ? 'hour' : null)}
+          setValue={setHourValue}
           placeholder={'시'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          style={{zIndex: 1}}
+          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
+          style={{ paddingLeft: 15 }}
         />
 
         <DropDownPicker
           value={minuteValue}
           items={minuteItems}
           open={openPicker === 'minute' && !noTime}
-          setOpen={open => !noTime && setOpenPicker(open ? 'minute' : null)}
-          setValue={result => setMinuteValue(result)}
+          setOpen={(open) => !noTime && setOpenPicker(open ? 'minute' : null)}
+          setValue={setMinuteValue}
           placeholder={'분'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          style={{zIndex: 1}}
+          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
+          style={{ paddingLeft: 15 }}
         />
       </View>
 
-      <View style={[styles.section, { marginTop: 10 }]}>
-        <CheckBox
-          value={noTime}
-          onValueChange={newValue => setNoTime(newValue)}
-          tintColors={{ true: 'black', false: '#AAA' }}
-        />
-        <Text>시간 모름</Text>
+      {/* 시간 모름 체크박스 */}
+      <View style={[styles.section, { marginTop: 20, flexDirection: 'row', alignItems: 'center' }]}>
+        <TouchableOpacity
+          onPress={() => setNoTime(!noTime)}
+          style={[
+            localStyles.checkbox,
+            { borderColor: noTime ? '#111' : '#C7C7C7' },
+          ]}
+        >
+          {noTime && <Icon name="checkmark" size={15} color="#111" />}
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontFamily: 'NanumSquareB',
+            color: '#111',
+            fontSize: 12,
+          }}
+        >
+          시간 모름
+        </Text>
       </View>
     </View>
   );
@@ -170,8 +209,13 @@ function BirthdayScreen() {
 export default BirthdayScreen;
 
 const localStyles = StyleSheet.create({
-  dropdown: {},
-  dropdownContainer: {
-    flexGrow: 1,
+  checkbox: {
+    width: 19,
+    height: 19,
+    borderWidth: 1,
+    borderRadius: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
   },
 });

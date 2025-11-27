@@ -8,6 +8,10 @@ import {
   Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import { BackHandler } from 'react-native';
+import { useEffect } from 'react';
+
 function AlarmScreen({ navigation }: any) {
   const items: Array<listProps> = getItems();
 
@@ -44,6 +48,29 @@ function AlarmScreen({ navigation }: any) {
           </View>
         }
       />
+    </View>
+  );
+}
+
+// 뒤로가기 클릭 시 앱 꺼짐 막기
+function HomeScreen() {
+
+  useEffect(() => {
+    const backAction = () => {
+      return true; // 뒤로가기 막기
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
+  return (
+    <View>
+      <Text>홈 화면</Text>
     </View>
   );
 }
