@@ -60,8 +60,6 @@ function SelectButton({
           </Text>
         </Text>
 
-
-
         /* 3. JSX면 그대로 렌더링 */
         ) : (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -77,15 +75,15 @@ function SelectButton({
 const styles = StyleSheet.create({
   button: {
     flex: 1,
-    height: 46,
-    borderRadius: 12,
+    height: 44,
+    borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
   },
   text: {
-    fontWeight: 'bold',
     fontSize: 16,
+    fontFamily: 'NanumSquareB',
     color: colors.background,
   },
 });
