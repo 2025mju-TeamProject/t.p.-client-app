@@ -43,15 +43,24 @@ function SelectButton({
 
         /* 2. title이 문자열이면 기존 방식으로 처리 */
         ) : typeof title === 'string' ? (
-          <Text
-            style={
-              textStyle === null
-                ? [styles.text, { color: isSelected ? '#fff' : '#111' }]
-                : [textStyle, { color: isSelected ? '#fff' : '#111' }]
-            }
-          >
-            {title}
+        <Text
+          style={[
+            textStyle ? textStyle : null,  // 전달받은 스타일 우선 적용
+            { color: isSelected ? '#fff' : '#111' },
+          ]}
+        >
+          {/* 이모지는 기본 폰트로 */}
+          <Text style={{ fontFamily: undefined }}>
+            {title.split(' ')[0] + ' '}
           </Text>
+
+          {/* 나머지 텍스트는 전달 받은 textStyle 그대로 적용 */}
+          <Text>
+            {title.split(' ').slice(1).join(' ')}
+          </Text>
+        </Text>
+
+
 
         /* 3. JSX면 그대로 렌더링 */
         ) : (

@@ -51,8 +51,8 @@ function MbtiScreen() {
           },
         ]}
       >
-        <Text style={styles.text}>외향형</Text>
-        <Text style={styles.text}>내향형</Text>
+        <Text style={styles.text}>#밖에서 에너지 충전</Text>
+        <Text style={styles.text}>#집에서 에너지 충전</Text>
       </View>
 
       <View style={[styles.section, { marginTop: 30 }]}>
@@ -82,8 +82,8 @@ function MbtiScreen() {
           },
         ]}
       >
-        <Text style={styles.text}>감각형</Text>
-        <Text style={styles.text}>직관형</Text>
+        <Text style={styles.text}>#현재가 중요한 현실형</Text>
+        <Text style={styles.text}>#미래가 중요한 상상형</Text>
       </View>
 
       <View style={[styles.section, { marginTop: 30 }]}>
@@ -113,8 +113,8 @@ function MbtiScreen() {
           },
         ]}
       >
-        <Text style={styles.text}>사고형</Text>
-        <Text style={styles.text}>감정형</Text>
+        <Text style={styles.text}>#논리 중심적 판단형</Text>
+        <Text style={styles.text}>#감정 중심적 공감형</Text>
       </View>
 
       <View style={[styles.section, { marginTop: 30 }]}>
@@ -144,8 +144,8 @@ function MbtiScreen() {
           },
         ]}
       >
-        <Text style={styles.text}>판단형</Text>
-        <Text style={styles.text}>인식형</Text>
+        <Text style={styles.text}>#즉흥적이고 유연한 대응</Text>
+        <Text style={styles.text}>#계획이 철저한 일정중시</Text>
       </View>
     </View>
   );

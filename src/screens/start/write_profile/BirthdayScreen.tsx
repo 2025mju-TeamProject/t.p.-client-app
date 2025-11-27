@@ -190,7 +190,6 @@ function BirthdayScreen() {
           // 활&비활 상태
           style={noTime ? disabledPickerStyle : activePickerStyle}
           dropDownContainerStyle={noTime ? disabledDropdown : activeDropdown}
-          arrowIconStyle={{ tintColor: noTime ? '#979797' : '#111' }}
         />
 
         {/* 분 */}
