@@ -37,6 +37,7 @@ export default StyleSheet.create({
     lineHeight: 17,
     color: '#979797',
     fontFamily: 'NanumSquareR',
+    letterSpacing: -0.5,
   },
   text: {
     fontSize: 12,
