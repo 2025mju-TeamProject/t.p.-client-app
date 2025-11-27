@@ -44,6 +44,11 @@ export default StyleSheet.create({
     fontFamily: 'NanumSquareR',
     color: 'black'
   },
+  text13: {
+    fontSize: 13,
+    fontFamily: 'NanumSquareR',
+    color: 'black'
+  },
   boldText: {
     fontSize: 12,
     color: 'black',
@@ -53,5 +58,5 @@ export default StyleSheet.create({
     fontSize: 14,
     color: 'black',
     fontFamily: 'NanumSquareEB',
-  }
+  },
 })
