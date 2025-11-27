@@ -86,7 +86,6 @@ function IntroductionScreen({ modalVisible }: Props) {
     );
   }
 
-
 export default IntroductionScreen;
 
 const localStyles = StyleSheet.create({
