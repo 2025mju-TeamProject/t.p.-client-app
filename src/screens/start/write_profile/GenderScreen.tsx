@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import styles from './writeProfileStyles';
 import SelectButton from '../../../components/buttons/SelectButton';
 
@@ -27,16 +27,60 @@ function GenderScreen({ onPress, choosed }: Props) {
       </View>
 
       <View style={[styles.section, { marginTop: 30, gap: 8 }]}>
+
+        {/* 남성 */}
         <SelectButton
-          title="남성"
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={(selected) => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <Image
+                source={require('../../../../assets/icons/gender_m.png')}
+                style={{
+                  width: 18,
+                  height: 18,
+                  resizeMode: 'contain',   // ← tintColor 제거!
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: 'NanumSquareB',
+                  color: selected ? '#fff' : '#111',   // ← 글자만 변경!
+                }}
+              >
+                남성
+              </Text>
+            </View>
+          )}
+          tintColors={{ true: '#111', false: 'white' }}
           isSelected={gender === '남성'}
           onPress={() => handlePress('남성')}
         />
 
+
+        {/* 여성 */}
         <SelectButton
-          title="여성"
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={(selected) => (
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <Image
+                source={require('../../../../assets/icons/gender_w.png')}
+                style={{
+                  width: 18,
+                  height: 18,
+                  resizeMode: 'contain',
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: 'NanumSquareB',
+                  color: selected ? '#fff' : '#111',
+                }}
+              >
+                여성
+              </Text>
+            </View>
+          )}
+          tintColors={{ true: '#111', false: 'white' }}
           isSelected={gender === '여성'}
           onPress={() => handlePress('여성')}
         />
