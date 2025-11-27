@@ -43,10 +43,7 @@ function GenderScreen({ onPress, choosed }: Props) {
                 style={{
                   fontSize: 14,
                   fontFamily: 'NanumSquareB',
-                  color: selected ? '#fff' : '#111',
-                }}
-              >
-                남성
+                  color: selected ? '#fff' : '#111',}}>남성
               </Text>
             </View>
           )}
@@ -64,12 +61,8 @@ function GenderScreen({ onPress, choosed }: Props) {
               />
               <Text
                 style={{
-                  fontSize: 14,
-                  fontFamily: 'NanumSquareB',
-                  color: selected ? '#fff' : '#111',
-                }}
-              >
-                여성
+                  fontSize: 14, fontFamily: 'NanumSquareB',
+                  color: selected ? '#fff' : '#111',}}>여성
               </Text>
             </View>
           )}
