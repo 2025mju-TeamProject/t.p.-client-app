@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import AppButton from '../../components/buttons/AppButton';
 import ROUTES from '../../constants/routes';
 import { useAuth } from '../../context/AuthContext';
@@ -82,10 +83,12 @@ function LoginScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={[styles.section, { marginTop: 135 }]}>
-        <Text style={styles.title}>사빠당</Text>
+        <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>사빠당</Text>
       </View>
       <View style={styles.section}>
-        <Text style={styles.subTitle}>사랑에 빠질 당신</Text>
+        <Text style={[styles.subTitle,
+            { fontFamily: 'NanumSquareR', marginBottom: 10 }]}>
+            사랑에 빠질 당신을 위한 소개팅</Text>
       </View>
 
       {/*아이디*/}
@@ -95,7 +98,8 @@ function LoginScreen({ navigation }: any) {
           { marginTop: 73, marginLeft: 1, justifyContent: 'flex-start' },
         ]}
       >
-        <Text style={[styles.subTitle, { color: 'black' }]}>아이디</Text>
+        <Text style={[styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: 'black' }]}>아이디</Text>
       </View>
 
       <View style={[styles.section, { marginTop: 5 }]}>
@@ -113,7 +117,8 @@ function LoginScreen({ navigation }: any) {
           { marginTop: 33, marginLeft: 1, justifyContent: 'flex-start' },
         ]}
       >
-        <Text style={[styles.subTitle, { color: 'black' }]}>비밀번호</Text>
+        <Text style={[styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: 'black' }]}>비밀번호</Text>
       </View>
 
       <View style={[styles.section, { marginTop: 5 }]}>
@@ -128,20 +133,26 @@ function LoginScreen({ navigation }: any) {
       {/*자동 로그인*/}
       <View style={[styles.section2, { marginTop: 22 }]}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <CheckBox
-            value={remember}
-            onValueChange={newValue => setRemember(newValue)}
-            tintColors={{ true: 'black', false: '#AAA' }}
-          />
-          <Text style={{ fontSize: 12, fontWeight: 'bold' }}>자동 로그인</Text>
-        </View>
+          <TouchableOpacity
+            onPress={() => setRemember(!remember)}
+            style={[ styles.checkbox,
+                { borderColor: remember ? '#111' : '#C7C7C7' },
+            ]}>
+              {remember && <Icon name="checkmark" size={15} color="#111" />}
+          </TouchableOpacity>
+          <Text
+            style={[ styles.subTitle,
+               { color: 'black', fontSize: 12, fontFamily: 'NanumSquareB' },]}
+            >
+              자동 로그인
+            </Text>
+          </View>
 
         {/*Todo 테스트용 나중에 view로 바꿀것*/}
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={testLogin}>
-          <Text style={styles.subTitle}>아이디/비밀번호 찾기</Text>
+          <Text style={[styles.subTitle, { fontFamily: 'NanumSquareR', color: '#979797' }]}>아이디/비밀번호 찾기</Text>
         </TouchableOpacity>
       </View>
-
 
       {/*로그인 버튼*/}
       <View style={[styles.section, { marginTop: 39 }]}>
@@ -155,11 +166,11 @@ function LoginScreen({ navigation }: any) {
 
       {/*회원가입*/}
       <View style={[styles.section, { marginTop: 18, marginBottom: 200 }]}>
-        <Text style={[styles.subTitle, { marginRight: 4 }]}>
+        <Text style={[styles.subTitle, { fontFamily:'NanumSquareB', marginRight: 4, color: '#979797' }]}>
           아직 회원이 아니신가요?
         </Text>
         <TouchableOpacity onPress={navigateToSigninScreen}>
-          <Text style={[styles.subTitle, { color: 'black' }]}>회원가입</Text>
+          <Text style={[styles.subTitle, { fontFamily:'NanumSquareEB', color: 'black' }]}> 회원가입</Text>
         </TouchableOpacity>
       </View>
 
@@ -208,24 +219,25 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 38,
-    fontWeight: 'bold',
   },
   subTitle: {
     fontSize: 12,
-    fontWeight: 'bold',
-    color: '#9c9c9c',
   },
   textInput: {
     width: '100%',
     height: 46,
-    borderWidth: 2,
-    borderColor: '#e3e3e3',
-    borderRadius: 12,
-  },
-  checkBox: {
-    width: 14,
-    height: 14,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#111',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+  },
+  checkbox: {
+    width: 19,
+    height: 19,
+    borderWidth: 1,
+    borderRadius: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
   },
 });
