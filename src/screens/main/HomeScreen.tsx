@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   FlatList,
   ScrollView,
@@ -6,14 +6,15 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Image,
+  BackHandler,
 } from 'react-native';
+
 import RecommendCard from '../../components/profile/RecommendCard';
 import PagerView from 'react-native-pager-view';
 import Icon from 'react-native-vector-icons/Octicons';
 import ROUTES from '../../constants/routes';
-import { Image } from 'react-native';
 import HomeHeader from '../../components/common/HeaderHomeScreen';
-
 
 function HomeScreen({ navigation }: any) {
   const userList = getItems();

@@ -28,7 +28,8 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
 }) => {
 
   const image = require('../../../assets/sample-profile2.jpg');
-  const cupiImage = require('../../../assets/cupi.png');
+  const cupiImageLeft = require('../../../assets/cupi_wings_left.png');
+  const cupiImageRight = require('../../../assets/cupi_wings_right.png');
 
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={1.0}>
@@ -66,8 +67,9 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
 
           {/* 쿠피의 한줄평 */}
           <View style={styles.aiCard}>
-            <Image source={cupiImage} style={styles.cupiImage} />
+            <Image source={cupiImageLeft} style={styles.cupiImageLeft} />
             <Text style={styles.aiTitle}>쿠피의 한 줄평</Text>
+            <Image source={cupiImageRight} style={styles.cupiImageRight} />
           </View>
 
           <Text style={styles.aiDesc}>
@@ -120,10 +122,17 @@ aiTitle: {
     resizeMode: 'cover',
     borderRadius: 16,
   },
-  cupiImage: {
+  cupiImageLeft: {
     width: 32,
     height: 32,
     marginRight: 2,
+    resizeMode: 'contain',
+    borderRadius: 25,
+  },
+  cupiImageRight: {
+    width: 32,
+    height: 32,
+    marginLeft: 2,
     resizeMode: 'contain',
     borderRadius: 25,
   },
