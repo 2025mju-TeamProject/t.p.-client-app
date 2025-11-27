@@ -3,6 +3,7 @@ import { Text, View, Image, TextInput } from 'react-native';
 import styles from './writeProfileStyles';
 import SelectButton from '../../../components/buttons/SelectButton';
 
+
 type Props = {
   onPress: (value: string) => void;
   choosed: string;
