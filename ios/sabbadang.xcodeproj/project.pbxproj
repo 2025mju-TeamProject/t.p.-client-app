@@ -11,6 +11,11 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		DDE1F0931D51419E86008724 /* NanumSquareB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1E483E13F48643C880B37DD3 /* NanumSquareB.otf */; };
+		04918888B03740F2B8F6AAA9 /* NanumSquareEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 34113D588DFC43B4A79A0E83 /* NanumSquareEB.otf */; };
+		C10FC87AD7E849B98FDE684F /* NanumSquareL.otf in Resources */ = {isa = PBXBuildFile; fileRef = 555C0046964A4EC0A8EE7460 /* NanumSquareL.otf */; };
+		BEE4F9D755544305A72E8EBA /* NanumSquareR.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4CE0F3E06EC4FC9B0C8D49D /* NanumSquareR.otf */; };
+		7329F384D8AB467790A5E505 /* SCDream7.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28C2E0B016D04C9D96263755 /* SCDream7.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = sabbadang/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = sabbadang/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		1E483E13F48643C880B37DD3 /* NanumSquareB.otf */ = {isa = PBXFileReference; name = "NanumSquareB.otf"; path = "../assets/fonts/NanumSquareB.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		34113D588DFC43B4A79A0E83 /* NanumSquareEB.otf */ = {isa = PBXFileReference; name = "NanumSquareEB.otf"; path = "../assets/fonts/NanumSquareEB.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		555C0046964A4EC0A8EE7460 /* NanumSquareL.otf */ = {isa = PBXFileReference; name = "NanumSquareL.otf"; path = "../assets/fonts/NanumSquareL.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E4CE0F3E06EC4FC9B0C8D49D /* NanumSquareR.otf */ = {isa = PBXFileReference; name = "NanumSquareR.otf"; path = "../assets/fonts/NanumSquareR.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		28C2E0B016D04C9D96263755 /* SCDream7.otf */ = {isa = PBXFileReference; name = "SCDream7.otf"; path = "../assets/fonts/SCDream7.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +84,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				74196B3A29B140F6B25CDB57 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -96,6 +107,19 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		74196B3A29B140F6B25CDB57 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				1E483E13F48643C880B37DD3 /* NanumSquareB.otf */,
+				34113D588DFC43B4A79A0E83 /* NanumSquareEB.otf */,
+				555C0046964A4EC0A8EE7460 /* NanumSquareL.otf */,
+				E4CE0F3E06EC4FC9B0C8D49D /* NanumSquareR.otf */,
+				28C2E0B016D04C9D96263755 /* SCDream7.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -159,6 +183,11 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				DDE1F0931D51419E86008724 /* NanumSquareB.otf in Resources */,
+				04918888B03740F2B8F6AAA9 /* NanumSquareEB.otf in Resources */,
+				C10FC87AD7E849B98FDE684F /* NanumSquareL.otf in Resources */,
+				BEE4F9D755544305A72E8EBA /* NanumSquareR.otf in Resources */,
+				7329F384D8AB467790A5E505 /* SCDream7.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

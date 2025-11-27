@@ -58,9 +58,13 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
             </View>
           </View>
 
-          <Text style={styles.name}>{name}  {age}세</Text>
+        {/* 사용자 이름 + 나이 */}
+        <Text style={styles.name}>
+          {name}{''}
+          <Text style={styles.age}> {age}세</Text>
+        </Text>
 
-          {/*쿠피의 한줄평*/}
+          {/* 쿠피의 한줄평 */}
           <View style={styles.aiCard}>
             <Image source={cupiImage} style={styles.cupiImage} />
             <Text style={styles.aiTitle}>쿠피의 한 줄평</Text>
@@ -82,16 +86,18 @@ const styles = StyleSheet.create({
   cardWrapper: {
     width: winWidth - 48,
   },
-  aiTitle: {
-    fontWeight: '700',
-    fontSize: 16,
-    marginBottom: 2,
-    marginTop: 8,  // 가운데 정렬해도 안 맞아서, 걍 위에 여백을 추가함
-    marginLeft: 2,
-  },
+aiTitle: {
+  fontSize: 16,
+  marginBottom: 2,
+  marginTop: 4,
+  marginLeft: 3,
+  fontFamily: 'SCDream7',
+  letterSpacing: -0.5,    // 자간 줄이기
+},
+
   aiCard: {
-    marginBottom: 8,
-    marginTop: 10,
+    marginBottom: 10,
+    marginTop: 12,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -131,11 +137,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 5,
   },
-  name: {
-    fontSize: 26,
-    fontWeight: '700',
-    color: '#111',
-  },
+    name: {
+      fontSize: 26,
+      color: '#111',
+      fontFamily: 'SCDream7',
+    },
+    age: {
+      fontSize: 23,
+      color: '#111',
+      fontFamily: 'SCDream7',
+    },
 
   // 태그랑 이름 사이 여백
   tagContainer: {
