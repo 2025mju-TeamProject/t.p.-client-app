@@ -23,15 +23,15 @@ function IntroductionScreen() {
   return (
     <View style={styles.container}>
       <View style={[styles.section, {marginTop: 30}]}>
-        <Text style={styles.title}>{'주로 활동하는\n지역은 어디인가요?'}</Text>
+        <Text style={styles.title}>{'활동하는 지역은 어디인가요?'}</Text>
       </View>
 
       <View style={[styles.section, {marginTop: 30, flexDirection: 'row',}]}>
         <View style={{marginLeft: 5, width : '50%'}}>
-          <Text style={{fontSize: 12, fontWeight: 400}}>시 / 도 선택</Text>
+          <Text style={styles.boldText}>시/도 선택</Text>
         </View>
         <View style={{marginLeft: 5, width: '50%'}}>
-          <Text style={{fontSize: 12, fontWeight: 400}}>시 / 군 / 구 선택</Text>
+          <Text style={styles.boldText}>시/군/구 선택</Text>
         </View>
       </View>
 

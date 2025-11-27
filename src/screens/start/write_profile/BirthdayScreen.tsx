@@ -101,12 +101,7 @@ function BirthdayScreen() {
 
       {/* 생년월일 */}
       <View style={[styles.section, { marginTop: 30 }]}>
-        <Text
-          style={[
-            styles.subTitle,
-            { fontFamily: 'NanumSquareB', color: '#111' },
-          ]}>
-          생년월일
+        <Text style={styles.boldText}>생년월일
         </Text>
       </View>
 
@@ -163,12 +158,7 @@ function BirthdayScreen() {
 
       {/* 태어난 시간 */}
       <View style={[styles.section, { marginTop: 30 }]}>
-        <Text
-          style={[
-            styles.subTitle,
-            { fontFamily: 'NanumSquareB', color: '#111' },
-          ]}>
-          태어난 시간
+        <Text style={styles.boldText}>태어난 시간
         </Text>
       </View>
 

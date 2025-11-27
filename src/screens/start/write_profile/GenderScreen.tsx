@@ -76,7 +76,7 @@ function GenderScreen({ onPress, choosed }: Props) {
 
       {/* 닉네임 입력 */}
       <View style={[styles.section, { marginTop: 35 }]}>
-        <Text style={[styles.subTitle, { fontFamily: 'NanumSquareB', color: '#111' }]}>
+        <Text style={styles.boldText}>
           닉네임
         </Text>
       </View>
