@@ -23,8 +23,8 @@ function IntroductionScreen() {
   return (
     <View style={styles.container}>
       {/* 제목 */}
-      <View style={[styles.section, { marginTop: 30, marginBottom: 10 }]}>
-        <Text style={styles.title}>{'활동하는 지역은 어디인가요?'}</Text>
+      <View style={[styles.section, { marginTop: 30, marginBottom: 5 }]}>
+        <Text style={styles.title}>{'주로 활동하는 \n지역은 어디인가요?'}</Text>
       </View>
 
       {/* 라벨 */}
