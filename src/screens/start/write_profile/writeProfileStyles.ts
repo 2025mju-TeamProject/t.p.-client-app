@@ -48,5 +48,10 @@ export default StyleSheet.create({
     fontSize: 12,
     color: 'black',
     fontFamily: 'NanumSquareEB',
+  },
+  boldTextBB: {
+    fontSize: 14,
+    color: 'black',
+    fontFamily: 'NanumSquareEB',
   }
 })
