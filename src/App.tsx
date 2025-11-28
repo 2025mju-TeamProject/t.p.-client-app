@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './navigation/RootNavigator';
 import { AuthProvider } from './context/AuthContext';
 import { StatusBar } from 'react-native';
-import { requestUserPermission, getFcmToken, registerForegroundMessageListener, registerNotificationOpenedListeners } from './fcm';
+import { requestUserPermission, getFcmToken, registerForegroundMessageListener, registerNotificationOpenedListeners } from './services/fcm';
 
 function App() {
   useEffect(() => {
