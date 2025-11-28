@@ -46,6 +46,7 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
 
         {/*하단 카드*/}
         <View style={styles.infoBox}>
+
           {/*상단 태그*/}
           <View style={styles.tagContainer}>
             <View style={{marginRight: 8}}>
@@ -61,7 +62,7 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
 
         {/* 사용자 이름 + 나이 */}
         <Text style={styles.name}>
-          {name}{''}
+          {name}{' '}
           <Text style={styles.age}> {age}세</Text>
         </Text>
 
@@ -93,7 +94,8 @@ aiTitle: {
   marginBottom: 2,
   marginTop: 4,
   marginLeft: 3,
-  fontFamily: 'SCDream7',
+  fontFamily: 'TmoneyRoundWindExtraBold',
+  color: '#333333',
   letterSpacing: -0.5,    // 자간 줄이기
 },
 
@@ -123,16 +125,16 @@ aiTitle: {
     borderRadius: 16,
   },
   cupiImageLeft: {
-    width: 32,
-    height: 32,
-    marginRight: 2,
+    width: 24,
+    height: 24,
+    marginRight: 1,
     resizeMode: 'contain',
     borderRadius: 25,
   },
   cupiImageRight: {
-    width: 32,
-    height: 32,
-    marginLeft: 2,
+    width: 24,
+    height: 24,
+    marginLeft: 1,
     resizeMode: 'contain',
     borderRadius: 25,
   },
@@ -148,13 +150,15 @@ aiTitle: {
   },
     name: {
       fontSize: 26,
-      color: '#111',
+      color: '#333333',
       fontFamily: 'SCDream7',
+      letterSpacing: -0.5,
     },
     age: {
       fontSize: 23,
-      color: '#111',
+      color: '#333333',
       fontFamily: 'SCDream7',
+      letterSpacing: -0.5,
     },
 
   // 태그랑 이름 사이 여백

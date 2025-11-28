@@ -13,6 +13,7 @@ import ImageScreen from '../../screens/start/write_profile/ImageScreen';
 import IntroductionScreen from '../../screens/start/write_profile/IntroductionScreen';
 import Modal from 'react-native-modal';
 import ROUTES from '../../constants/routes';
+import SignUpProgressBar from '../../components/progress/SignUpProgressBar';
 
 const messages = ['쿠피가 프로필 작성 중', '쿠피가 프로필 작성 중.', '쿠피가 프로필 작성 중..', '쿠피가 프로필 작성 중...']
 
@@ -81,9 +82,12 @@ function WriteProfileScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      {/* 헤더 */}
-      <View style={styles.header}>
+      {/* 헤더 & 상단 프로그레스바 */}
+    <View style={styles.header}>
+      <View style={styles.progressWrapper}>
+        <SignUpProgressBar step={page + 1} total={totalPages} />
       </View>
+    </View>
 
       {/* 페이지 뷰 */}
       <PagerView
@@ -199,6 +203,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     paddingHorizontal: 16,
+    paddingTop: 42,
   },
   pager: {
     flex: 1,
@@ -239,5 +244,9 @@ const styles = StyleSheet.create({
   modalSubtitle: {
     fontSize: 13,
     color: '#434343'
-  }
+  },
+    progressWrapper: {
+      width: '96%',
+      alignSelf: 'center',
+    },
 });

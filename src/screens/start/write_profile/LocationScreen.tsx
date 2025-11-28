@@ -22,20 +22,24 @@ function IntroductionScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.section, {marginTop: 30}]}>
-        <Text style={styles.title}>{'주로 활동하는\n지역은 어디인가요?'}</Text>
+      {/* 제목 */}
+      <View style={[styles.section, { marginTop: 30, marginBottom: 5 }]}>
+        <Text style={styles.title}>{'주로 활동하는 \n지역은 어디인가요?'}</Text>
       </View>
 
-      <View style={[styles.section, {marginTop: 30, flexDirection: 'row',}]}>
-        <View style={{marginLeft: 5, width : '50%'}}>
-          <Text style={{fontSize: 12, fontWeight: 400}}>시 / 도 선택</Text>
+      {/* 라벨 */}
+      <View style={[styles.section, { marginTop: 30, flexDirection: 'row' }]}>
+        <View style={{ marginLeft: 5, width: '50%', marginBottom: 10 }}>
+          <Text style={styles.boldText}>시/도 선택</Text>
         </View>
-        <View style={{marginLeft: 5, width: '50%'}}>
-          <Text style={{fontSize: 12, fontWeight: 400}}>시 / 군 / 구 선택</Text>
+        <View style={{ marginLeft: 5, width: '50%', marginBottom: 10 }}>
+          <Text style={styles.boldText}>시/군/구 선택</Text>
         </View>
       </View>
 
-      <View style={[styles.section, {marginTop: 5, justifyContent: 'space-between'}]}>
+      {/* 드롭다운 */}
+      <View style={[styles.section, { marginTop: 5, justifyContent: 'space-between' }]}>
+
         {/* 시/도 */}
         <DropDownPicker
           open={sidoOpen}
@@ -48,8 +52,23 @@ function IntroductionScreen() {
           }}
           setValue={setSido}
           placeholder="선택"
-          placeholderStyle={{color: '#B1B1B1'}}
-          containerStyle={{ width: '48%' }}
+          placeholderStyle={{ color: '#B1B1B1' }}
+          fontFamily="NanumSquareR"
+          style={{
+            borderColor: '#111',
+            borderWidth: 1,
+            height: 46,
+            borderRadius: 12,
+            paddingHorizontal: 12,
+            zIndex: 5000,
+          }}
+          containerStyle={{ width: '48%', zIndex: 5000 }}
+          dropDownContainerStyle={{
+            borderColor: '#111',
+            borderWidth: 1,
+            borderRadius: 12,
+            zIndex: 5000,
+          }}
         />
 
         {/* 군/구 */}
@@ -64,12 +83,27 @@ function IntroductionScreen() {
           }}
           setValue={setGungu}
           placeholder="선택"
-          placeholderStyle={{color: '#B1B1B1'}}
-          containerStyle={{ width: '48%' }}
+          placeholderStyle={{ color: '#B1B1B1' }}
+          fontFamily="NanumSquareR"
+          style={{
+            borderColor: '#111',
+            borderWidth: 1,
+            height: 46,
+            borderRadius: 12,
+            paddingHorizontal: 12,
+            zIndex: 4000,
+          }}
+          containerStyle={{ width: '48%', zIndex: 4000 }}
+          dropDownContainerStyle={{
+            borderColor: '#111',
+            borderWidth: 1,
+            borderRadius: 12,
+            zIndex: 4000,
+          }}
           disabled={!sido}
         />
-      </View>
 
+      </View>
     </View>
   );
 }
