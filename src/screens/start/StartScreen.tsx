@@ -1,10 +1,13 @@
 import ROUTES from '../../constants/routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Routes from '../../constants/routes';
+import styles from 'react-native-webview/lib/WebView.styles';
+import React, { useEffect } from 'react';
+import {View} from 'react-native';
 
 function StartScreen({ navigation }: any) {
   async function handleNavigate() {
-    let route
+    // let route
     // if(await AsyncStorage.getItem('accessToken')){
     //   route = ROUTES.WRITEPROFFILE;
     // } else {
@@ -17,8 +20,12 @@ function StartScreen({ navigation }: any) {
     });
   }
 
+  useEffect(() => {
+    handleNavigate();
+  })
+
   return (
-    handleNavigate()
+    <View />
   );
 }
 
