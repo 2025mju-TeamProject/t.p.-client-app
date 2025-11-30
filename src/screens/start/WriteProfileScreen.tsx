@@ -153,8 +153,6 @@ function WriteProfileScreen({ navigation }: any) {
     }
   }
 
-  const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
   useEffect(() => {
     if (!modalVisible) return;
     const interval = setInterval(() => {
@@ -164,11 +162,48 @@ function WriteProfileScreen({ navigation }: any) {
     return () => clearInterval(interval);
   }, [modalVisible]);
 
+  function isNextEnabled() {
+    switch (page) {
+      case 0:
+        return profile.gender !== '' && profile.nickname !== '';
+
+      case 1:
+        const hasDate =
+          profile.year !== 0 &&
+          profile.month !== 0 &&
+          profile.day !== 0;
+
+        const hasTime =
+          profile.birth_time_unknown
+            ? true
+            : profile.hour !== 0 && profile.minute !== 0;
+
+        return hasDate && hasTime;
+
+      case 2:
+        return profile.hobbies.length >= 3 && profile.hobbies.length <= 8;
+
+      case 3:
+        return profile.mbti !== '';
+
+      case 4:
+        return profile.job !== '';
+
+      case 5:
+        return (
+          profile.location_city !== '' &&
+          profile.location_district !== ''
+        );
+
+      default:
+        return true;
+    }
+  }
+
   async function handleLogin() {
     if (page === totalPages - 1) {
       setModalVisible(true);
 
-      await wait(3000);
       setModalVisible(false);
 
       navigation.reset({
@@ -324,7 +359,7 @@ function WriteProfileScreen({ navigation }: any) {
               title="다음"
               tintColors={{ true: colors.pink, false: '#B1B1B1' }}
               onPress={goNext}
-              isAbled={true}
+              isAbled={isNextEnabled()}
             />
           </>
         )}
@@ -333,7 +368,7 @@ function WriteProfileScreen({ navigation }: any) {
             title="다음"
             tintColors={{ true: colors.pink, false: '#B1B1B1' }}
             onPress={goNext}
-            isAbled={true}
+            isAbled={isNextEnabled()}
           />
         )}
       </View>
