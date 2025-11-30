@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 import AppButton from '../../components/buttons/AppButton';
 import colors from '../../constants/colors';
-import CheckBox from '@react-native-community/checkbox';
 import Modal from 'react-native-modal';
 import strings from '../../constants/strings';
 import Icon from 'react-native-vector-icons/Ionicons';
+import apiClient from '../../services/apiClient';
+import axios from 'axios';
 
 import {
   validateId,
@@ -21,41 +22,52 @@ import {
   validateCheckPassword,
   validatePhone,
 } from '../../utils/validation';
+import ROUTES from '../../constants/routes';
 
 const { width } = Dimensions.get('window');
 
-const termTexts = [
-  'None',
-  strings.term2,
-  strings.term3,
-] as const;
+const termTexts = ['None', strings.term2, strings.term3] as const;
 
 const termTitle = [
   'None',
   '서비스 이용 약관 동의',
-  '개인정보 처리방침 동의'
+  '개인정보 처리방침 동의',
 ] as const;
+
+const idWarnText = [
+  'None',
+  '아이디는 6~20자 영어 소문자, 숫자만 가능합니다.',
+  '이미 등록된 아이디입니다.',
+];
 
 function SigninScreen({ navigation }: any) {
   const [id, setId] = useState('');
   const [passwd, setPasswd] = useState('');
   const [checkPasswd, setCheckPasswd] = useState('');
   const [phone, setPhone] = useState('');
+  const [isCheckPasswd, setIsCheckPasswd] = useState<boolean>(true);
+  const [isId, setIsId] = useState<boolean>(true);
+  const [isPasswd, setIsPasswd] = useState<boolean>(true);
+  const [isPhone, setIsPhone] = useState<boolean>(true);
+  const [idTextIndex, setIdTextIndex] = useState<number>(0);
 
-  const [term1, setTerm1] = useState(false);
-  const [term2, setTerm2] = useState(false);
-  const [term3, setTerm3] = useState(false);
+  const [term1, setTerm1] = useState<boolean>(false);
+  const [term2, setTerm2] = useState<boolean>(false);
+  const [term3, setTerm3] = useState<boolean>(false);
 
   const [termIndex, setTermIndex] = useState(1);
-  const [next, setNext] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [next, setNext] = useState<boolean>(false);
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const ok =
-      id.length > 0 &&
-      passwd.length > 0 &&
-      checkPasswd.length > 0 &&
-      phone.length > 0 &&
+      id.length >= 6 &&
+      id.length <= 20 &&
+      passwd.length >= 8 &&
+      passwd.length <= 20 &&
+      checkPasswd.length > 8 &&
+      checkPasswd.length <= 20 &&
+      phone.length == 11 &&
       term1 &&
       term2 &&
       term3;
@@ -96,21 +108,68 @@ function SigninScreen({ navigation }: any) {
     setModalVisible(true);
   }
 
-  function trySignin() {
-    navigation.navigate('WriteProfile');
+  async function trySignin() {
+    const api = apiClient;
+    const isValidId = validateId(id);
+    const isValidPasswd = validatePassword(passwd);
+    const isValidCheckPasswd = validateCheckPassword(passwd, checkPasswd);
+    const isValidPhone = validatePhone(phone);
+
+    setIsId(isValidId);
+    setIsPasswd(isValidPasswd);
+    setIsCheckPasswd(isValidCheckPasswd);
+    setIsPhone(isValidPhone);
+
+    if (!isValidId) {
+      setIdTextIndex(1);
+    }
+
+    if (!isValidId || !isValidPasswd || !isValidCheckPasswd || !isValidPhone) {
+      return;
+    }
+
+    try {
+      await api.post('/api/register/', {
+        username: id,
+        password: passwd,
+        password_verify: checkPasswd,
+        phone_number: phone,
+      });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: ROUTES.WRITEPROFFILE }],
+      });
+    } catch (error: any) {
+      if (error.response?.status == 400) {
+        if (error.response?.data.username) {
+          setIdTextIndex(2);
+          setIsId(false);
+        }
+
+        if (error.response?.data.phone_number) {
+          setIsPhone(false);
+        }
+      }
+    }
   }
 
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={[styles.section, { marginTop: 70 }]}>
-          <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>회원가입</Text>
+          <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>
+            회원가입
+          </Text>
         </View>
 
         <View style={styles.section}>
           <Text
-            style={[styles.subTitle,
-              { fontFamily: 'NanumSquareR', marginBottom: 10 },]}>사랑에 빠질 준비가 되었나요?
+            style={[
+              styles.subTitle,
+              { fontFamily: 'NanumSquareR', marginBottom: 10 },
+            ]}
+          >
+            사랑에 빠질 준비가 되었나요?
           </Text>
         </View>
 
@@ -124,13 +183,14 @@ function SigninScreen({ navigation }: any) {
           <Text
             style={[
               styles.subTitle,
-              { fontFamily: 'NanumSquareB', color: 'black' },]}>아이디</Text>
+              { fontFamily: 'NanumSquareB', color: 'black' },
+            ]}
+          >
+            아이디
+          </Text>
         </View>
 
-        <View
-          style={[
-            styles.section,
-            { fontFamily: 'NanumSquareB', color: '#111', marginTop: 5 },]}>
+        <View style={[styles.section, { marginTop: 5 }]}>
           <TextInput
             onChangeText={onIdInput}
             value={id}
@@ -139,18 +199,37 @@ function SigninScreen({ navigation }: any) {
               styles.textInput,
               { fontFamily: 'NanumSquareR', fontSize: 12 },
             ]}
-            placeholderTextColor="#979797"/>
+            placeholderTextColor="#979797"
+          />
+        </View>
+
+        <View style={[styles.section, { marginTop: 2 }]}>
+          <Icon
+            name={'alert-circle-outline'}
+            size={15}
+            color={isId ? 'white' : '#FF0C00'}
+          />
+          <Text
+            style={[styles.warningText, { color: isId ? 'white' : '#FF0C00' }]}
+          >
+            {idWarnText[idTextIndex]}
+          </Text>
         </View>
 
         {/* 비밀번호 */}
         <View
           style={[
             styles.section,
-            { marginTop: 36, marginLeft: 1, justifyContent: 'flex-start' },]}>
+            { marginTop: 12, marginLeft: 1, justifyContent: 'flex-start' },
+          ]}
+        >
           <Text
             style={[
-              styles.subTitle,{ fontFamily: 'NanumSquareB', color: 'black' },]}
-          >비밀번호
+              styles.subTitle,
+              { fontFamily: 'NanumSquareB', color: 'black' },
+            ]}
+          >
+            비밀번호
           </Text>
         </View>
 
@@ -160,21 +239,43 @@ function SigninScreen({ navigation }: any) {
             secureTextEntry
             value={passwd}
             style={[
-              styles.textInput,{ fontFamily: 'NanumSquareR', fontSize: 12 },]}
+              styles.textInput,
+              { fontFamily: 'NanumSquareR', fontSize: 12 },
+            ]}
             placeholder="비밀번호 입력(문자, 숫자, 특수문자 포함 8~20자)"
             placeholderTextColor="#979797"
           />
+        </View>
+
+        <View style={[styles.section, { marginTop: 2 }]}>
+          <Icon
+            name={'alert-circle-outline'}
+            size={15}
+            color={isPasswd ? 'white' : '#FF0C00'}
+          />
+          <Text
+            style={[
+              styles.warningText,
+              { color: isPasswd ? 'white' : '#FF0C00' },
+            ]}
+          >
+            비밀번호는 문자, 숫자, 특수문자 포함 8~20자만 가능합니다.
+          </Text>
         </View>
 
         {/* 비밀번호 확인 */}
         <View
           style={[
             styles.section,
-            { marginTop: 36, marginLeft: 1, justifyContent: 'flex-start' },]}>
+            { marginTop: 12, marginLeft: 1, justifyContent: 'flex-start' },
+          ]}
+        >
           <Text
             style={[
               styles.subTitle,
-              { fontFamily: 'NanumSquareB', color: 'black' },]}>
+              { fontFamily: 'NanumSquareB', color: 'black' },
+            ]}
+          >
             비밀번호 확인
           </Text>
         </View>
@@ -193,11 +294,27 @@ function SigninScreen({ navigation }: any) {
           />
         </View>
 
+        <View style={[styles.section, { marginTop: 2 }]}>
+          <Icon
+            name={'alert-circle-outline'}
+            size={15}
+            color={isCheckPasswd ? 'white' : '#FF0C00'}
+          />
+          <Text
+            style={[
+              styles.warningText,
+              { color: isCheckPasswd ? 'white' : '#FF0C00' },
+            ]}
+          >
+            비밀번호가 일치하지 않습니다
+          </Text>
+        </View>
+
         {/* 휴대폰 */}
         <View
           style={[
             styles.section,
-            { marginTop: 36, marginLeft: 1, justifyContent: 'flex-start' },
+            { marginTop: 12, marginLeft: 1, justifyContent: 'flex-start' },
           ]}
         >
           <Text
@@ -224,8 +341,24 @@ function SigninScreen({ navigation }: any) {
           />
         </View>
 
+        <View style={[styles.section, { marginTop: 2 }]}>
+          <Icon
+            name={'alert-circle-outline'}
+            size={15}
+            color={isPhone ? 'white' : '#FF0C00'}
+          />
+          <Text
+            style={[
+              styles.warningText,
+              { color: isPhone ? 'white' : '#FF0C00' },
+            ]}
+          >
+            '-'없이 11자리 숫자만 입력해 주세요.
+          </Text>
+        </View>
+
         {/* 약관 */}
-        <View style={[styles.section, { marginTop: 36 }]}>
+        <View style={[styles.section, { marginTop: 12 }]}>
           <TouchableOpacity
             onPress={() => onTerm1Input(!term1)}
             style={[
@@ -270,7 +403,12 @@ function SigninScreen({ navigation }: any) {
             <Text
               style={[
                 styles.subTitle,
-                { marginLeft: 5, color: 'red', fontSize: 13, fontFamily: 'NanumSquareB' },
+                {
+                  marginLeft: 5,
+                  color: 'red',
+                  fontSize: 13,
+                  fontFamily: 'NanumSquareB',
+                },
               ]}
             >
               [보기]
@@ -302,14 +440,18 @@ function SigninScreen({ navigation }: any) {
             <Text
               style={[
                 styles.subTitle,
-                { marginLeft: 5, color: 'red', fontSize: 13, fontFamily: 'NanumSquareB' },
+                {
+                  marginLeft: 5,
+                  color: 'red',
+                  fontSize: 13,
+                  fontFamily: 'NanumSquareB',
+                },
               ]}
             >
               [보기]
             </Text>
           </TouchableOpacity>
         </View>
-
       </ScrollView>
 
       {/* 하단 확정 버튼 */}
@@ -319,7 +461,7 @@ function SigninScreen({ navigation }: any) {
             title={'확인'}
             tintColors={{ true: colors.pink, false: '#B1B1B1' }}
             onPress={trySignin}
-            isAbled={true} // TODO: next 적용시 바꾸기
+            isAbled={next} // TODO: next 적용시 바꾸기
           />
         </View>
       </View>
@@ -349,7 +491,6 @@ function SigninScreen({ navigation }: any) {
           </ScrollView>
         </View>
       </Modal>
-
     </View>
   );
 }
@@ -385,6 +526,12 @@ const styles = StyleSheet.create({
     borderColor: '#111',
     borderRadius: 12,
     paddingHorizontal: 15,
+  },
+  warningText: {
+    fontSize: 12,
+    fontFamily: 'NanumSquareOTF',
+    color: '#FF0C00',
+    marginLeft: 3,
   },
   bottomTab: {
     width: '100%',
