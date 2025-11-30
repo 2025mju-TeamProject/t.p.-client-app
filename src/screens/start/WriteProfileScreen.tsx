@@ -22,6 +22,7 @@ import Modal from 'react-native-modal';
 import ROUTES from '../../constants/routes';
 import apiClient from '../../services/apiClient';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const messages = [
   '쿠피가 프로필 작성 중',
@@ -130,7 +131,7 @@ function WriteProfileScreen({ navigation }: any) {
       console.log('formdata', formData);
       response = await api.post('/api/profile/', formData, {
         headers: {
-          Authorization: `Bearer ${accessToken.data.access}`,
+          Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data',
         },
       });

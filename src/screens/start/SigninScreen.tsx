@@ -23,6 +23,7 @@ import {
   validatePhone,
 } from '../../utils/validation';
 import ROUTES from '../../constants/routes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
@@ -135,6 +136,13 @@ function SigninScreen({ navigation }: any) {
         password_verify: checkPasswd,
         phone_number: phone,
       });
+      const auth = await api.post('/api/login/', {
+        username: id,
+        password: passwd,
+      });
+      await AsyncStorage.setItem('accessToken', auth.data.access);
+      await AsyncStorage.setItem('refreshToken', auth.data.refresh);
+
       navigation.reset({
         index: 0,
         routes: [{ name: ROUTES.WRITEPROFFILE }],
@@ -460,8 +468,8 @@ function SigninScreen({ navigation }: any) {
           <AppButton
             title={'확인'}
             tintColors={{ true: colors.pink, false: '#B1B1B1' }}
-            onPress={() => navigation.navigate('WriteProfile')}
-            isAbled={true} // TODO: next 적용시 바꾸기
+            onPress={trySignin}
+            isAbled={next}
           />
         </View>
       </View>
