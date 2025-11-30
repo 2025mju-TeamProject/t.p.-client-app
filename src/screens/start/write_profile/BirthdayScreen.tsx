@@ -154,7 +154,7 @@ function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParent
           placeholderStyle={{ color: '#B1B1B1' }}
           fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
-          style={{ paddingLeft: 15 }}
+          style={{ paddingLeft: 15, zIndex: 1 }}
         />
 
         <DropDownPicker
@@ -167,7 +167,7 @@ function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParent
           placeholderStyle={{ color: '#B1B1B1' }}
           fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
-          style={{ paddingLeft: 15 }}
+          style={{ paddingLeft: 15, zIndex: 1 }}
         />
       </View>
 
