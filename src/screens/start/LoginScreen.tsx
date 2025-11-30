@@ -169,10 +169,9 @@ function LoginScreen({ navigation }: any) {
             </Text>
           </View>
 
-        {/*Todo 테스트용 나중에 view로 바꿀것*/}
-        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={testLogin}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text style={[styles.subTitle, { fontFamily: 'NanumSquareR', color: '#979797' }]}>아이디/비밀번호 찾기</Text>
-        </TouchableOpacity>
+        </View>
       </View>
 
       {/*로그인 버튼*/}
