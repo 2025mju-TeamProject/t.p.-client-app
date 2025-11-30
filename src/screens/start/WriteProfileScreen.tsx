@@ -241,23 +241,21 @@ function WriteProfileScreen({ navigation }: any) {
           <BirthdayScreen
             setParentYear={value => {
               setProfile(prev => ({ ...prev, year: value }));
-              console.log(profile.year);
             }}
             setParentMonth={value => {
               setProfile(prev => ({ ...prev, month: value }));
-              console.log(profile.month);
             }}
             setParentDay={value => {
               setProfile(prev => ({ ...prev, day: value }));
-              console.log(profile.day);
             }}
             setParentHour={value => {
               setProfile(prev => ({ ...prev, hour: value }));
-              console.log(profile.hour);
             }}
             setParentMinute={value => {
               setProfile(prev => ({ ...prev, minute: value }));
-              console.log(profile.minute);
+            }}
+            setParentNotime={value => {
+              setProfile(prev => ({ ...prev, birth_time_unknown: value }));
             }}
           />
         </View>

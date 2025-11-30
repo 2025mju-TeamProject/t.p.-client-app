@@ -10,9 +10,17 @@ type Props = {
   setParentDay: (value: number) => void;
   setParentHour: (value: number) => void;
   setParentMinute: (value: number) => void;
+  setParentNotime: (value: boolean) => void;
 };
 
-function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParentHour, setParentMinute}: Props) {
+function BirthdayScreen({
+  setParentYear,
+  setParentMonth,
+  setParentDay,
+  setParentHour,
+  setParentMinute,
+  setParentNotime,
+}: Props) {
   const [noTime, setNoTime] = useState<boolean>(false);
   const [openPicker, setOpenPicker] = useState<
     null | 'year' | 'month' | 'day' | 'hour' | 'minute'
@@ -65,6 +73,7 @@ function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParent
     setParentDay(dayValue !== null ? dayValue : 0);
     setParentHour(hourValue !== null ? hourValue : 0);
     setParentMinute(minuteValue !== null ? minuteValue : 0);
+    setParentNotime(noTime);
   }, [yearValue, monthValue, dayValue, hourValue, minuteValue, noTime]);
 
   return (
@@ -95,7 +104,7 @@ function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParent
           value={yearValue}
           items={yearItems}
           open={openPicker === 'year'}
-          setOpen={(open) => setOpenPicker(open ? 'year' : null)}
+          setOpen={open => setOpenPicker(open ? 'year' : null)}
           setValue={setYearValue}
           placeholder={'연'}
           placeholderStyle={{ color: '#B1B1B1' }}
@@ -108,7 +117,7 @@ function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParent
           value={monthValue}
           items={monthItems}
           open={openPicker === 'month'}
-          setOpen={(open) => setOpenPicker(open ? 'month' : null)}
+          setOpen={open => setOpenPicker(open ? 'month' : null)}
           setValue={setMonthValue}
           placeholder={'월'}
           placeholderStyle={{ color: '#B1B1B1' }}
@@ -121,7 +130,7 @@ function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParent
           value={dayValue}
           items={dayItems}
           open={openPicker === 'day'}
-          setOpen={(open) => setOpenPicker(open ? 'day' : null)}
+          setOpen={open => setOpenPicker(open ? 'day' : null)}
           setValue={setDayValue}
           placeholder={'일'}
           placeholderStyle={{ color: '#B1B1B1' }}
@@ -148,7 +157,7 @@ function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParent
           value={hourValue}
           items={hourItems}
           open={openPicker === 'hour' && !noTime}
-          setOpen={(open) => !noTime && setOpenPicker(open ? 'hour' : null)}
+          setOpen={open => !noTime && setOpenPicker(open ? 'hour' : null)}
           setValue={setHourValue}
           placeholder={'시'}
           placeholderStyle={{ color: '#B1B1B1' }}
@@ -161,7 +170,7 @@ function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParent
           value={minuteValue}
           items={minuteItems}
           open={openPicker === 'minute' && !noTime}
-          setOpen={(open) => !noTime && setOpenPicker(open ? 'minute' : null)}
+          setOpen={open => !noTime && setOpenPicker(open ? 'minute' : null)}
           setValue={setMinuteValue}
           placeholder={'분'}
           placeholderStyle={{ color: '#B1B1B1' }}
@@ -172,7 +181,12 @@ function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParent
       </View>
 
       {/* 시간 모름 체크박스 */}
-      <View style={[styles.section, { marginTop: 20, flexDirection: 'row', alignItems: 'center' }]}>
+      <View
+        style={[
+          styles.section,
+          { marginTop: 20, flexDirection: 'row', alignItems: 'center' },
+        ]}
+      >
         <TouchableOpacity
           onPress={() => setNoTime(!noTime)}
           style={[
