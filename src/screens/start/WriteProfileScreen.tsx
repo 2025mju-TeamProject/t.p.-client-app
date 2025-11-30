@@ -64,11 +64,7 @@ function WriteProfileScreen({ navigation }: any) {
     job: '',
     mbti: '',
     hobbies: [],
-    images: [
-      require('../../../assets/sample-profile2.jpg'),
-      require('../../../assets/sample-profile2.jpg'),
-      require('../../../assets/sample-profile2.jpg'),
-    ],
+    images: [],
   });
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [messageIndex, setMessageIndex] = useState<number>(0);
@@ -107,7 +103,6 @@ function WriteProfileScreen({ navigation }: any) {
       });
       const formData = new FormData();
 
-      const { images, ...profileWithoutImages } = profile;
       formData.append('nickname', (profile.nickname));
       formData.append('gender', (profile.gender));
 
@@ -194,6 +189,9 @@ function WriteProfileScreen({ navigation }: any) {
           profile.location_city !== '' &&
           profile.location_district !== ''
         );
+
+      case 6:
+        return profile.images.length >= 2
 
       default:
         return true;
@@ -296,7 +294,9 @@ function WriteProfileScreen({ navigation }: any) {
         </View>
 
         <View key="image">
-          <ImageScreen />
+          <ImageScreen setParentImage={value => {
+            setProfile(prev => ({ ...prev, images: value }));
+          }}/>
         </View>
 
         <View key="introduction">

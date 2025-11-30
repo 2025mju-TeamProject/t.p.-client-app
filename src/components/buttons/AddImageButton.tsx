@@ -1,24 +1,51 @@
 import React, { JSX } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 type Props = {
-  bubble?: string
-}
+  bubble?: string;
+  onPress?: () => void;
+  background?: ImageSourcePropType | null;
+};
 
 const width = Dimensions.get('window').width;
 
-function AddImageButton({bubble = ''}: Props) {
+function AddImageButton({
+  bubble = '',
+  onPress = () => {},
+  background = null,
+}: Props) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+      {background !== null && (
+        <Image
+          source={background}
+          style={{ width: '100%', height: '100%', borderRadius: 10 }}
+        />
+      )}
+      {background === null && <Icon name={'plus'} size={30} color="#D2D2D2" />}
       {bubble !== '' && (
-        <View style={styles.bubble}>
+        <View
+          style={[
+            styles.bubble,
+            bubble === '대표'
+              ? { backgroundColor: 'white' }
+              : { backgroundColor: '#D2D2D2' },
+          ]}
+        >
           <Text style={styles.text}>{bubble}</Text>
         </View>
       )}
-      <Icon name={'plus'} size={30} color="#D2D2D2" />
-    </View>
-  )
+    </TouchableOpacity>
+  );
 }
 
 export default AddImageButton;
@@ -47,6 +74,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     fontWeight: 700,
-    color: 'black'
-  }
-})
+    color: 'black',
+  },
+});
