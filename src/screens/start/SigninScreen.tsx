@@ -460,8 +460,8 @@ function SigninScreen({ navigation }: any) {
           <AppButton
             title={'확인'}
             tintColors={{ true: colors.pink, false: '#B1B1B1' }}
-            onPress={trySignin}
-            isAbled={next} // TODO: next 적용시 바꾸기
+            onPress={() => navigation.navigate('WriteProfile')}
+            isAbled={true} // TODO: next 적용시 바꾸기
           />
         </View>
       </View>

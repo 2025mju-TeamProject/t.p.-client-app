@@ -4,34 +4,19 @@ import styles from './writeProfileStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-type Birthday = {
-  year: number;
-  month: number;
-  day: number;
-  hour: number;
-  minute: number;
-  knowTime: boolean;
-};
-
 type Props = {
-  birthday: Birthday;
+  setParentYear: (value: number) => void;
+  setParentMonth: (value: number) => void;
+  setParentDay: (value: number) => void;
+  setParentHour: (value: number) => void;
+  setParentMinute: (value: number) => void;
 };
 
-function BirthdayScreen() {
+function BirthdayScreen({ setParentYear, setParentMonth, setParentDay, setParentHour, setParentMinute}: Props) {
   const [noTime, setNoTime] = useState<boolean>(false);
   const [openPicker, setOpenPicker] = useState<
     null | 'year' | 'month' | 'day' | 'hour' | 'minute'
   >(null);
-
-  // 전체 생일 상태
-  const [birthday, setBirthday] = useState<Birthday>({
-    year: 0,
-    month: 0,
-    day: 0,
-    hour: 0,
-    minute: 0,
-    knowTime: false,
-  });
 
   // 연
   const [yearValue, setYearValue] = useState<number | null>(null);
@@ -74,7 +59,13 @@ function BirthdayScreen() {
       setHourValue(null);
       setMinuteValue(null);
     }
-  }, [noTime]);
+
+    setParentYear(yearValue !== null ? yearValue : 0);
+    setParentMonth(monthValue !== null ? monthValue : 0);
+    setParentDay(dayValue !== null ? dayValue : 0);
+    setParentHour(hourValue !== null ? hourValue : 0);
+    setParentMinute(minuteValue !== null ? minuteValue : 0);
+  }, [yearValue, monthValue, dayValue, hourValue, minuteValue, noTime]);
 
   return (
     <View style={styles.container}>

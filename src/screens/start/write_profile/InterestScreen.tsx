@@ -3,8 +3,17 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import styles from './writeProfileStyles'
 import SelectButton from '../../../components/buttons/SelectButton';
 
-function InterestScreen() {
+type Props = {
+  setParentHobbies: (value: string[]) => void;
+}
+
+function InterestScreen({ setParentHobbies }: Props) {
   const [selected, setSelected] = useState<Array<string>>([]);
+
+  useEffect(() => {
+    const trimmed = selected.map(item => item.slice(2)); // 앞 2글자 제거
+    setParentHobbies(trimmed);
+  }, [selected]);
 
   function handleSelected(item: string) {
     setSelected(prev => {

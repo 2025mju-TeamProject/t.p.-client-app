@@ -1,10 +1,30 @@
-import React, { useState } from 'react';
+import React, { JSX, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import styles from './writeProfileStyles';
 import SelectButton from '../../../components/buttons/SelectButton';
 
-function JobScreen() {
+type Props = {
+  setParentJob: (value: string) => void;
+}
+
+const jobs = [
+  'IT·개발직',
+  '사무·관리직',
+  '전문직',
+  '공공·교육직',
+  '서비스·외식업',
+  '프리랜서·자영업',
+  '학생',
+  '기타'
+]
+
+function JobScreen({ setParentJob }: Props): JSX.Element {
   const [index, setIndex] = useState<number>(-1);
+
+  function handlePress(index: number) {
+    setIndex(index);
+    setParentJob(jobs[index]);
+  }
 
   return (
     <View style={styles.container}>
