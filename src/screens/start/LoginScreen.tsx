@@ -14,13 +14,16 @@ import { useAuth } from '../../context/AuthContext';
 import CheckBox from '@react-native-community/checkbox';
 import OneOptionModal from '../../components/modals/OneOptionModal';
 import Modal from 'react-native-modal';
+import apiClient from '../../services/apiClient';
+import axios, { AxiosResponse } from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
 function LoginScreen({ navigation }: any) {
   const { login } = useAuth();
-  const [id, setId] = useState('');
-  const [passwd, setPasswd] = useState('');
+  const [id, setId] = useState<string>('');
+  const [passwd, setPasswd] = useState<string>('');
   const [remember, setRemember] = useState(false);
   const [canLogin, setCanLogin] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -33,19 +36,37 @@ function LoginScreen({ navigation }: any) {
     setCanLogin(ok)
   }, [id, passwd]);
 
-  const handleLogin = () => {
-    //Todo 로그인 api 연결
-    if (id != '0000') {
-      setIsModalVisible(true);
-      return;
-    }
+  const handleLogin = async () => {
+    const api = apiClient
+    let auth: AxiosResponse<any, any, {}>
+    try {
+      auth = await api.post('/api/login/', {
+        username: id,
+        password: passwd
+      })
+      console.log('auth', auth)
 
-    login('Jane Doe');
-    //navigateToHomeScreen()
-    navigation.reset({
-      index: 0,
-      routes: [{ name: ROUTES.BOTTOM }],
-    });
+      if(remember){
+        await AsyncStorage.setItem('accessToken', auth.data.access);
+        await AsyncStorage.setItem('refreshToken', auth.data.refresh);
+      }
+
+      login(auth.data.access);
+      //navigateToHomeScreen()
+      navigation.reset({
+        index: 0,
+        routes: [{ name: ROUTES.BOTTOM }],
+      });
+
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        console.log('로그인 실패 status:', error.response?.status);
+        console.log(error.response?.data);
+        showModal();
+      } else {
+        console.log('예상 못 한 에러:', error);
+      }
+    }
   };
 
   const onIdInput = (value: string) => {
