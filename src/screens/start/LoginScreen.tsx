@@ -14,7 +14,7 @@ import { useAuth } from '../../context/AuthContext';
 import CheckBox from '@react-native-community/checkbox';
 import OneOptionModal from '../../components/modals/OneOptionModal';
 import Modal from 'react-native-modal';
-import apiClient from '../../services/apiClient';
+import apiClient from '../../api/apiClient';
 import axios, { AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

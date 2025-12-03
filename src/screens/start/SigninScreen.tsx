@@ -13,8 +13,7 @@ import colors from '../../constants/colors';
 import Modal from 'react-native-modal';
 import strings from '../../constants/strings';
 import Icon from 'react-native-vector-icons/Ionicons';
-import apiClient from '../../services/apiClient';
-import axios from 'axios';
+import apiClient from '../../api/apiClient';
 
 import {
   validateId,

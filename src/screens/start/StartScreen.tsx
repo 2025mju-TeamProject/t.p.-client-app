@@ -1,18 +1,18 @@
 import ROUTES from '../../constants/routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Routes from '../../constants/routes';
-import styles from 'react-native-webview/lib/WebView.styles';
 import React, { useEffect } from 'react';
 import {View} from 'react-native';
 
 function StartScreen({ navigation }: any) {
   async function handleNavigate() {
-    // let route
-    // if(await AsyncStorage.getItem('accessToken')){
-    //   route = ROUTES.WRITEPROFFILE;
-    // } else {
-    //   route = ROUTES.HOME;
-    // }
+    let route
+    const token = await AsyncStorage.getItem('accessToken');
+    if(token !== null) {
+
+      route = ROUTES.WRITEPROFFILE;
+    } else {
+      route = ROUTES.HOME;
+    }
     navigation.reset({
       index: 0,
       // routes: [{ name: route }],

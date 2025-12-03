@@ -20,9 +20,8 @@ import ImageScreen from '../../screens/start/write_profile/ImageScreen';
 import IntroductionScreen from '../../screens/start/write_profile/IntroductionScreen';
 import Modal from 'react-native-modal';
 import ROUTES from '../../constants/routes';
-import apiClient from '../../services/apiClient';
+import apiClient from '../../api/apiClient';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const messages = [
   '쿠피가 프로필 작성 중',
