@@ -14,7 +14,8 @@ import { useAuth } from '../../context/AuthContext';
 import CheckBox from '@react-native-community/checkbox';
 import OneOptionModal from '../../components/modals/OneOptionModal';
 import Modal from 'react-native-modal';
-import apiClient from '../../api/apiClient';
+import { loginApi, isApiError } from '../../api/auth';
+import { saveTokens } from '../../utils/token';
 import axios, { AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -37,29 +38,22 @@ function LoginScreen({ navigation }: any) {
   }, [id, passwd]);
 
   const handleLogin = async () => {
-    const api = apiClient
-    let auth: AxiosResponse<any, any, {}>
     try {
-      auth = await api.post('/api/login/', {
-        username: id,
-        password: passwd
-      })
-      console.log('auth', auth)
+      const auth = await loginApi(id, passwd); // ← API 모듈 사용
 
-      if(remember){
-        await AsyncStorage.setItem('accessToken', auth.data.access);
-        await AsyncStorage.setItem('refreshToken', auth.data.refresh);
+      if (remember) {
+        await saveTokens(auth); // access/refresh 둘 다 저장
       }
 
-      login(auth.data.access);
-      //navigateToHomeScreen()
+      // 전역 auth context 같은 곳에 access 저장
+      login(auth.access); // 기존에 쓰던 login 함수 이름이 login이면 이름 충돌 주의
+
       navigation.reset({
         index: 0,
         routes: [{ name: ROUTES.BOTTOM }],
       });
-
-    } catch (error: any) {
-      if (axios.isAxiosError(error)) {
+    } catch (error: unknown) {
+      if (isApiError(error)) {
         console.log('로그인 실패 status:', error.response?.status);
         console.log(error.response?.data);
         showModal();

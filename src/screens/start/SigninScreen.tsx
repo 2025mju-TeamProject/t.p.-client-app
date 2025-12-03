@@ -13,7 +13,8 @@ import colors from '../../constants/colors';
 import Modal from 'react-native-modal';
 import strings from '../../constants/strings';
 import Icon from 'react-native-vector-icons/Ionicons';
-import apiClient from '../../api/apiClient';
+import { loginApi, registerApi, isApiError } from '../../api/auth';
+import { saveTokens } from '../../utils/token';
 
 import {
   validateId,
@@ -22,7 +23,6 @@ import {
   validatePhone,
 } from '../../utils/validation';
 import ROUTES from '../../constants/routes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
@@ -109,7 +109,6 @@ function SigninScreen({ navigation }: any) {
   }
 
   async function trySignin() {
-    const api = apiClient;
     const isValidId = validateId(id);
     const isValidPasswd = validatePassword(passwd);
     const isValidCheckPasswd = validateCheckPassword(passwd, checkPasswd);
@@ -129,33 +128,37 @@ function SigninScreen({ navigation }: any) {
     }
 
     try {
-      await api.post('/api/register/', {
+      await registerApi({
         username: id,
         password: passwd,
         password_verify: checkPasswd,
         phone_number: phone,
       });
-      const auth = await api.post('/api/login/', {
-        username: id,
-        password: passwd,
-      });
-      await AsyncStorage.setItem('accessToken', auth.data.access);
-      await AsyncStorage.setItem('refreshToken', auth.data.refresh);
+
+      const auth = await loginApi(id, passwd);
+
+      await saveTokens(auth);
 
       navigation.reset({
         index: 0,
         routes: [{ name: ROUTES.WRITEPROFFILE }],
       });
-    } catch (error: any) {
-      if (error.response?.status == 400) {
-        if (error.response?.data.username) {
-          setIdTextIndex(2);
-          setIsId(false);
-        }
+    } catch (error: unknown) {
+      if (isApiError(error)) {
+        if (error.response?.status === 400) {
+          const data = error.response?.data;
 
-        if (error.response?.data.phone_number) {
-          setIsPhone(false);
+          if (data?.username) {
+            setIdTextIndex(2);
+            setIsId(false);
+          }
+
+          if (data?.phone_number) {
+            setIsPhone(false);
+          }
         }
+      } else {
+        console.log('예상 못 한 에러:', error);
       }
     }
   }
