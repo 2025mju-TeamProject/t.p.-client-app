@@ -5,18 +5,22 @@ import SelectButton from '../../../components/buttons/SelectButton';
 
 
 type Props = {
-  onPress: (value: string) => void;
-  choosed: string;
+  setParentGender: (value: string) => void;
+  setParentNickname: (value: string) => void;
 };
 
-function GenderScreen({ onPress, choosed }: Props) {
-  const [gender, setGender] = useState<string>(choosed);
+function GenderScreen({ setParentGender, setParentNickname }: Props) {
+  const [gender, setGender] = useState<string>('');
   const [nickname, setNickname] = useState<string>(''); // 닉네임 상태 추가
 
   function handlePress(value: string) {
     setGender(value);
-    onPress(value);
   }
+
+  useEffect(() => {
+    setParentGender(gender);
+    setParentNickname(nickname);
+  }, [gender, nickname]);
 
   return (
     <View style={styles.container}>

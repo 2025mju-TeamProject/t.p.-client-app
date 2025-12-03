@@ -14,6 +14,7 @@ interface ProfileCardProps {
   age: number;
   distance: string;
   hashtags: string[];
+  job: string;
   imagePath: string;
   onPress: () => void;
 }

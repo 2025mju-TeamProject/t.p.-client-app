@@ -4,30 +4,27 @@ import styles from './writeProfileStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-type Birthday = {
-  year: number;
-  month: number;
-  day: number;
-  hour: number;
-  minute: number;
-  knowTime: boolean;
+type Props = {
+  setParentYear: (value: number) => void;
+  setParentMonth: (value: number) => void;
+  setParentDay: (value: number) => void;
+  setParentHour: (value: number) => void;
+  setParentMinute: (value: number) => void;
+  setParentNotime: (value: boolean) => void;
 };
 
-function BirthdayScreen() {
+function BirthdayScreen({
+  setParentYear,
+  setParentMonth,
+  setParentDay,
+  setParentHour,
+  setParentMinute,
+  setParentNotime,
+}: Props) {
   const [noTime, setNoTime] = useState<boolean>(false);
   const [openPicker, setOpenPicker] = useState<
     null | 'year' | 'month' | 'day' | 'hour' | 'minute'
   >(null);
-
-  // 전체 생일 상태
-  const [birthday, setBirthday] = useState<Birthday>({
-    year: 0,
-    month: 0,
-    day: 0,
-    hour: 0,
-    minute: 0,
-    knowTime: false,
-  });
 
   // 연
   const [yearValue, setYearValue] = useState<number | null>(null);
@@ -70,23 +67,14 @@ function BirthdayScreen() {
       setHourValue(null);
       setMinuteValue(null);
     }
-  }, [noTime]);
 
-  // 드롭 박스
-  const pickerStyle = {
-    borderRadius: 12,
-    height: 46,
-    borderColor: '#111',
-    backgroundColor: 'white',
-    paddingLeft: 15,
-    paddingHorizontal: 12,
-  };
-
-  const pickerDropdownStyle = {
-    borderRadius: 12,
-    borderColor: '#111',
-    backgroundColor: 'white',
-  };
+    setParentYear(yearValue !== null ? yearValue : 0);
+    setParentMonth(monthValue !== null ? monthValue : 0);
+    setParentDay(dayValue !== null ? dayValue : 0);
+    setParentHour(hourValue !== null ? hourValue : 0);
+    setParentMinute(minuteValue !== null ? minuteValue : 0);
+    setParentNotime(noTime);
+  }, [yearValue, monthValue, dayValue, hourValue, minuteValue, noTime]);
 
   return (
     <View style={styles.container}>
@@ -101,107 +89,94 @@ function BirthdayScreen() {
 
       {/* 생년월일 */}
       <View style={[styles.section, { marginTop: 30 }]}>
-        <Text style={styles.boldText}>생년월일
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: '#111' },
+          ]}
+        >
+          생년월일
         </Text>
       </View>
 
-      <View style={[styles.section, { marginTop: 10, gap: 10 }]}>
-        {/* 연 */}
+      <View style={[styles.section, { marginTop: 5, gap: 10 }]}>
         <DropDownPicker
           value={yearValue}
           items={yearItems}
           open={openPicker === 'year'}
-          setOpen={(open) => setOpenPicker(open ? 'year' : null)}
+          setOpen={open => setOpenPicker(open ? 'year' : null)}
           setValue={setYearValue}
-          placeholder="연"
+          placeholder={'연'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily="NanumSquareR"
-          style={pickerStyle}
-          containerStyle={{ width: '33%', zIndex: 5000  }}
-          dropDownContainerStyle={{pickerDropdownStyle, zIndex: 5000}}
-
-
+          fontFamily={'NanumSquareR'}
+          containerStyle={{ width: '33%' }}
+          style={{ paddingLeft: 15 }}
         />
 
-        {/* 월 */}
         <DropDownPicker
           value={monthValue}
           items={monthItems}
           open={openPicker === 'month'}
-          setOpen={(open) => setOpenPicker(open ? 'month' : null)}
+          setOpen={open => setOpenPicker(open ? 'month' : null)}
           setValue={setMonthValue}
-          placeholder="월"
+          placeholder={'월'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily="NanumSquareR"
-          style={pickerStyle}
-          containerStyle={{ width: '30%', zIndex: 4000 }}
-          dropDownContainerStyle={{ pickerDropdownStyle, zIndex: 4000 }}
-
+          fontFamily={'NanumSquareR'}
+          containerStyle={{ width: '30%' }}
+          style={{ paddingLeft: 15 }}
         />
 
-        {/* 일 */}
         <DropDownPicker
           value={dayValue}
           items={dayItems}
           open={openPicker === 'day'}
-          setOpen={(open) => setOpenPicker(open ? 'day' : null)}
+          setOpen={open => setOpenPicker(open ? 'day' : null)}
           setValue={setDayValue}
-          placeholder="일"
+          placeholder={'일'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily="NanumSquareR"
-          style={pickerStyle}
-          containerStyle={{ width: '30%', zIndex: 3000 }}
-          dropDownContainerStyle={{ pickerDropdownStyle, zIndex: 3000 }}
-
+          fontFamily={'NanumSquareR'}
+          containerStyle={{ width: '30%' }}
+          style={{ paddingLeft: 15 }}
         />
       </View>
 
       {/* 태어난 시간 */}
       <View style={[styles.section, { marginTop: 30 }]}>
-        <Text style={styles.boldText}>태어난 시간
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: '#111' },
+          ]}
+        >
+          태어난 시간
         </Text>
       </View>
 
-      <View style={[styles.section, { marginTop: 10, gap: 10 }]}>
-        {/* 시 */}
+      <View style={[styles.section, { marginTop: 5, gap: 10 }]}>
         <DropDownPicker
           value={hourValue}
           items={hourItems}
           open={openPicker === 'hour' && !noTime}
-          setOpen={(open) => !noTime && setOpenPicker(open ? 'hour' : null)}
+          setOpen={open => !noTime && setOpenPicker(open ? 'hour' : null)}
           setValue={setHourValue}
-          placeholder="시"
+          placeholder={'시'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily="NanumSquareR"
-          style={pickerStyle}
-          containerStyle={{ width: '30%', zIndex: 2000 }}
-          dropDownContainerStyle={{ pickerDropdownStyle, zIndex: 2000 }}
-
-          // 활&비활 상태
-          style={noTime ? disabledPickerStyle : activePickerStyle}
-          dropDownContainerStyle={noTime ? disabledDropdown : activeDropdown}
+          fontFamily={'NanumSquareR'}
+          containerStyle={{ width: '30%' }}
+          style={{ paddingLeft: 15, zIndex: 1 }}
         />
 
-        {/* 분 */}
         <DropDownPicker
           value={minuteValue}
           items={minuteItems}
           open={openPicker === 'minute' && !noTime}
-          setOpen={(open) => !noTime && setOpenPicker(open ? 'minute' : null)}
+          setOpen={open => !noTime && setOpenPicker(open ? 'minute' : null)}
           setValue={setMinuteValue}
-          placeholder="분"
+          placeholder={'분'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily="NanumSquareR"
-          style={pickerStyle}
-          containerStyle={{ width: '30%', zIndex: 1000 }}
-          dropDownContainerStyle={{pickerDropdownStyle, zIndex: 1000 }}
-
-          // 활&비활 상태
-          style={noTime ? disabledPickerStyle : activePickerStyle}
-          dropDownContainerStyle={noTime ? disabledDropdown : activeDropdown}
-          arrowIconStyle={{ tintColor: noTime ? '#979797' : '#111' }}
-
-
+          fontFamily={'NanumSquareR'}
+          containerStyle={{ width: '30%' }}
+          style={{ paddingLeft: 15, zIndex: 1 }}
         />
       </View>
 
@@ -210,13 +185,15 @@ function BirthdayScreen() {
         style={[
           styles.section,
           { marginTop: 20, flexDirection: 'row', alignItems: 'center' },
-        ]}>
+        ]}
+      >
         <TouchableOpacity
           onPress={() => setNoTime(!noTime)}
           style={[
             localStyles.checkbox,
             { borderColor: noTime ? '#111' : '#C7C7C7' },
-          ]}>
+          ]}
+        >
           {noTime && <Icon name="checkmark" size={15} color="#111" />}
         </TouchableOpacity>
 
@@ -225,7 +202,8 @@ function BirthdayScreen() {
             fontFamily: 'NanumSquareB',
             color: '#111',
             fontSize: 12,
-          }}>
+          }}
+        >
           시간 모름
         </Text>
       </View>
@@ -246,35 +224,3 @@ const localStyles = StyleSheet.create({
     marginRight: 10,
   },
 });
-
-// 활성화&비활성 드롭박스 스타일
-const activePickerStyle = {
-  borderRadius: 12,
-  height: 46,
-  borderColor: '#111',
-  backgroundColor: 'white',
-  paddingLeft: 15,
-  paddingHorizontal: 12,
-};
-
-const disabledPickerStyle = {
-  borderRadius: 12,
-  height: 46,
-  borderColor: '#E3E3E3',
-  backgroundColor: '#FAFAFA',
-  paddingLeft: 15,
-  paddingHorizontal: 12,
-};
-
-const activeDropdown = {
-  borderRadius: 12,
-  borderColor: '#111',
-  backgroundColor: 'white',
-};
-
-const disabledDropdown = {
-  borderRadius: 12,
-  borderColor: '#FAFAFA',
-  backgroundColor: '#F2F2F2',
-};
-

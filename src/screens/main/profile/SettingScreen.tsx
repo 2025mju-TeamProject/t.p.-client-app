@@ -1,21 +1,49 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../../../constants/colors';
 import ROUTES from '../../../constants/routes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import routes from '../../../constants/routes';
 
 function SettingScreen({ navigation }: any) {
-
   // 뒤로가기: 이전 화면으로 이동(스택 뒤로가기)
-  const goBack = () => { navigation.goBack(); };
+  const goBack = () => {
+    navigation.goBack();
+  };
 
   // 메뉴 아이템 컴포넌트
-  const MenuItem = ({ title }: { title: string }) => (
-    <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
+  const MenuItem = ({
+    title,
+    onPress = function(){},
+  }: {
+    title: string;
+    onPress?: () => void;
+  }) => (
+    <TouchableOpacity
+      style={styles.menuItem}
+      activeOpacity={0.7}
+      onPress={onPress}
+    >
       <Text style={styles.menuText}>{title}</Text>
       <Ionicons name="chevron-forward" size={20} color="#B1B1B1" />
     </TouchableOpacity>
   );
+
+  async function logout() {
+    await AsyncStorage.clear();
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: ROUTES.STARTNAV }],
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -29,7 +57,6 @@ function SettingScreen({ navigation }: any) {
 
       {/* 아래 내용만 스크롤 */}
       <ScrollView
-        style={styles.scrollArea}
         contentContainerStyle={{ paddingBottom: 40 }}
       >
         {/* 알림 섹션 */}
@@ -49,7 +76,7 @@ function SettingScreen({ navigation }: any) {
 
         {/* 계정 섹션 */}
         <Text style={styles.sectionTitle}>계정</Text>
-        <MenuItem title="로그아웃" />
+        <MenuItem title="로그아웃" onPress={logout} />
         <MenuItem title="계정삭제" />
 
         {/* 앱 정보 */}
@@ -107,8 +134,8 @@ const styles = StyleSheet.create({
     color: '#111111',
   },
 
-  divider: { /* 영역 나누는 회색 직선 */
-    height: 1,
+  divider: {
+    /* 영역 나누는 회색 직선 */ height: 1,
     backgroundColor: '#D9D9D9',
     marginTop: 10,
     marginLeft: 12,

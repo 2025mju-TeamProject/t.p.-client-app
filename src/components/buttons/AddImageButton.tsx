@@ -1,64 +1,48 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import {
   Dimensions,
+  Image,
+  ImageSourcePropType,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
-  Image,
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { launchImageLibrary } from 'react-native-image-picker';
 
 type Props = {
   bubble?: string;
-  index: number;
-  image: string | null;
-  onSelect: (index: number, uri: string) => void;
-  onRemove: (index: number) => void;
+  onPress?: () => void;
+  background?: ImageSourcePropType | null;
 };
 
 const width = Dimensions.get('window').width;
-const side = (width - 48) / 3 - 8;
 
-function AddImageButton({ bubble = '', index, image, onSelect, onRemove }: Props) {
-  const handlePress = async () => {
-    const result = await launchImageLibrary({
-      mediaType: 'photo',
-      selectionLimit: 1,
-    });
-
-    if (result.didCancel) return;
-
-    const uri = result.assets?.[0]?.uri;
-    if (uri) onSelect(index, uri);
-  };
-
+function AddImageButton({
+  bubble = '',
+  onPress = () => {},
+  background = null,
+}: Props) {
   return (
-    <TouchableOpacity style={styles.container} onPress={!image ? handlePress : undefined}>
-
-      {/* bubble (필수) */}
-      {bubble !== '' && !image && (
-        <View style={styles.bubble}>
-          <Text style={styles.bubbleText}>{bubble}</Text>
-        </View>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+      {background !== null && (
+        <Image
+          source={background}
+          style={{ width: '100%', height: '100%', borderRadius: 10 }}
+        />
       )}
-
-      {/* 미리보기 이미지 */}
-      {image ? (
-        <>
-          <Image source={{ uri: image }} style={styles.preview} />
-
-          {/* X 삭제 버튼 */}
-          <TouchableOpacity
-            style={styles.removeBtn}
-            onPress={() => onRemove(index)}
-          >
-            <Icon name="x" size={18} color="white" />
-          </TouchableOpacity>
-        </>
-      ) : (
-        <Icon name="plus" size={30} color="#D2D2D2" />
+      {background === null && <Icon name={'plus'} size={30} color="#D2D2D2" />}
+      {bubble !== '' && (
+        <View
+          style={[
+            styles.bubble,
+            bubble === '대표'
+              ? { backgroundColor: 'white' }
+              : { backgroundColor: '#D2D2D2' },
+          ]}
+        >
+          <Text style={styles.text}>{bubble}</Text>
+        </View>
       )}
     </TouchableOpacity>
   );
@@ -68,14 +52,13 @@ export default AddImageButton;
 
 const styles = StyleSheet.create({
   container: {
-    width: side,
-    height: side,
+    width: (width - 48) / 3 - 8,
+    height: (width - 48) / 3 - 8,
     backgroundColor: '#F4F4F4',
     borderRadius: 10,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
-    position: 'relative',
   },
   bubble: {
     width: 37,
@@ -87,30 +70,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#D2D2D2',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 10,
   },
-  bubbleText: {
+  text: {
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: 700,
     color: 'black',
-  },
-
-  preview: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-
-  removeBtn: {
-    position: 'absolute',
-    top: 6,
-    right: 6,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 20,
   },
 });

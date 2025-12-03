@@ -11,41 +11,67 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AppButton from '../../components/buttons/AppButton';
 import ROUTES from '../../constants/routes';
 import { useAuth } from '../../context/AuthContext';
-import CheckBox from '@react-native-community/checkbox';
 import OneOptionModal from '../../components/modals/OneOptionModal';
 import Modal from 'react-native-modal';
+import { loginApi, isApiError } from '../../api/auth';
+import { saveTokens } from '../../utils/localTokens';
+import { useLoading } from '../../context/LoadingContext';
+import { useNetInfoContext } from '../../context/NetInfoContext';
 
 const { width } = Dimensions.get('window');
 
 function LoginScreen({ navigation }: any) {
   const { login } = useAuth();
-  const [id, setId] = useState('');
-  const [passwd, setPasswd] = useState('');
+  const { showLoading, hideLoading } = useLoading();
+  const { isConnected } = useNetInfoContext();
+  const [id, setId] = useState<string>('');
+  const [passwd, setPasswd] = useState<string>('');
   const [remember, setRemember] = useState(false);
   const [canLogin, setCanLogin] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const ok =
-      id.length > 0 &&
-      passwd.length > 0
+      21 > id.length &&
+      id.length > 5 &&
+      21 > passwd.length &&
+      passwd.length > 7;
 
-    setCanLogin(ok)
+    setCanLogin(ok);
   }, [id, passwd]);
 
-  const handleLogin = () => {
-    //Todo 로그인 api 연결
-    if (id != '0000') {
-      setIsModalVisible(true);
-      return;
+  const handleLogin = async () => {
+    if(!isConnected) {
+      return
     }
+    showLoading();
 
-    login('Jane Doe');
-    //navigateToHomeScreen()
-    navigation.reset({
-      index: 0,
-      routes: [{ name: ROUTES.BOTTOM }],
-    });
+    try {
+      console.log('working');
+      const auth = await loginApi(id, passwd); // ← API 모듈 사용
+      if (remember) {
+        await saveTokens(auth); // access/refresh 둘 다 저장
+      }
+
+      // 전역 auth context 같은 곳에 access 저장
+      login(auth.access); // 기존에 쓰던 login 함수 이름이 login이면 이름 충돌 주의
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: ROUTES.BOTTOM }],
+      });
+    } catch (error: unknown) {
+      showModal();
+      if (isApiError(error)) {
+        console.log('로그인 실패 status:', error.response?.status);
+        console.log(error.response?.data);
+
+      } else {
+        console.log('예상 못 한 에러:', error);
+      }
+    } finally {
+      hideLoading();
+    }
   };
 
   const onIdInput = (value: string) => {
@@ -73,7 +99,7 @@ function LoginScreen({ navigation }: any) {
 
   function testLogin() {
     login('Jane Doe');
-    navigateToHomeScreen()
+    navigateToHomeScreen();
     navigation.reset({
       index: 0,
       routes: [{ name: ROUTES.BOTTOM }],
@@ -86,9 +112,14 @@ function LoginScreen({ navigation }: any) {
         <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>사빠당</Text>
       </View>
       <View style={styles.section}>
-        <Text style={[styles.subTitle,
-            { fontFamily: 'NanumSquareR', marginBottom: 10 }]}>
-            사랑에 빠질 당신을 위한 소개팅</Text>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareR', marginBottom: 10 },
+          ]}
+        >
+          사랑에 빠질 당신을 위한 소개팅
+        </Text>
       </View>
 
       {/*아이디*/}
@@ -98,8 +129,14 @@ function LoginScreen({ navigation }: any) {
           { marginTop: 73, marginLeft: 1, justifyContent: 'flex-start' },
         ]}
       >
-        <Text style={[styles.subTitle,
-            { fontFamily: 'NanumSquareB', color: 'black' }]}>아이디</Text>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: 'black' },
+          ]}
+        >
+          아이디
+        </Text>
       </View>
 
       <View style={[styles.section, { marginTop: 5 }]}>
@@ -117,8 +154,14 @@ function LoginScreen({ navigation }: any) {
           { marginTop: 33, marginLeft: 1, justifyContent: 'flex-start' },
         ]}
       >
-        <Text style={[styles.subTitle,
-            { fontFamily: 'NanumSquareB', color: 'black' }]}>비밀번호</Text>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: 'black' },
+          ]}
+        >
+          비밀번호
+        </Text>
       </View>
 
       <View style={[styles.section, { marginTop: 5 }]}>
@@ -135,23 +178,33 @@ function LoginScreen({ navigation }: any) {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity
             onPress={() => setRemember(!remember)}
-            style={[ styles.checkbox,
-                { borderColor: remember ? '#111' : '#C7C7C7' },
-            ]}>
-              {remember && <Icon name="checkmark" size={15} color="#111" />}
+            style={[
+              styles.checkbox,
+              { borderColor: remember ? '#111' : '#C7C7C7' },
+            ]}
+          >
+            {remember && <Icon name="checkmark" size={15} color="#111" />}
           </TouchableOpacity>
           <Text
-            style={[ styles.subTitle,
-               { color: 'black', fontSize: 12, fontFamily: 'NanumSquareB' },]}
-            >
-              자동 로그인
-            </Text>
-          </View>
+            style={[
+              styles.subTitle,
+              { color: 'black', fontSize: 12, fontFamily: 'NanumSquareB' },
+            ]}
+          >
+            자동 로그인
+          </Text>
+        </View>
 
-        {/*Todo 테스트용 나중에 view로 바꿀것*/}
-        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={testLogin}>
-          <Text style={[styles.subTitle, { fontFamily: 'NanumSquareR', color: '#979797' }]}>아이디/비밀번호 찾기</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text
+            style={[
+              styles.subTitle,
+              { fontFamily: 'NanumSquareR', color: '#979797' },
+            ]}
+          >
+            아이디/비밀번호 찾기
+          </Text>
+        </View>
       </View>
 
       {/*로그인 버튼*/}
@@ -166,11 +219,24 @@ function LoginScreen({ navigation }: any) {
 
       {/*회원가입*/}
       <View style={[styles.section, { marginTop: 18, marginBottom: 200 }]}>
-        <Text style={[styles.subTitle, { fontFamily:'NanumSquareB', marginRight: 4, color: '#979797' }]}>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', marginRight: 4, color: '#979797' },
+          ]}
+        >
           아직 회원이 아니신가요?
         </Text>
         <TouchableOpacity onPress={navigateToSigninScreen}>
-          <Text style={[styles.subTitle, { fontFamily:'NanumSquareEB', color: 'black' }]}> 회원가입</Text>
+          <Text
+            style={[
+              styles.subTitle,
+              { fontFamily: 'NanumSquareEB', color: 'black' },
+            ]}
+          >
+            {' '}
+            회원가입
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -179,12 +245,14 @@ function LoginScreen({ navigation }: any) {
         isVisible={isModalVisible}
         onBackdropPress={() => setIsModalVisible(false)}
         animationIn="fadeInUp"
-        animationOut="fadeOutDown" >
+        animationOut="fadeOutDown"
+      >
         <OneOptionModal
           title={'로그인 실패'}
-          subTitle={'아이디와 비밀번호가 일치하지 않습니다'}
+          subTitle={'아이디와 비밀번호가 일치하지 않습니다.'}
           optionText={'확인'}
-          onClick={closeModal} />
+          onClick={closeModal}
+        />
       </Modal>
     </View>
   );
@@ -197,7 +265,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
   },
   section: {
     width: width,
