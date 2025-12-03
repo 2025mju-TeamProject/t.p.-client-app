@@ -29,10 +29,6 @@ function LoginScreen({ navigation }: any) {
   const [remember, setRemember] = useState(false);
   const [canLogin, setCanLogin] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [modalTitle, setModalTitle] = useState<string>('로그인 실패');
-  const [modalText, setModalText] = useState<string>(
-    '아이디와 비밀번호가 일치하지 않습니다.',
-  );
 
   useEffect(() => {
     const ok =
@@ -45,15 +41,11 @@ function LoginScreen({ navigation }: any) {
   }, [id, passwd]);
 
   const handleLogin = async () => {
-    if (!isConnected) {
-      // 인터넷 없는 경우 처리
-      await setModalTitle('인터넷 연결 안됨');
-      await setModalText('서버에 연결할 수 없습니다.');
-      showModal();
-      return;
+    if(!isConnected) {
+      return
     }
-
     showLoading();
+
     try {
       console.log('working');
       const auth = await loginApi(id, passwd); // ← API 모듈 사용
@@ -69,12 +61,11 @@ function LoginScreen({ navigation }: any) {
         routes: [{ name: ROUTES.BOTTOM }],
       });
     } catch (error: unknown) {
+      showModal();
       if (isApiError(error)) {
         console.log('로그인 실패 status:', error.response?.status);
         console.log(error.response?.data);
-        await setModalTitle('로그인 실패');
-        await setModalText('아이디와 비밀번호가 일치하지 않습니다.');
-        showModal();
+
       } else {
         console.log('예상 못 한 에러:', error);
       }
@@ -257,8 +248,8 @@ function LoginScreen({ navigation }: any) {
         animationOut="fadeOutDown"
       >
         <OneOptionModal
-          title={modalTitle}
-          subTitle={modalText}
+          title={'로그인 실패'}
+          subTitle={'아이디와 비밀번호가 일치하지 않습니다.'}
           optionText={'확인'}
           onClick={closeModal}
         />

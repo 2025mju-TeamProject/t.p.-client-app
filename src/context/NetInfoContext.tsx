@@ -1,6 +1,9 @@
 // src/contexts/NetInfoContext.tsx
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
+import Modal from 'react-native-modal';
+import OneOptionModal from '../components/modals/OneOptionModal';
+import { StyleSheet, View, Text } from 'react-native';
 
 type NetInfoContextType = {
   isConnected: boolean;          // 인터넷 연결 여부 (null 대신 false로 기본값)
@@ -27,6 +30,18 @@ export function NetInfoProvider({ children }: { children: ReactNode }) {
   return (
     <NetInfoContext.Provider value={{ isConnected, netInfo }}>
       {children}
+      <Modal
+        isVisible={!isConnected}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        pointerEvents="none"
+      >
+        <View style={styles.container}>
+          <Text style={styles.title}>
+            인터넷 연결 없음
+          </Text>
+        </View>
+      </Modal>
     </NetInfoContext.Provider>
   );
 }
@@ -38,3 +53,22 @@ export function useNetInfoContext() {
   }
   return ctx;
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: 180,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 18,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 12,
+  },
+})
