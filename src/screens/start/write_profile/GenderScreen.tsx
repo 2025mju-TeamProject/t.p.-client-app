@@ -3,6 +3,7 @@ import { Text, View, Image, TextInput } from 'react-native';
 import styles from './writeProfileStyles';
 import SelectButton from '../../../components/buttons/SelectButton';
 
+
 type Props = {
   setParentGender: (value: string) => void;
   setParentNickname: (value: string) => void;
@@ -47,10 +48,7 @@ function GenderScreen({ setParentGender, setParentNickname }: Props) {
                 style={{
                   fontSize: 14,
                   fontFamily: 'NanumSquareB',
-                  color: selected ? '#fff' : '#111',
-                }}
-              >
-                남성
+                  color: selected ? '#fff' : '#111',}}>남성
               </Text>
             </View>
           )}
@@ -68,12 +66,8 @@ function GenderScreen({ setParentGender, setParentNickname }: Props) {
               />
               <Text
                 style={{
-                  fontSize: 14,
-                  fontFamily: 'NanumSquareB',
-                  color: selected ? '#fff' : '#111',
-                }}
-              >
-                여성
+                  fontSize: 14, fontFamily: 'NanumSquareB',
+                  color: selected ? '#fff' : '#111',}}>여성
               </Text>
             </View>
           )}
@@ -86,7 +80,7 @@ function GenderScreen({ setParentGender, setParentNickname }: Props) {
 
       {/* 닉네임 입력 */}
       <View style={[styles.section, { marginTop: 35 }]}>
-        <Text style={[styles.subTitle, { fontFamily: 'NanumSquareB', color: '#111' }]}>
+        <Text style={styles.boldText}>
           닉네임
         </Text>
       </View>

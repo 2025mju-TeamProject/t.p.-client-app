@@ -41,12 +41,22 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: 12,
-    fontWeight: 400,
+    fontFamily: 'NanumSquareR',
+    color: 'black'
+  },
+  text13: {
+    fontSize: 13,
+    fontFamily: 'NanumSquareR',
     color: 'black'
   },
   boldText: {
     fontSize: 12,
-    fontWeight: 800,
-    color: 'black'
-  }
+    color: 'black',
+    fontFamily: 'NanumSquareEB',
+  },
+  boldTextBB: {
+    fontSize: 14,
+    color: 'black',
+    fontFamily: 'NanumSquareEB',
+  },
 })

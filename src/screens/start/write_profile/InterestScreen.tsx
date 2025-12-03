@@ -39,11 +39,16 @@ function InterestScreen({ setParentHobbies }: Props) {
         <Text style={styles.subTitle}>최소 3개, 최대 8개까지 선택할 수 있어요.</Text>
       </View>
 
+      {/* 운동 및 피트니스 */}
       <ScrollView style={{marginTop: 30}}>
-        <View style={styles.section}>
-          <Text style={[styles.boldText]}>🏃 운동 및 피트니스</Text>
+        <View style={[styles.section]}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: 13 }}>🏃</Text>
+            <Text style={{ fontSize: 13, fontFamily: 'NanumSquareEB', marginLeft: 4 }}>
+              운동 및 피트니스
+            </Text>
+          </View>
         </View>
-
         <View style={[styles.section, {marginTop: 10, flexWrap: 'wrap', gap: 8}]}>
           {sportsItems.map((item, index) => (
             <SelectButton
@@ -56,8 +61,21 @@ function InterestScreen({ setParentHobbies }: Props) {
           ))}
         </View>
 
-        <View style={[styles.section, {marginTop: 30}]}>
-          <Text style={[styles.boldText]}>✈️ 여행 및 야외활동</Text>
+        {/* 여행 및 야외활동 */}
+        <View style={[styles.section, { marginTop: 30 }]}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: 13 }}>✈️</Text>
+            <Text
+              style={{
+                fontSize: 13,
+                fontFamily: 'NanumSquareEB',
+                marginLeft: 4,
+                color: '#111',
+              }}
+            >
+              여행 및 야외활동
+            </Text>
+          </View>
         </View>
         <View style={[styles.section, {marginTop: 10, flexWrap: 'wrap', gap: 8}]}>
           {activityItems.map((item, index) => (
@@ -71,9 +89,23 @@ function InterestScreen({ setParentHobbies }: Props) {
           ))}
         </View>
 
-        <View style={[styles.section, {marginTop: 30}]}>
-          <Text style={[styles.boldText]}>🎨 문화 및 예술</Text>
+        {/* 문화 및 예술 */}
+        <View style={[styles.section, { marginTop: 30 }]}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: 13 }}>🎨</Text>
+            <Text
+              style={{
+                fontSize: 13,
+                fontFamily: 'NanumSquareEB',
+                marginLeft: 4,
+                color: '#111',
+              }}
+            >
+              문화 및 예술
+            </Text>
+          </View>
         </View>
+
         <View style={[styles.section, {marginTop: 10, flexWrap: 'wrap', gap: 8}]}>
           {artItems.map((item, index) => (
             <SelectButton
@@ -86,9 +118,23 @@ function InterestScreen({ setParentHobbies }: Props) {
           ))}
         </View>
 
-        <View style={[styles.section, {marginTop: 30}]}>
-          <Text style={[styles.boldText]}>📚 생활 및 자기관리</Text>
+        {/* 생활 및 자기관리 */}
+        <View style={[styles.section, { marginTop: 30 }]}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: 13 }}>📚</Text>
+            <Text
+              style={{
+                fontSize: 13,
+                fontFamily: 'NanumSquareEB',
+                marginLeft: 4,
+                color: '#111',
+              }}
+            >
+              생활 및 자기관리
+            </Text>
+          </View>
         </View>
+
         <View style={[styles.section, {marginTop: 10, marginBottom: 30, flexWrap: 'wrap', gap: 8}]}>
           {livingItems.map((item, index) => (
             <SelectButton
@@ -108,9 +154,9 @@ function InterestScreen({ setParentHobbies }: Props) {
 export default InterestScreen;
 
 const sportsItems = [
-  '🏌️ 골프', '🏀 농구', '🏃 러닝', '🏄 서핑', '🎿 스키/스노우보드',
-  '🐬 스킨스쿠버', '⚾ 야구', '🧘 요가', '💪 헬스', '🚴 자전거',
-  '⚽ 축구', '🏋️‍♂️ 크로스핏', '🧗‍♀️ 클라이밍', '🎾 테니스', '🥽 프리다이빙', '💃 필라테스',
+  '🏌️ 골프', '⚽ 축구', '🏀 농구', '🏃 러닝', '🏄 서핑', '🎿 스키', ,
+  '⚾ 야구', '🚴 자전거', '🐬 스킨스쿠버', '🧘 요가', '💪 헬스',
+  '🏋️‍♂️ 크로스핏', '🧗‍♀️ 클라이밍', '🎾 테니스', '🥽 프리다이빙', '💃 필라테스',
 ]
 
 const activityItems = [
@@ -133,16 +179,17 @@ const localStyles = StyleSheet.create({
   button: {
     width: 'auto',
     height: 36,
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 8,
     borderColor: '#D9D9D9',
+    paddingHorizontal: 10,
   },
   buttonText: {
     fontSize: 13,
-    fontWeight: 700,
-    color: '#434343'
+    color: '#434343',
+    fontFamily: 'NanumSquareB',
   }
 })

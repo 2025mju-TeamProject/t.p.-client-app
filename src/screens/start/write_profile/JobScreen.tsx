@@ -34,64 +34,56 @@ function JobScreen({ setParentJob }: Props): JSX.Element {
 
       <View style={[styles.columnSection, { marginTop: 30, gap: 8 }]}>
         <SelectButton
-          title={'💻 IT·개발직'}
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={'💻  IT·개발직'}
           isSelected={index === 0}
           onPress={() => handlePress(0)}
           style={localStyle.button}
         />
 
         <SelectButton
-          title={'🏢 사무·관리직'}
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={'🏢  사무·관리직'}
           isSelected={index === 1}
           onPress={() => handlePress(1)}
           style={localStyle.button}
         />
 
         <SelectButton
-          title={'💼 전문직'}
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={'💼  전문직'}
           isSelected={index === 2}
           onPress={() => handlePress(2)}
           style={localStyle.button}
         />
 
         <SelectButton
-          title={'🏛️ 공공·교육직'}
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={'🏛️  공공·교육직'}
           isSelected={index === 3}
           onPress={() => handlePress(3)}
           style={localStyle.button}
         />
 
         <SelectButton
-          title={'🍽️ 서비스·외식업'}
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={'🍽️  서비스·외식업'}
           isSelected={index === 4}
           onPress={() => handlePress(4)}
           style={localStyle.button}
         />
 
         <SelectButton
-          title={'🌱 프리랜서·자영업'}
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={'🌱  프리랜서·자영업'}
           isSelected={index === 5}
           onPress={() => handlePress(5)}
           style={localStyle.button}
         />
 
         <SelectButton
-          title={'🎓 학생'}
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={'🎓  학생'}
           isSelected={index === 6}
           onPress={() => handlePress(6)}
           style={localStyle.button}
         />
 
         <SelectButton
-          title={'✨ 기타'}
-          tintColors={{ true: '#515151', false: 'white' }}
+          title={'✨  기타'}
           isSelected={index === 7}
           onPress={() => handlePress(7)}
           style={localStyle.button}
