@@ -11,36 +11,52 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AppButton from '../../components/buttons/AppButton';
 import ROUTES from '../../constants/routes';
 import { useAuth } from '../../context/AuthContext';
-import CheckBox from '@react-native-community/checkbox';
 import OneOptionModal from '../../components/modals/OneOptionModal';
 import Modal from 'react-native-modal';
 import { loginApi, isApiError } from '../../api/auth';
 import { saveTokens } from '../../utils/token';
-import axios, { AxiosResponse } from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useLoading } from '../../context/LoadingContext';
+import { useNetInfoContext } from '../../context/NetInfoContext';
 
 const { width } = Dimensions.get('window');
 
 function LoginScreen({ navigation }: any) {
   const { login } = useAuth();
+  const { showLoading, hideLoading } = useLoading();
+  const { isConnected } = useNetInfoContext();
   const [id, setId] = useState<string>('');
   const [passwd, setPasswd] = useState<string>('');
   const [remember, setRemember] = useState(false);
   const [canLogin, setCanLogin] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState<string>('로그인 실패');
+  const [modalText, setModalText] = useState<string>(
+    '아이디와 비밀번호가 일치하지 않습니다.',
+  );
 
   useEffect(() => {
     const ok =
-      id.length > 0 &&
-      passwd.length > 0
+      21 > id.length &&
+      id.length > 5 &&
+      21 > passwd.length &&
+      passwd.length > 7;
 
-    setCanLogin(ok)
+    setCanLogin(ok);
   }, [id, passwd]);
 
   const handleLogin = async () => {
-    try {
-      const auth = await loginApi(id, passwd); // ← API 모듈 사용
+    if (!isConnected) {
+      // 인터넷 없는 경우 처리
+      await setModalTitle('인터넷 연결 안됨');
+      await setModalText('서버에 연결할 수 없습니다.');
+      showModal();
+      return;
+    }
 
+    showLoading();
+    try {
+      console.log('working');
+      const auth = await loginApi(id, passwd); // ← API 모듈 사용
       if (remember) {
         await saveTokens(auth); // access/refresh 둘 다 저장
       }
@@ -56,10 +72,14 @@ function LoginScreen({ navigation }: any) {
       if (isApiError(error)) {
         console.log('로그인 실패 status:', error.response?.status);
         console.log(error.response?.data);
+        await setModalTitle('로그인 실패');
+        await setModalText('아이디와 비밀번호가 일치하지 않습니다.');
         showModal();
       } else {
         console.log('예상 못 한 에러:', error);
       }
+    } finally {
+      hideLoading();
     }
   };
 
@@ -88,7 +108,7 @@ function LoginScreen({ navigation }: any) {
 
   function testLogin() {
     login('Jane Doe');
-    navigateToHomeScreen()
+    navigateToHomeScreen();
     navigation.reset({
       index: 0,
       routes: [{ name: ROUTES.BOTTOM }],
@@ -101,9 +121,14 @@ function LoginScreen({ navigation }: any) {
         <Text style={[styles.title, { fontFamily: 'SCDream7' }]}>사빠당</Text>
       </View>
       <View style={styles.section}>
-        <Text style={[styles.subTitle,
-            { fontFamily: 'NanumSquareR', marginBottom: 10 }]}>
-            사랑에 빠질 당신을 위한 소개팅</Text>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareR', marginBottom: 10 },
+          ]}
+        >
+          사랑에 빠질 당신을 위한 소개팅
+        </Text>
       </View>
 
       {/*아이디*/}
@@ -113,8 +138,14 @@ function LoginScreen({ navigation }: any) {
           { marginTop: 73, marginLeft: 1, justifyContent: 'flex-start' },
         ]}
       >
-        <Text style={[styles.subTitle,
-            { fontFamily: 'NanumSquareB', color: 'black' }]}>아이디</Text>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: 'black' },
+          ]}
+        >
+          아이디
+        </Text>
       </View>
 
       <View style={[styles.section, { marginTop: 5 }]}>
@@ -132,8 +163,14 @@ function LoginScreen({ navigation }: any) {
           { marginTop: 33, marginLeft: 1, justifyContent: 'flex-start' },
         ]}
       >
-        <Text style={[styles.subTitle,
-            { fontFamily: 'NanumSquareB', color: 'black' }]}>비밀번호</Text>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', color: 'black' },
+          ]}
+        >
+          비밀번호
+        </Text>
       </View>
 
       <View style={[styles.section, { marginTop: 5 }]}>
@@ -150,21 +187,32 @@ function LoginScreen({ navigation }: any) {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <TouchableOpacity
             onPress={() => setRemember(!remember)}
-            style={[ styles.checkbox,
-                { borderColor: remember ? '#111' : '#C7C7C7' },
-            ]}>
-              {remember && <Icon name="checkmark" size={15} color="#111" />}
+            style={[
+              styles.checkbox,
+              { borderColor: remember ? '#111' : '#C7C7C7' },
+            ]}
+          >
+            {remember && <Icon name="checkmark" size={15} color="#111" />}
           </TouchableOpacity>
           <Text
-            style={[ styles.subTitle,
-               { color: 'black', fontSize: 12, fontFamily: 'NanumSquareB' },]}
-            >
-              자동 로그인
-            </Text>
-          </View>
+            style={[
+              styles.subTitle,
+              { color: 'black', fontSize: 12, fontFamily: 'NanumSquareB' },
+            ]}
+          >
+            자동 로그인
+          </Text>
+        </View>
 
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={[styles.subTitle, { fontFamily: 'NanumSquareR', color: '#979797' }]}>아이디/비밀번호 찾기</Text>
+          <Text
+            style={[
+              styles.subTitle,
+              { fontFamily: 'NanumSquareR', color: '#979797' },
+            ]}
+          >
+            아이디/비밀번호 찾기
+          </Text>
         </View>
       </View>
 
@@ -180,11 +228,24 @@ function LoginScreen({ navigation }: any) {
 
       {/*회원가입*/}
       <View style={[styles.section, { marginTop: 18, marginBottom: 200 }]}>
-        <Text style={[styles.subTitle, { fontFamily:'NanumSquareB', marginRight: 4, color: '#979797' }]}>
+        <Text
+          style={[
+            styles.subTitle,
+            { fontFamily: 'NanumSquareB', marginRight: 4, color: '#979797' },
+          ]}
+        >
           아직 회원이 아니신가요?
         </Text>
         <TouchableOpacity onPress={navigateToSigninScreen}>
-          <Text style={[styles.subTitle, { fontFamily:'NanumSquareEB', color: 'black' }]}> 회원가입</Text>
+          <Text
+            style={[
+              styles.subTitle,
+              { fontFamily: 'NanumSquareEB', color: 'black' },
+            ]}
+          >
+            {' '}
+            회원가입
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -193,12 +254,14 @@ function LoginScreen({ navigation }: any) {
         isVisible={isModalVisible}
         onBackdropPress={() => setIsModalVisible(false)}
         animationIn="fadeInUp"
-        animationOut="fadeOutDown" >
+        animationOut="fadeOutDown"
+      >
         <OneOptionModal
-          title={'로그인 실패'}
-          subTitle={'아이디와 비밀번호가 일치하지 않습니다'}
+          title={modalTitle}
+          subTitle={modalText}
           optionText={'확인'}
-          onClick={closeModal} />
+          onClick={closeModal}
+        />
       </Modal>
     </View>
   );
@@ -211,7 +274,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
   },
   section: {
     width: width,

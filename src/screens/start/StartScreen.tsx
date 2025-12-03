@@ -6,17 +6,18 @@ import { getAccessToken } from '../../utils/token';
 
 function StartScreen({ navigation }: any) {
   async function handleNavigate() {
-    let route
-    const token = getAccessToken();
-    if(token !== null) {
-      // todo 프로필 여부 체크
-      route = ROUTES.WRITEPROFFILE;
-    } else {
-      route = ROUTES.HOME;
-    }
+    // let route
+    // const token = getAccessToken();
+    // if(token !== null) {
+    //   // todo 프로필 여부 체크
+    //   route = ROUTES.WRITEPROFFILE;
+    // } else {
+    //   route = ROUTES.HOME;
+    // }
     navigation.reset({
       index: 0,
-      routes: [{ name: route }],
+      //routes: [{ name: route }],
+      routes: [{ name: ROUTES.LOGIN }],
     });
   }
 
