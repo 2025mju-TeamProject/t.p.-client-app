@@ -22,6 +22,9 @@ import Modal from 'react-native-modal';
 import ROUTES from '../../constants/routes';
 import apiClient from '../../api/apiClient';
 import axios from 'axios';
+import { getAccessToken } from '../../utils/localTokens';
+import { useLoading } from '../../context/LoadingContext';
+import { useAuth } from '../../context/AuthContext';
 
 const messages = [
   '쿠피가 프로필 작성 중',
@@ -66,6 +69,8 @@ function WriteProfileScreen({ navigation }: any) {
     hobbies: [],
     images: [],
   });
+  const { login } = useAuth();
+  const { showLoading, hideLoading } = useLoading();
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [messageIndex, setMessageIndex] = useState<number>(0);
   const [profileText, setProfileText] = useState<string>('');
@@ -79,6 +84,7 @@ function WriteProfileScreen({ navigation }: any) {
       getIntroduction();
     }
     if (page === totalPages - 1) {
+      handleLogin()
     }
 
     pagerRef.current.setPage(page + 1);
@@ -97,10 +103,7 @@ function WriteProfileScreen({ navigation }: any) {
     try {
       setModalVisible(true);
 
-      const accessToken = await api.post('/api/login/', {
-        username: 'ryan098761',
-        password: 'sehoon2004!',
-      });
+      const accessToken = await getAccessToken()
       const formData = new FormData();
 
       formData.append('nickname', (profile.nickname));
@@ -128,14 +131,14 @@ function WriteProfileScreen({ navigation }: any) {
       });
 
       console.log('formdata', formData);
-      response = await api.post('/api/profile/', formData, {
+      response = await api.post('/api/users/profile/', formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data',
         },
       });
       console.log(response.data);
-      setProfileText(response.data.profile_text);
+      setProfileText(response.data.data.profile_text);
 
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
@@ -200,14 +203,68 @@ function WriteProfileScreen({ navigation }: any) {
 
   async function handleLogin() {
     if (page === totalPages - 1) {
-      setModalVisible(true);
+      showLoading()
 
-      setModalVisible(false);
+      const api = apiClient;
+      let response;
+      try {
+        setModalVisible(true);
 
-      navigation.reset({
-        index: 0,
-        routes: [{ name: ROUTES.LOGIN }],
-      });
+        const accessToken = await getAccessToken()
+        const formData = new FormData();
+
+        formData.append('nickname', (profile.nickname));
+        formData.append('gender', (profile.gender));
+
+        formData.append('year', String(profile.year));
+        formData.append('month', String(profile.month));
+        formData.append('day', String(profile.day));
+        formData.append('hour', String(profile.hour));
+        formData.append('minute', String(profile.minute));
+
+        formData.append('birth_time_unknown', (profile.birth_time_unknown ? 'true' : 'false'));
+        formData.append('location_city', (profile.location_city));
+        formData.append('location_district', (profile.location_district));
+        formData.append('job', (profile.job));
+        formData.append('mbti', (profile.mbti));
+        formData.append('profile_text', (profileText));
+        formData.append('hobbies', JSON.stringify(profile.hobbies));
+
+        profile.images.forEach((img, index) => {
+          const asset = Image.resolveAssetSource(img);
+          formData.append('images', {
+            uri: asset.uri,
+            type: 'image/jpeg',
+            name: `profile_${index}.jpg`,
+          } as any);
+        });
+
+        console.log('formdata', formData);
+        response = await api.patch('/api/users/profile/', formData, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        console.log(response.data);
+        login(accessToken!!)
+        navigation.reset({
+          index: 0,
+          routes: [{ name: ROUTES.BOTTOM }],
+        });
+
+      } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+          console.log('프로필 작성 실패:', error.response?.status);
+        } else {
+          console.log('예상 못 한 에러:', error);
+        }
+      } finally {
+        hideLoading()
+      }
+
+
+
     }
   }
 

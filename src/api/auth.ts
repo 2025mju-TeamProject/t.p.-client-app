@@ -16,8 +16,8 @@ export interface RegisterRequest {
 }
 
 // 회원가입 API
-export async function registerApi(data: RegisterRequest): Promise<void> {
-  await apiClient.post('/api/register/', data);
+export async function registerApi(data: RegisterRequest): Promise<any> {
+  await apiClient.post('/api/users/register/', data);
 }
 
 // 로그인 API

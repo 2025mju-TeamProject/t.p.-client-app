@@ -1,8 +1,6 @@
-// src/contexts/NetInfoContext.tsx
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import Modal from 'react-native-modal';
-import OneOptionModal from '../components/modals/OneOptionModal';
 import { StyleSheet, View, Text } from 'react-native';
 
 type NetInfoContextType = {
@@ -14,7 +12,7 @@ const NetInfoContext = createContext<NetInfoContextType | undefined>(undefined);
 
 export function NetInfoProvider({ children }: { children: ReactNode }) {
   const [netInfo, setNetInfo] = useState<NetInfoState | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {

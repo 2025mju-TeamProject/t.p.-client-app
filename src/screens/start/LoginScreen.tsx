@@ -14,7 +14,7 @@ import { useAuth } from '../../context/AuthContext';
 import OneOptionModal from '../../components/modals/OneOptionModal';
 import Modal from 'react-native-modal';
 import { loginApi, isApiError } from '../../api/auth';
-import { saveTokens } from '../../utils/token';
+import { saveTokens } from '../../utils/localTokens';
 import { useLoading } from '../../context/LoadingContext';
 import { useNetInfoContext } from '../../context/NetInfoContext';
 

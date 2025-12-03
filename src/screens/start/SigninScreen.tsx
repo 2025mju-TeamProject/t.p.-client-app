@@ -14,7 +14,7 @@ import Modal from 'react-native-modal';
 import strings from '../../constants/strings';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { loginApi, registerApi, isApiError } from '../../api/auth';
-import { saveTokens } from '../../utils/token';
+import { saveTokens } from '../../utils/localTokens';
 
 import {
   validateId,
@@ -23,6 +23,8 @@ import {
   validatePhone,
 } from '../../utils/validation';
 import ROUTES from '../../constants/routes';
+import { useLoading } from '../../context/LoadingContext';
+import { useNetInfoContext } from '../../context/NetInfoContext';
 
 const { width } = Dimensions.get('window');
 
@@ -41,6 +43,9 @@ const idWarnText = [
 ];
 
 function SigninScreen({ navigation }: any) {
+  const { showLoading, hideLoading } = useLoading();
+  const { isConnected } = useNetInfoContext();
+
   const [id, setId] = useState('');
   const [passwd, setPasswd] = useState('');
   const [checkPasswd, setCheckPasswd] = useState('');
@@ -127,6 +132,11 @@ function SigninScreen({ navigation }: any) {
       return;
     }
 
+    if(!isConnected) {
+      return;
+    }
+
+    showLoading();
     try {
       await registerApi({
         username: id,
@@ -145,6 +155,7 @@ function SigninScreen({ navigation }: any) {
       });
     } catch (error: unknown) {
       if (isApiError(error)) {
+        console.log('회원가입 실패 status:', error.response?.status);
         if (error.response?.status === 400) {
           const data = error.response?.data;
 
@@ -160,6 +171,8 @@ function SigninScreen({ navigation }: any) {
       } else {
         console.log('예상 못 한 에러:', error);
       }
+    } finally {
+      hideLoading();
     }
   }
 
