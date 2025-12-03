@@ -376,7 +376,7 @@ function SigninScreen({ navigation }: any) {
               { color: isPhone ? 'white' : '#FF0C00' },
             ]}
           >
-            '-'없이 11자리 숫자만 입력해 주세요.
+            이미 등록된 전화번호입니다.
           </Text>
         </View>
 
