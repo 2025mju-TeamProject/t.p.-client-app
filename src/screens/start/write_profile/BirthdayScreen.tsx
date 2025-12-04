@@ -108,7 +108,6 @@ function BirthdayScreen({
           setValue={setYearValue}
           placeholder={'연'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '33%' }}
           style={{ paddingLeft: 15 }}
         />
@@ -121,7 +120,6 @@ function BirthdayScreen({
           setValue={setMonthValue}
           placeholder={'월'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
           style={{ paddingLeft: 15 }}
         />
@@ -134,7 +132,6 @@ function BirthdayScreen({
           setValue={setDayValue}
           placeholder={'일'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
           style={{ paddingLeft: 15 }}
         />
@@ -161,7 +158,6 @@ function BirthdayScreen({
           setValue={setHourValue}
           placeholder={'시'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
           style={{ paddingLeft: 15, zIndex: 1 }}
         />
@@ -174,7 +170,6 @@ function BirthdayScreen({
           setValue={setMinuteValue}
           placeholder={'분'}
           placeholderStyle={{ color: '#B1B1B1' }}
-          fontFamily={'NanumSquareR'}
           containerStyle={{ width: '30%' }}
           style={{ paddingLeft: 15, zIndex: 1 }}
         />

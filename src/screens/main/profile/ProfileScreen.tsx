@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../../../components/common/Header';
 import colors from '../../../constants/colors';
 import ROUTES from '../../../constants/routes';
+import { useLoading } from '../../../context/LoadingContext';
+import { DetailProfileResponse, getUserProfileApi } from '../../../api/profile';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { isApiError } from '../../../api/auth';
 
 function ProfileScreen({ navigation }: any) {
-  // 유저 임시데이터, TODO: 실제 유저 데이터 연동
+  const { showLoading, hideLoading } = useLoading();
+  const [profile, setProfile] = useState<DetailProfileResponse>()
+
   const user = {
     nickname: '고구맛탕',
     avatar: require('../../../../assets/sample-profile2.jpg'),
@@ -16,6 +22,29 @@ function ProfileScreen({ navigation }: any) {
   const goPreview = () => navigation.navigate(ROUTES.PROFILE_PREVIEW);
   const goSettings = () => navigation.navigate(ROUTES.SETTINGS);
 
+  useEffect(() => {
+    async function getProfile() {
+      showLoading();
+      try {
+        const userId = await AsyncStorage.getItem('user_id');
+        if(userId === null) return;
+
+        const numberId = parseInt(userId);
+        const response = await getUserProfileApi(numberId);
+        setProfile(response);
+
+      } catch (error) {
+        if(isApiError(error)) {
+          console.log('error status : ', error.status);
+        }
+      } finally {
+        hideLoading();
+      }
+    }
+
+    getProfile()
+  }, [])
+
   return (
     <ScrollView style={styles.container}>
       <Header title="프로필" />
@@ -23,10 +52,8 @@ function ProfileScreen({ navigation }: any) {
       <View style={{ marginTop: 0 }}>
         <View style={styles.profileCard}>
           <Image source={user.avatar} style={styles.avatar} />
-          <Text style={styles.nickname}>{user.nickname}</Text>
+          <Text style={styles.nickname}>{profile?.nickname}</Text>
         </View>
-
-        <View style={styles.divider} />
 
         <View style={styles.list}>
           <ListItem icon="create-outline" label="프로필 편집" onPress={goEdit} />
@@ -55,7 +82,7 @@ function ListItem({
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={onPress}
-      style={[styles.item, isLast && styles.itemLast]}
+      style={[styles.item]}
     >
       <View style={styles.itemLeft}>
         <Ionicons name={icon as any} size={20} color="#202124" />
