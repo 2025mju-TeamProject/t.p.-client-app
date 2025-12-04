@@ -13,10 +13,10 @@ interface ProfileCardProps {
   name: string;
   age: number;
   distance: string;
-  hashtags: string[];
+  hashtags?: string[];
   job: string;
-  mbti: string
-  imagePath: string;
+  mbti: string;
+  imagePath?: string;
   report: string;
   onPress: () => void;
 }
@@ -33,8 +33,7 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
   report,
   onPress,
 }) => {
-
-  const image = require('../../../assets/sample-profile2.jpg');
+  const image = `http://3.35.223.187:8000${imagePath}`;
   const cupiImageLeft = require('../../../assets/cupi_wings_left.png');
   const cupiImageRight = require('../../../assets/cupi_wings_right.png');
 
@@ -43,7 +42,8 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
       <View style={[styles.cardWrapper, { marginBottom: 16 }]}>
         {/*프로필 카드*/}
         <View style={styles.profileCard}>
-          <Image source={image} style={styles.image} />
+          <Image source={{ uri: image }} style={styles.image} />
+          <Text style={styles.noImageText}>이미지를 불러올 수 없음</Text>
         </View>
 
         {/*하단 카드*/}
@@ -86,15 +86,15 @@ const styles = StyleSheet.create({
   cardWrapper: {
     width: winWidth - 48,
   },
-aiTitle: {
-  fontSize: 16,
-  marginBottom: 2,
-  marginTop: 4,
-  marginLeft: 3,
-  fontFamily: 'TmoneyRoundWindExtraBold',
-  color: '#333333',
-  letterSpacing: -0.5,    // 자간 줄이기
-},
+  aiTitle: {
+    fontSize: 16,
+    marginBottom: 2,
+    marginTop: 4,
+    marginLeft: 3,
+    fontFamily: 'TmoneyRoundWindExtraBold',
+    color: '#333333',
+    letterSpacing: -0.5, // 자간 줄이기
+  },
 
   aiCard: {
     marginBottom: 10,
@@ -108,18 +108,18 @@ aiTitle: {
   },
   profileCard: {
     width: '100%',
-    backgroundColor: '#fff',
+    height: 383,
+    backgroundColor: '#CACACA',
     borderRadius: 16,
-    overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   image: {
     width: '100%',
     height: 383,
     resizeMode: 'cover',
     borderRadius: 16,
+    zIndex: 10,
   },
   cupiImageLeft: {
     width: 24,
@@ -145,22 +145,27 @@ aiTitle: {
     shadowOpacity: 0.05,
     shadowRadius: 5,
   },
-    name: {
-      fontSize: 26,
-      color: '#333333',
-      fontFamily: 'SCDream7',
-      letterSpacing: -0.5,
-    },
-    age: {
-      fontSize: 23,
-      color: '#333333',
-      fontFamily: 'SCDream7',
-      letterSpacing: -0.5,
-    },
+  name: {
+    fontSize: 26,
+    color: '#333333',
+    fontFamily: 'SCDream7',
+    letterSpacing: -0.5,
+  },
+  age: {
+    fontSize: 23,
+    color: '#333333',
+    fontFamily: 'SCDream7',
+    letterSpacing: -0.5,
+  },
 
   // 태그랑 이름 사이 여백
   tagContainer: {
     flexDirection: 'row',
     marginBottom: 14,
+  },
+  noImageText: {
+    fontSize: 24,
+    color: 'black',
+    position: 'absolute',
   },
 });

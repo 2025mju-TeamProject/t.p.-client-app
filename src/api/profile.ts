@@ -33,7 +33,7 @@ export interface DetailProfileResponse {
   hobbies: string[];
   mbti: string;
   profile_text: string;
-  images: {id: number, image: string};
+  images: {id: number, image: string}[];
 }
 
 type scores = {

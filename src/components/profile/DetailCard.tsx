@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  FlatList,
   Image,
   ScrollView,
   StyleSheet,
@@ -25,7 +24,7 @@ type Props = {
 function DetailCard({ profile, report }: Props) {
   const { showLoading, hideLoading } = useLoading();
   const [detail, setDetail] = useState<DetailProfileResponse>();
-  const imageList = getImages();
+  const [imageList, setImageList] = useState<string[]>([`http://3.35.223.187:8000${profile.profile_image}`]);
   const pageRef = useRef<PagerView>(null);
   const [page, setPage] = useState<number>(0);
 
@@ -55,8 +54,19 @@ function DetailCard({ profile, report }: Props) {
       }
     }
 
+    getImages()
     getProfile();
   }, []);
+
+  async function getImages() {
+    const response = await getUserProfileApi(profile.user_id)
+    const uri = response.images
+    console.log(uri)
+    uri.map(item => {
+      setImageList(prev => [ ...prev, `http://3.35.223.187:8000${item.image}` ]);
+    })
+
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -66,8 +76,8 @@ function DetailCard({ profile, report }: Props) {
         initialPage={0}
         onPageSelected={e => setPage(e.nativeEvent.position)}
       >
-        {imageList.map(item => (
-          <Image key={imageList.indexOf(item)} source={item.image} style={styles.image} />
+        {imageList.map((item, index) => (
+          <Image key={index} source={{uri: item}} style={styles.image} />
         ))}
       </PagerView>
 
@@ -218,20 +228,6 @@ const styles = StyleSheet.create({
     height: 450,
   }
 });
-
-function getImages() {
-  return [
-    { image: require('../../../assets/sample-profile2.jpg') },
-    { image: require('../../../assets/sample-profile2.jpg') },
-    { image: require('../../../assets/sample-profile2.jpg') },
-    { image: require('../../../assets/sample-profile2.jpg') },
-    { image: require('../../../assets/sample-profile2.jpg') },
-  ];
-}
-
-function changeTag(text: string) {
-
-}
 
 const emojiMap: Record<string, string> = {
   골프: '🏌️',
