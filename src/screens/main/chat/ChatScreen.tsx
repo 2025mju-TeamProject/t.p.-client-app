@@ -35,9 +35,8 @@ type Chat = {
 };
 
 function ChatScreen({ navigation, route }: any) {
-  const { chatId } = route.params;
-  const oppoId = 22;
-  const myId = 23;
+  const { roomInfo } = route.params;
+  const oppoId: number = roomInfo?.other_user_id;
   const { accessToken } = useAuth();
   const ws = useRef<WebSocket | null>(null);
   const [assistText, setAssisText] = useState<string[]>([]);
@@ -69,7 +68,7 @@ function ChatScreen({ navigation, route }: any) {
   useEffect(() => {
     if (!accessToken) return;
 
-    loadMessages(accessToken);
+    loadMessages(oppoId, accessToken);
 
     const socket = new WebSocket(
       `ws://3.35.223.187:8000/ws/chat/${oppoId}/?token=${accessToken}`,
@@ -113,7 +112,7 @@ function ChatScreen({ navigation, route }: any) {
     return () => {
       socket.close();
     };
-  }, [chatId, accessToken]);
+  }, [roomInfo, accessToken]);
 
   useEffect(() => {
     if (!content.length) return;
@@ -144,7 +143,7 @@ function ChatScreen({ navigation, route }: any) {
   function handleAssistant() {
     if(isAssistantVisible) { setIsAssistantVisible(false); return }
     else setIsAssistantVisible(true);
-    if(!accessToken) return;
+    if(!accessToken || !oppoId) return;
 
     loadAssistant(oppoId, accessToken)
     scrollToBottom();
@@ -157,8 +156,8 @@ function ChatScreen({ navigation, route }: any) {
     //todo 차단 api 연결
   }
 
-  async function loadMessages(auth: string) {
-    const data = await getMessage(oppoId, auth);
+  async function loadMessages(targetId: number, auth: string) {
+    const data = await getMessage(targetId, auth);
 
     const mapped = data.map(item => ({
       message: item.content,
@@ -224,7 +223,7 @@ function ChatScreen({ navigation, route }: any) {
               source={require('../../../../assets/sample-profile2.jpg')}
               style={styles.profileImage}
             />
-            <Text style={styles.headerText}>{chatId}</Text>
+            <Text style={styles.headerText}>{roomInfo.other_nickname}</Text>
 
             <TouchableOpacity
               onPress={() => {
@@ -248,7 +247,7 @@ function ChatScreen({ navigation, route }: any) {
                 key={item.timeStamp}
                 text={item.message}
                 time={toTimeHM(item.timeStamp)}
-                isOpponent={item.sender !== myId}
+                isOpponent={item.sender === oppoId}
               />
             ))}
         </ScrollView>

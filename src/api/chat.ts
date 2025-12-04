@@ -10,6 +10,15 @@ export interface ChatResponse {
   timestamp: string;
 }
 
+export interface ChatRoomResponse {
+  room_id: number;
+  other_user_id: number;
+  other_nickname: string;
+  other_image: string;
+  last_message: string;
+  timestamp: string;
+}
+
 export async function sendMessage(
   message: string,
   oppoId: string,
@@ -41,5 +50,15 @@ export async function getAssistant(oppoId: number, auth: string): Promise<Array<
   })
 
   return response.data.suggestions;
+}
+
+export async function getChatRooms(auth: string): Promise<Array<ChatRoomResponse>> {
+  const response = await apiClient.get(`/chat/api/rooms/`, {
+    headers: {
+      Authorization: `Bearer ${auth}`,
+    }
+  });
+
+  return response.data;
 }
 
