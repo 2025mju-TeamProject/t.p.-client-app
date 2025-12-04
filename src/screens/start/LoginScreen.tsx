@@ -17,6 +17,8 @@ import { loginApi, isApiError } from '../../api/auth';
 import { saveTokens } from '../../utils/localTokens';
 import { useLoading } from '../../context/LoadingContext';
 import { useNetInfoContext } from '../../context/NetInfoContext';
+import {decodeJwt } from '../../utils/decoder';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
@@ -54,6 +56,10 @@ function LoginScreen({ navigation }: any) {
 
       // 전역 auth context 같은 곳에 access 저장
       login(auth.access); // 기존에 쓰던 login 함수 이름이 login이면 이름 충돌 주의
+
+      const decoded = decodeJwt(auth.access);
+      console.log(decoded?.payload.user_id);
+      AsyncStorage.setItem('user_id', decoded?.payload.user_id)
 
       navigation.reset({
         index: 0,
