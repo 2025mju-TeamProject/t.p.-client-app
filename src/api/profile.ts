@@ -10,9 +10,9 @@ export interface ProfileResponse {
   gender: string;
   location: string;
   total_score: number;
-  score: scores;
-  info: info;
-  profile_image: string;
+  score?: scores;
+  info?: info;
+  profile_image?: string;
 }
 
 export interface DetailProfileResponse {
@@ -26,7 +26,7 @@ export interface DetailProfileResponse {
   minute: number;
   birthday_time_unknown: boolean;
   location_city: string;
-  location_distrinct: string;
+  location_district: string;
   latitude: number;
   longitude: number;
   job: string;

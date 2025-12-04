@@ -19,7 +19,9 @@ function ProfileScreen({ navigation }: any) {
   };
 
   const goEdit = () => navigation.navigate(ROUTES.PROFILE_EDIT);
-  const goPreview = () => navigation.navigate(ROUTES.PROFILE_PREVIEW);
+  function goPreview () {
+    navigation.navigate(ROUTES.PROFILE_PREVIEW, profile);
+  }
   const goSettings = () => navigation.navigate(ROUTES.SETTINGS);
 
   useEffect(() => {
@@ -31,6 +33,7 @@ function ProfileScreen({ navigation }: any) {
 
         const numberId = parseInt(userId);
         const response = await getUserProfileApi(numberId);
+        console.log(response);
         setProfile(response);
 
       } catch (error) {

@@ -67,7 +67,7 @@ function DetailCard({ profile, report }: Props) {
         onPageSelected={e => setPage(e.nativeEvent.position)}
       >
         {imageList.map(item => (
-          <Image source={item.image} style={styles.image} />
+          <Image key={imageList.indexOf(item)} source={item.image} style={styles.image} />
         ))}
       </PagerView>
 
@@ -119,7 +119,7 @@ function DetailCard({ profile, report }: Props) {
                 color: colors.pink,
               }}
             >
-              { Math.ceil(profile.total_score) }
+              { profile.total_score ? Math.ceil(profile.total_score) : 0}
             </Text>
             <Text style={[styles.title, { marginLeft: 3 }]}>점</Text>
           </View>

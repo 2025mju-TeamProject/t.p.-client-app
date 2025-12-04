@@ -1,27 +1,50 @@
-// 내가 내 프로필 화면을 볼 때 화면
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import DetailCard from '../../../components/profile/DetailCard';
+import { DetailProfileResponse, ProfileResponse } from '../../../api/profile';
 
-function MyProfileScreen() {
+type Props = {
+  navigation: any;
+  route: { params: DetailProfileResponse };
+};
+
+function MyProfileScreen({ navigation, route }: Props) {
+  const profile = route.params;
+
+  const myProfile: ProfileResponse = {
+    user_id: profile.user_id,
+    nickname: profile.nickname,
+    age: 23,
+    mbti: 'INTP',
+    job: profile.job,
+    gender: profile.gender,
+    location: `${profile.location_city} ${profile.location_district}`,
+    total_score: 0,
+  };
+
+  useEffect(() => {
+    console.log(myProfile);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        사용자가 직접 사용자의 프로필을 보는 페이지: DitailScreen 디자인 수정 후 UI 구성 예정(11/24)
-      </Text>
+      <DetailCard profile={myProfile} report={'다른 회원님의 프로필을 볼 때\n서로의 궁합을 알려주는 곳입니다.'} />
     </View>
   );
 }
+
+
 
 export default MyProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '100%',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    paddingTop: 40,
     backgroundColor: '#ffffff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
   },
   text: {
     fontSize: 18,
