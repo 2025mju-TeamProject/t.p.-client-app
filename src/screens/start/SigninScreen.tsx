@@ -263,7 +263,7 @@ function SigninScreen({ navigation }: any) {
             value={passwd}
             style={[
               styles.textInput,
-              { fontFamily: 'NanumSquareR', fontSize: 12 },
+              { fontSize: 12 },
             ]}
             placeholder="비밀번호 입력(문자, 숫자, 특수문자 포함 8~20자)"
             placeholderTextColor="#979797"
@@ -296,7 +296,7 @@ function SigninScreen({ navigation }: any) {
           <Text
             style={[
               styles.subTitle,
-              { fontFamily: 'NanumSquareB', color: 'black' },
+              { color: 'black' },
             ]}
           >
             비밀번호 확인
@@ -310,7 +310,7 @@ function SigninScreen({ navigation }: any) {
             value={checkPasswd}
             style={[
               styles.textInput,
-              { fontFamily: 'NanumSquareR', fontSize: 12 },
+              { fontSize: 12 },
             ]}
             placeholder="비밀번호 확인(문자, 숫자, 특수문자 포함 8~20자)"
             placeholderTextColor="#979797"
