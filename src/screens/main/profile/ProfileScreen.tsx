@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ScrollView,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../../../components/common/Header';
 import colors from '../../../constants/colors';
@@ -11,15 +18,20 @@ import { isApiError } from '../../../api/auth';
 
 function ProfileScreen({ navigation }: any) {
   const { showLoading, hideLoading } = useLoading();
-  const [profile, setProfile] = useState<DetailProfileResponse>()
+  const [profile, setProfile] = useState<DetailProfileResponse>();
 
   const user = {
     nickname: '고구맛탕',
     avatar: require('../../../../assets/sample-profile2.jpg'),
   };
 
-  const goEdit = () => navigation.navigate(ROUTES.PROFILE_EDIT);
-  function goPreview () {
+  function goEdit() {
+    navigation.navigate(ROUTES.PROFILE_EDIT, {
+      nickname: profile?.nickname,
+      gender: profile?.gender,
+    });
+  }
+  function goPreview() {
     navigation.navigate(ROUTES.PROFILE_PREVIEW, profile);
   }
   const goSettings = () => navigation.navigate(ROUTES.SETTINGS);
@@ -29,15 +41,14 @@ function ProfileScreen({ navigation }: any) {
       showLoading();
       try {
         const userId = await AsyncStorage.getItem('user_id');
-        if(userId === null) return;
+        if (userId === null) return;
 
         const numberId = parseInt(userId);
         const response = await getUserProfileApi(numberId);
         console.log(response);
         setProfile(response);
-
       } catch (error) {
-        if(isApiError(error)) {
+        if (isApiError(error)) {
           console.log('error status : ', error.status);
         }
       } finally {
@@ -45,8 +56,8 @@ function ProfileScreen({ navigation }: any) {
       }
     }
 
-    getProfile()
-  }, [])
+    getProfile();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -59,9 +70,17 @@ function ProfileScreen({ navigation }: any) {
         </View>
 
         <View style={styles.list}>
-          <ListItem icon="create-outline" label="프로필 편집" onPress={goEdit} />
-          <ListItem icon="eye-outline" label="프로필 미리보기" onPress={goPreview} />
-          <ListItem icon="settings-outline" label="설정" onPress={goSettings}/>
+          <ListItem
+            icon="create-outline"
+            label="프로필 편집"
+            onPress={goEdit}
+          />
+          <ListItem
+            icon="eye-outline"
+            label="프로필 미리보기"
+            onPress={goPreview}
+          />
+          <ListItem icon="settings-outline" label="설정" onPress={goSettings} />
         </View>
       </View>
     </ScrollView>
