@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -13,6 +13,7 @@ import colors from '../../constants/colors';
 import { DetailProfileResponse, getUserProfileApi, ProfileResponse } from '../../api/profile';
 import { useLoading } from '../../context/LoadingContext';
 import { isApiError } from '../../api/auth';
+import PagerView from 'react-native-pager-view';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -25,6 +26,8 @@ function DetailCard({ profile, report }: Props) {
   const { showLoading, hideLoading } = useLoading();
   const [detail, setDetail] = useState<DetailProfileResponse>();
   const imageList = getImages();
+  const pageRef = useRef<PagerView>(null);
+  const [page, setPage] = useState<number>(0);
 
   function addEmoji(item: string, defaultEmoji = '⭐'): string {
     // 이미 앞에 이모지가 있는 경우 그대로 반환
@@ -57,14 +60,16 @@ function DetailCard({ profile, report }: Props) {
 
   return (
     <ScrollView style={styles.container}>
-      <FlatList
-        horizontal={true}
-        showsHorizontalScrollIndicator={true}
-        data={imageList}
-        renderItem={({ item }) => (
+      <PagerView
+        ref={pageRef}
+        style={styles.pager}
+        initialPage={0}
+        onPageSelected={e => setPage(e.nativeEvent.position)}
+      >
+        {imageList.map(item => (
           <Image source={item.image} style={styles.image} />
-        )}
-      />
+        ))}
+      </PagerView>
 
       {/*태그*/}
       <View style={[styles.section, { marginTop: 20 }]}>
@@ -208,6 +213,10 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     lineHeight: 20,
   },
+  pager: {
+    width: '100%',
+    height: 450,
+  }
 });
 
 function getImages() {
