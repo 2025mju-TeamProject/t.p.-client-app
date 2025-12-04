@@ -1,30 +1,43 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
   TouchableOpacity,
+  Text, Image
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from "react-native-vector-icons/Feather";
+
+type Props = {
+  onPress: () => void;
+  onSend: (text: string) => void;
+  externalText?: string;
+};
 
 const INPUT_HEIGHT = 48;
 
-function ChatInput() {
+function ChatInput({ onPress, onSend, externalText }: Props) {
   const [text, setText] = useState("");
+  const wingImage = require('../../../../assets/cupi_wings_right.png');
+
+  useEffect(() => {
+    if (externalText !== undefined) {
+      setText(externalText);
+    }
+  }, [externalText]);
+
+  function handleSend() {
+    onSend(text);
+    setText('');
+  };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"} // 키보드 올라올 때 input도 올라감
-      keyboardVerticalOffset={Platform.OS === "ios" ? 16 : 0}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <View style={styles.inputContainer}>
         {/* 왼쪽 아이콘 */}
-        <TouchableOpacity style={styles.iconWrapper}>
-          <Ionicons name="add" size={22} color="#666" />
+        <TouchableOpacity style={styles.iconWrapper} onPress={onPress}>
+          <Image source={wingImage} style={{width: 30, height: 30}} />
         </TouchableOpacity>
 
         {/* 텍스트 입력창 */}
@@ -33,21 +46,19 @@ function ChatInput() {
           multiline
           value={text}
           onChangeText={setText}
-          placeholder="메시지를 입력하세요..."
-          placeholderTextColor="#aaa"
           scrollEnabled={false} // 내용이 많을 때 스크롤 대신 높이 증가
         />
 
         {/* 오른쪽 아이콘 */}
-        <TouchableOpacity style={styles.iconWrapper}>
+        <TouchableOpacity style={[styles.iconWrapper, {width: 40}]} onPress={handleSend}>
           {text.length > 0 ? (
-            <Ionicons name="send" size={22} color="black" />
+            <Text style={[styles.sendText, {color: 'black'}]}>보내기</Text>
           ) : (
-            <Ionicons name="send" size={22} color="#CACACA" />
+            <Text style={[styles.sendText, {color: '#CACACA'}]}>보내기</Text>
           )}
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
@@ -55,8 +66,6 @@ export default ChatInput;
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    bottom: 0,
     width: "100%",
     backgroundColor: "white",
     borderTopWidth: 0.5,
@@ -67,16 +76,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "flex-end",
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 24,
-    backgroundColor: "#f9f9f9",
+    //borderWidth: 1,
     paddingHorizontal: 8,
   },
   iconWrapper: {
-    width: INPUT_HEIGHT,
+    width: 24,
     height: INPUT_HEIGHT,
-    borderRadius: INPUT_HEIGHT / 2,
+    //borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -86,7 +92,13 @@ const styles = StyleSheet.create({
     maxHeight: INPUT_HEIGHT * 3, // 최대 3줄까지만 늘어나게
     paddingVertical: 8,
     paddingHorizontal: 10,
+    paddingBottom: 15,
     fontSize: 16,
     color: "#222",
+    //borderWidth: 1,
   },
+  sendText: {
+    fontSize: 14,
+    fontFamily: 'NanumSquare4'
+  }
 });

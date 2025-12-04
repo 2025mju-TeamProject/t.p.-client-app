@@ -19,7 +19,7 @@ function MenuModal({ options, cancle }: Props) {
         {
           options.map(
             option => (
-              <TouchableOpacity onPress={() => {option.onClick()}} style={styles.optionButtons} >
+              <TouchableOpacity key={option.text} onPress={() => {option.onClick()}} style={styles.optionButtons} >
                 <Text style={{ color: 'black' }}>{option.text}</Text>
               </TouchableOpacity>
             )

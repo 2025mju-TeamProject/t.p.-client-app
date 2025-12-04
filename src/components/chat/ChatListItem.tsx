@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
 import colors from '../../constants/colors';
+import { ChatRoomResponse } from '../../api/chat';
 
-type Props = { title: string; onPress: () => void };
+type Props = { roomInfo: ChatRoomResponse; onPress: () => void };
 
-function ChatListItem({title, onPress}: Props) {
+function ChatListItem({roomInfo, onPress}: Props) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image
@@ -12,8 +13,8 @@ function ChatListItem({title, onPress}: Props) {
         style={styles.profileImage}/>
 
       <View style={styles.textContainer}>
-        <Text style={styles.titleText}>{title}</Text>
-        <Text>안녕하세요~</Text>
+        <Text style={styles.titleText}>{roomInfo.other_nickname}</Text>
+        <Text>{roomInfo.last_message}</Text>
       </View>
       <Text style={styles.timeText}>14:18</Text>
     </TouchableOpacity>
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     height: '100%',
+    justifyContent: 'center',
   },
   titleText: {
     fontSize: 16,
