@@ -91,7 +91,7 @@ aiTitle: {
   marginBottom: 2,
   marginTop: 4,
   marginLeft: 3,
-  fontFamily: 'TmoneyRoundWindExtraBold',
+  fontFamily: 'NanumSquareEB',
   color: '#333333',
   letterSpacing: -0.5,    // 자간 줄이기
 },
