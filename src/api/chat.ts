@@ -24,7 +24,7 @@ export async function sendMessage(
 }
 
 export async function getMessage(oppoId: number, auth: string): Promise<Array<ChatResponse>> {
-  const response = await apiClient.get(`/chat/api/messages/${oppoId}/`, {
+  const response = await apiClient.get(`/chat/api/history-messages/${oppoId}/`, {
     headers: {
       Authorization: `Bearer ${auth}`,
     }
@@ -34,12 +34,12 @@ export async function getMessage(oppoId: number, auth: string): Promise<Array<Ch
 }
 
 export async function getAssistant(oppoId: number, auth: string): Promise<Array<string>> {
-  const response = await apiClient.get(`/chat/api/messages/${oppoId}/`, {
+  const response = await apiClient.post(`/chat/api/suggestions/${oppoId}/`, {}, {
     headers: {
       Authorization: `Bearer ${auth}`,
     }
   })
 
-  return response.data;
+  return response.data.suggestions;
 }
 

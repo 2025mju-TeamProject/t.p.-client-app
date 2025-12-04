@@ -20,7 +20,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { isApiError } from '../../../api/auth';
 import { useAuth } from '../../../context/AuthContext';
-import { getMessage } from '../../../api/chat';
+import { getAssistant, getMessage } from '../../../api/chat';
+import { useLoading } from '../../../context/LoadingContext';
 
 type option = {
   text: string;
@@ -35,7 +36,7 @@ type Chat = {
 
 function ChatScreen({ navigation, route }: any) {
   const { chatId } = route.params;
-  const oppoId = 20;
+  const oppoId = 22;
   const myId = 23;
   const { accessToken } = useAuth();
   const ws = useRef<WebSocket | null>(null);
@@ -43,7 +44,9 @@ function ChatScreen({ navigation, route }: any) {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const [isAssistantVisible, setIsAssistantVisible] = useState<boolean>(false);
+  const [inputText, setInputText] = useState('');
   const [content, setContent] = useState<Chat[]>([]);
+  const { showLoading, hideLoading } = useLoading()
   const modalOption: Array<option> = [
     {
       text: '채팅방 나가기',
@@ -139,8 +142,11 @@ function ChatScreen({ navigation, route }: any) {
   }
 
   function handleAssistant() {
-    if(isAssistantVisible) { setIsAssistantVisible(false); }
+    if(isAssistantVisible) { setIsAssistantVisible(false); return }
     else setIsAssistantVisible(true);
+    if(!accessToken) return;
+
+    loadAssistant(oppoId, accessToken)
     scrollToBottom();
   }
 
@@ -161,6 +167,22 @@ function ChatScreen({ navigation, route }: any) {
     }));
 
     setContent(mapped);
+  }
+
+  async function loadAssistant(oppoId: number, auth: string) {
+    showLoading()
+    setAssisText([])
+    try {
+      const data = await getAssistant(oppoId, auth);
+      console.log(data);
+      setAssisText(data);
+    } catch (error) {
+      if(isApiError(error)) {
+        console.log(error?.response);
+      }
+    } finally {
+      hideLoading();
+    }
   }
 
   function toTimeHM(isoString: string): string {
@@ -223,6 +245,7 @@ function ChatScreen({ navigation, route }: any) {
           {content !== undefined &&
             content.map((item, index) => (
               <ChatBubble
+                key={item.timeStamp}
                 text={item.message}
                 time={toTimeHM(item.timeStamp)}
                 isOpponent={item.sender !== myId}
@@ -245,13 +268,13 @@ function ChatScreen({ navigation, route }: any) {
                   style={{ width: 78, height: 3, backgroundColor: '#C8C8C8' }}
                 />
               </View>
-              <TouchableOpacity style={styles.section}>
+              <TouchableOpacity style={styles.section} onPress={() => setInputText(assistText[0])}>
                 <Text style={styles.optionText}>{assistText[0]}</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.section}>
+              <TouchableOpacity style={styles.section} onPress={() => setInputText(assistText[1])}>
                 <Text style={styles.optionText}>{assistText[1]}</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.section}>
+              <TouchableOpacity style={styles.section} onPress={() => setInputText(assistText[2])}>
                 <Text style={styles.optionText}>{assistText[2]}</Text>
               </TouchableOpacity>
               <View
@@ -275,6 +298,7 @@ function ChatScreen({ navigation, route }: any) {
         <ChatInput
           onPress={handleAssistant}
           onSend={sendMessage}
+          externalText={inputText}
         />
       </KeyboardAvoidingView>
 
@@ -357,7 +381,7 @@ const styles = StyleSheet.create({
     height: 207,
     //backgroundColor: '#CACACA',
     paddingHorizontal: 24,
-    marginVertical: 20,
+    marginBottom: 20,
   },
   assistContainer: {
     width: '100%',

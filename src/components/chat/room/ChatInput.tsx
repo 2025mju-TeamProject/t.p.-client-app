@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -12,13 +12,20 @@ import Ionicons from "react-native-vector-icons/Feather";
 type Props = {
   onPress: () => void;
   onSend: (text: string) => void;
+  externalText?: string;
 };
 
 const INPUT_HEIGHT = 48;
 
-function ChatInput({ onPress, onSend }: Props) {
+function ChatInput({ onPress, onSend, externalText }: Props) {
   const [text, setText] = useState("");
   const wingImage = require('../../../../assets/cupi_wings_right.png');
+
+  useEffect(() => {
+    if (externalText !== undefined) {
+      setText(externalText);
+    }
+  }, [externalText]);
 
   function handleSend() {
     onSend(text);
