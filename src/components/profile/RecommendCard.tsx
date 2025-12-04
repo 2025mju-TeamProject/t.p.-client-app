@@ -15,7 +15,9 @@ interface ProfileCardProps {
   distance: string;
   hashtags: string[];
   job: string;
+  mbti: string
   imagePath: string;
+  report: string;
   onPress: () => void;
 }
 
@@ -25,6 +27,10 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
   name,
   age,
   distance,
+  job,
+  mbti,
+  imagePath,
+  report,
   onPress,
 }) => {
 
@@ -34,12 +40,7 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
 
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={1.0}>
-      <View
-        style={[
-          styles.cardWrapper,
-          {marginBottom: 16}
-        ]}
-      >
+      <View style={[styles.cardWrapper, { marginBottom: 16 }]}>
         {/*프로필 카드*/}
         <View style={styles.profileCard}>
           <Image source={image} style={styles.image} />
@@ -47,25 +48,23 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
 
         {/*하단 카드*/}
         <View style={styles.infoBox}>
-
           {/*상단 태그*/}
           <View style={styles.tagContainer}>
-            <View style={{marginRight: 8}}>
-              <ProfileTag text="경기도 용인시"/>
+            <View style={{ marginRight: 8 }}>
+              <ProfileTag text={distance} />
             </View>
-            <View style={{marginRight: 8}}>
-              <ProfileTag text="IT·개발직"/>
+            <View style={{ marginRight: 8 }}>
+              <ProfileTag text={job} />
             </View>
-            <View style={{marginRight: 8}}>
-              <ProfileTag text="INTJ"/>
+            <View style={{ marginRight: 8 }}>
+              <ProfileTag text={mbti} />
             </View>
           </View>
 
-        {/* 사용자 이름 + 나이 */}
-        <Text style={styles.name}>
-          {name}{' '}
-          <Text style={styles.age}> {age}세</Text>
-        </Text>
+          {/* 사용자 이름 + 나이 */}
+          <Text style={styles.name}>
+            {name} <Text style={styles.age}> {age}세</Text>
+          </Text>
 
           {/* 쿠피의 한줄평 */}
           <View style={styles.aiCard}>
@@ -74,10 +73,7 @@ const RecommendCard: React.FC<ProfileCardProps> = ({
             <Image source={cupiImageRight} style={styles.cupiImageRight} />
           </View>
 
-          <Text style={styles.aiDesc}>
-            감자맛탕 님과의 궁합은 서로의 관심사와 성격이 잘 맞는 편입니다. 대화의
-            흐름이 자연스럽고 유머 코드도 비슷해요.
-          </Text>
+          <Text style={styles.aiDesc}>{report}</Text>
         </View>
       </View>
     </TouchableOpacity>

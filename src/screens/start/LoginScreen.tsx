@@ -47,7 +47,6 @@ function LoginScreen({ navigation }: any) {
     showLoading();
 
     try {
-      console.log('working');
       const auth = await loginApi(id, passwd); // ← API 모듈 사용
       if (remember) {
         await saveTokens(auth); // access/refresh 둘 다 저장
