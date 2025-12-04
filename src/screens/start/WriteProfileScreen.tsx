@@ -25,6 +25,8 @@ import axios from 'axios';
 import { getAccessToken } from '../../utils/localTokens';
 import { useLoading } from '../../context/LoadingContext';
 import { useAuth } from '../../context/AuthContext';
+import { decodeJwt } from '@utils/decoder';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const messages = [
   '쿠피가 프로필 작성 중',
@@ -246,8 +248,13 @@ function WriteProfileScreen({ navigation }: any) {
             'Content-Type': 'multipart/form-data',
           },
         });
+
         console.log(response.data);
         login(accessToken!!)
+        const decoded = await decodeJwt(accessToken!!);
+        console.log(decoded?.payload.user_id);
+        await AsyncStorage.setItem('user_id', decoded?.payload.user_id)
+
         navigation.reset({
           index: 0,
           routes: [{ name: ROUTES.BOTTOM }],
