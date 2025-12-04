@@ -24,7 +24,7 @@ type Props = {
 function DetailCard({ profile, report }: Props) {
   const { showLoading, hideLoading } = useLoading();
   const [detail, setDetail] = useState<DetailProfileResponse>();
-  const [imageList, setImageList] = useState<string[]>([`http://3.35.223.187:8000${profile.profile_image}`]);
+  const [imageList, setImageList] = useState<string[]>([]);
   const pageRef = useRef<PagerView>(null);
   const [page, setPage] = useState<number>(0);
 
