@@ -1,3 +1,5 @@
+import { DetailProfileResponse } from '../api/profile';
+
 export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
@@ -14,4 +16,6 @@ export type RootStackParamList = {
   StartNAV: undefined;
   WriteProfile: undefined;
   Alarm: undefined;
+  EditProfile: undefined;
+  ProfilePreview: undefined;
 };

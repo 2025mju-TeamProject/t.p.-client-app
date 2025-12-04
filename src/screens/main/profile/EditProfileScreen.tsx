@@ -7,26 +7,25 @@ import {
   Image,
   ImageSourcePropType,
 } from 'react-native';
-import BirthdayScreen from '../../screens/start/write_profile/BirthdayScreen';
-import GenderScreen from '../../screens/start/write_profile/GenderScreen';
-import AppButton from '../../components/buttons/AppButton';
-import colors from '../../constants/colors';
+import BirthdayScreen from '../../../screens/start/write_profile/BirthdayScreen';
+import GenderScreen from '../../../screens/start/write_profile/GenderScreen';
+import AppButton from '../../../components/buttons/AppButton';
+import colors from '../../../constants/colors';
 import PagerView from 'react-native-pager-view';
-import InterestScreen from '../../screens/start/write_profile/InterestScreen';
-import MbtiScreen from '../../screens/start/write_profile/MbtiScreen';
-import JobScreen from '../../screens/start/write_profile/JobScreen';
-import LocationScreen from '../../screens/start/write_profile/LocationScreen';
-import ImageScreen from '../../screens/start/write_profile/ImageScreen';
-import IntroductionScreen from '../../screens/start/write_profile/IntroductionScreen';
+import InterestScreen from '../../../screens/start/write_profile/InterestScreen';
+import MbtiScreen from '../../../screens/start/write_profile/MbtiScreen';
+import JobScreen from '../../../screens/start/write_profile/JobScreen';
+import LocationScreen from '../../../screens/start/write_profile/LocationScreen';
+import ImageScreen from '../../../screens/start/write_profile/ImageScreen';
+import IntroductionScreen from '../../../screens/start/write_profile/IntroductionScreen';
 import Modal from 'react-native-modal';
-import ROUTES from '../../constants/routes';
-import apiClient from '../../api/apiClient';
+import ROUTES from '../../../constants/routes';
+import apiClient from '../../../api/apiClient';
 import axios from 'axios';
-import { getAccessToken } from '../../utils/localTokens';
-import { useLoading } from '../../context/LoadingContext';
-import { useAuth } from '../../context/AuthContext';
-import { decodeJwt } from '@utils/decoder';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAccessToken } from '../../../utils/localTokens';
+import { useLoading } from '../../../context/LoadingContext';
+import { useAuth } from '../../../context/AuthContext';
+import { DetailProfileResponse } from '../../../api/profile';
 
 const messages = [
   '쿠피가 프로필 작성 중',
@@ -52,7 +51,12 @@ type profile = {
   images: ImageSourcePropType[];
 };
 
-function WriteProfileScreen({ navigation }: any) {
+type Props = {
+  navigation: any;
+  route: { params: { nickname: string; gender: string } };
+};
+
+function EditProfileScreen({ navigation, route }: any) {
   const pagerRef = useRef<PagerView>(null);
   const [page, setPage] = useState<number>(0);
   const [profile, setProfile] = useState<profile>({
@@ -77,7 +81,7 @@ function WriteProfileScreen({ navigation }: any) {
   const [messageIndex, setMessageIndex] = useState<number>(0);
   const [profileText, setProfileText] = useState<string>('');
 
-  const totalPages = 8;
+  const totalPages = 7;
 
   function goNext() {
     if (!pagerRef.current) return;
@@ -86,7 +90,7 @@ function WriteProfileScreen({ navigation }: any) {
       getIntroduction();
     }
     if (page === totalPages - 1) {
-      handleLogin()
+      handleLogin();
     }
 
     pagerRef.current.setPage(page + 1);
@@ -105,11 +109,11 @@ function WriteProfileScreen({ navigation }: any) {
     try {
       setModalVisible(true);
 
-      const accessToken = await getAccessToken()
+      const accessToken = await getAccessToken();
       const formData = new FormData();
 
-      formData.append('nickname', (profile.nickname));
-      formData.append('gender', (profile.gender));
+      formData.append('nickname', route.params.nickname);
+      formData.append('gender', route.params.gender);
 
       formData.append('year', String(profile.year));
       formData.append('month', String(profile.month));
@@ -117,10 +121,13 @@ function WriteProfileScreen({ navigation }: any) {
       formData.append('hour', String(profile.hour));
       formData.append('minute', String(profile.minute));
 
-      formData.append('birth_time_unknown', (profile.birth_time_unknown ? 'true' : 'false'));
-      formData.append('location_city', (profile.location_city));
-      formData.append('location_district', (profile.location_district));
-      formData.append('job', (profile.job));
+      formData.append(
+        'birth_time_unknown',
+        profile.birth_time_unknown ? 'true' : 'false',
+      );
+      formData.append('location_city', profile.location_city);
+      formData.append('location_district', profile.location_district);
+      formData.append('job', profile.job);
       formData.append('hobbies', JSON.stringify(profile.hobbies));
 
       profile.images.forEach((img, index) => {
@@ -141,7 +148,6 @@ function WriteProfileScreen({ navigation }: any) {
       });
       console.log(response.data);
       setProfileText(response.data.data.profile_text);
-
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         console.log('프로필 작성 실패:', error.response?.status);
@@ -165,38 +171,29 @@ function WriteProfileScreen({ navigation }: any) {
   function isNextEnabled() {
     switch (page) {
       case 0:
-        return profile.gender !== '' && profile.nickname !== '';
-
-      case 1:
         const hasDate =
-          profile.year !== 0 &&
-          profile.month !== 0 &&
-          profile.day !== 0;
+          profile.year !== 0 && profile.month !== 0 && profile.day !== 0;
 
-        const hasTime =
-          profile.birth_time_unknown
-            ? true
-            : profile.hour !== 0 && profile.minute !== 0;
+        const hasTime = profile.birth_time_unknown
+          ? true
+          : profile.hour !== 0 && profile.minute !== 0;
 
         return hasDate && hasTime;
 
-      case 2:
+      case 1:
         return profile.hobbies.length >= 3 && profile.hobbies.length <= 8;
 
-      case 3:
+      case 2:
         return profile.mbti !== '';
 
-      case 4:
+      case 3:
         return profile.job !== '';
 
-      case 5:
-        return (
-          profile.location_city !== '' &&
-          profile.location_district !== ''
-        );
+      case 4:
+        return profile.location_city !== '' && profile.location_district !== '';
 
-      case 6:
-        return profile.images.length >= 2
+      case 5:
+        return profile.images.length >= 2;
 
       default:
         return true;
@@ -205,18 +202,15 @@ function WriteProfileScreen({ navigation }: any) {
 
   async function handleLogin() {
     if (page === totalPages - 1) {
-      showLoading()
+      showLoading();
 
       const api = apiClient;
       let response;
       try {
         setModalVisible(true);
 
-        const accessToken = await getAccessToken()
+        const accessToken = await getAccessToken();
         const formData = new FormData();
-
-        formData.append('nickname', (profile.nickname));
-        formData.append('gender', (profile.gender));
 
         formData.append('year', String(profile.year));
         formData.append('month', String(profile.month));
@@ -224,12 +218,15 @@ function WriteProfileScreen({ navigation }: any) {
         formData.append('hour', String(profile.hour));
         formData.append('minute', String(profile.minute));
 
-        formData.append('birth_time_unknown', (profile.birth_time_unknown ? 'true' : 'false'));
-        formData.append('location_city', (profile.location_city));
-        formData.append('location_district', (profile.location_district));
-        formData.append('job', (profile.job));
-        formData.append('mbti', (profile.mbti));
-        formData.append('profile_text', (profileText));
+        formData.append(
+          'birth_time_unknown',
+          profile.birth_time_unknown ? 'true' : 'false',
+        );
+        formData.append('location_city', profile.location_city);
+        formData.append('location_district', profile.location_district);
+        formData.append('job', profile.job);
+        formData.append('mbti', profile.mbti);
+        formData.append('profile_text', profileText);
         formData.append('hobbies', JSON.stringify(profile.hobbies));
 
         profile.images.forEach((img, index) => {
@@ -248,18 +245,12 @@ function WriteProfileScreen({ navigation }: any) {
             'Content-Type': 'multipart/form-data',
           },
         });
-
         console.log(response.data);
-        login(accessToken!!)
-        const decoded = await decodeJwt(accessToken!!);
-        console.log(decoded?.payload.user_id);
-        await AsyncStorage.setItem('user_id', decoded?.payload.user_id)
-
+        login(accessToken!!);
         navigation.reset({
           index: 0,
           routes: [{ name: ROUTES.BOTTOM }],
         });
-
       } catch (error: any) {
         if (axios.isAxiosError(error)) {
           console.log('프로필 작성 실패:', error.response?.status);
@@ -267,11 +258,8 @@ function WriteProfileScreen({ navigation }: any) {
           console.log('예상 못 한 에러:', error);
         }
       } finally {
-        hideLoading()
+        hideLoading();
       }
-
-
-
     }
   }
 
@@ -288,17 +276,6 @@ function WriteProfileScreen({ navigation }: any) {
         scrollEnabled={false}
         onPageSelected={e => setPage(e.nativeEvent.position)}
       >
-        <View key="gender">
-          <GenderScreen
-            setParentGender={value => {
-              setProfile(prev => ({ ...prev, gender: value }));
-            }}
-            setParentNickname={value => {
-              setProfile(prev => ({ ...prev, nickname: value }));
-            }}
-          />
-        </View>
-
         <View key="birthday">
           <BirthdayScreen
             setParentYear={value => {
@@ -358,13 +335,18 @@ function WriteProfileScreen({ navigation }: any) {
         </View>
 
         <View key="image">
-          <ImageScreen setParentImage={value => {
-            setProfile(prev => ({ ...prev, images: value }));
-          }}/>
+          <ImageScreen
+            setParentImage={value => {
+              setProfile(prev => ({ ...prev, images: value }));
+            }}
+          />
         </View>
 
         <View key="introduction">
-          <IntroductionScreen text={profileText} onChangeText={setProfileText} />
+          <IntroductionScreen
+            text={profileText}
+            onChangeText={setProfileText}
+          />
         </View>
       </PagerView>
 
@@ -378,7 +360,7 @@ function WriteProfileScreen({ navigation }: any) {
         <View style={styles.copiModal}>
           <View style={{ alignItems: 'center', gap: 10 }}>
             <Image
-              source={require('../../../assets/cupi.png')}
+              source={require('../../../../assets/cupi.png')}
               style={{ width: 110, height: 90 }}
             />
             <Text style={styles.modalTitle}>{messages[messageIndex]}</Text>
@@ -438,7 +420,7 @@ function WriteProfileScreen({ navigation }: any) {
   );
 }
 
-export default WriteProfileScreen;
+export default EditProfileScreen;
 
 const styles = StyleSheet.create({
   container: {

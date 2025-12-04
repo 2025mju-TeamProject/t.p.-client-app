@@ -17,7 +17,6 @@ export default function SignUpProgressBar({ step, total }: Props) {
         backgroundColor: '#F7F7F7',
         borderRadius: 3,
         overflow: 'hidden',
-        borderRadius: 12,
       }}
     >
       <View

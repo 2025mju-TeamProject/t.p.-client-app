@@ -15,23 +15,64 @@ import PagerView from 'react-native-pager-view';
 import Icon from 'react-native-vector-icons/Octicons';
 import ROUTES from '../../constants/routes';
 import HomeHeader from '../../components/common/HeaderHomeScreen';
+import { getMatchingReportApi, getRecommandProfileApi, ProfileResponse } from '../../api/profile';
+import { useAuth } from '../../context/AuthContext';
+import { useLoading } from '../../context/LoadingContext';
+import { AxiosError } from 'axios';
+import { isApiError } from '../../api/auth';
 
 function HomeScreen({ navigation }: any) {
-  const userList = getItems();
+  const { showLoading, hideLoading } = useLoading();
+  const [userList, setUserList] = useState<ProfileResponse[]>([]);
+  const [reportMap, setReportMap] = useState<Record<number, string>>({});
+  const auth = useAuth();
   const pageRef = useRef<PagerView>(null);
   const [page, setPage] = useState<number>(0);
   const [hasAlarm, setHasAlarm] = useState(true);
 
   const [pressed, setPressed] = useState(false);
 
-  const totalPages = userList.length;
+  function navToDetail(page: number) {
+    navigation.navigate(ROUTES.DETAIL, {
+      profile: userList[page],
+      report: reportMap[userList[page].user_id],
+    });
+  }
 
-  // 서버 연동 시 아래 useEffect 활성화하면 됨
-  // useEffect(() => {
-  //   fetch('/alarm/unread')
-  //     .then(res => res.json())
-  //     .then(data => setHasAlarm(data.hasUnread));
-  // }, []);
+  useEffect(() => {
+    const fetchAll = async () => {
+      if (!auth.accessToken) return;
+
+      showLoading();
+      try {
+        // 1) 추천 리스트 불러오기
+        const users = await getRecommandProfileApi(auth.accessToken);
+        setUserList(users);
+
+        // 2) 각 유저별로 한줄평 API 호출 (병렬)
+        const entries = await Promise.all(
+          users.map(async (u) => {
+            try {
+              const report = await getMatchingReportApi(u.user_id, auth.accessToken!);
+              return [u.user_id, report] as const;
+            } catch (error) {
+              if(isApiError(error)) {
+                console.log(error.response);
+              }
+              return [u.user_id, '쿠피가 한 줄평을 불러오지 못했어요.'] as const;
+            }
+          }),
+        );
+
+        // 3) { [user_id]: report } 형태의 맵으로 변환
+        setReportMap(Object.fromEntries(entries));
+      } finally {
+        hideLoading();
+      }
+    };
+
+    fetchAll();
+  }, [auth.accessToken]);
 
   return (
     <View style={styles.container}>
@@ -51,7 +92,7 @@ function HomeScreen({ navigation }: any) {
         >
           {userList.map(item => (
             <ScrollView
-              key={item.userId}
+              key={item.user_id}
               style={styles.page}
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
@@ -59,20 +100,20 @@ function HomeScreen({ navigation }: any) {
 
               {/* 프로필 카드 */}
               <RecommendCard
-                name={item.name}
+                name={item.nickname}
                 age={item.age}
-                distance={item.distance}
+                distance={item.location}
                 job={item.job}
-                hashtags={item.hashtags}
-                imagePath={item.image}
-                onPress={() => navigation.navigate('Detail')}
+                hashtags={item.info.comman_hobbies}
+                imagePath={item.profile_image}
+                mbti={item.mbti}
+                report={reportMap[item.user_id] ?? '불러오는 중...'}
+                onPress={() => navToDetail(page)}
               />
 
             </ScrollView>
           ))}
         </PagerView>
-
-
     </View>
   );
 }
@@ -115,7 +156,6 @@ const styles = StyleSheet.create({
     color: '#9C9C9C',
     fontSize: 12,
     fontFamily: 'NanumSquareOTF',
-    fontWeight: '700',
     lineHeight: 14,
     marginBottom: 20,
   },
@@ -136,62 +176,3 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
 });
-
-function getItems() {
-  return [
-    {
-      name: '감자맛탕',
-      age: 29,
-      distance: '경기도 (1km)',
-      job: '회사원',
-      hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: '../../assets/sample-profile2.jpg',
-      userId: 0,
-    },
-    {
-      name: '감자맛탕',
-      age: 29,
-      distance: '경기도 (1km)',
-      job: '회사원',
-      hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: '../../assets/sample-profile2.jpg',
-      userId: 1,
-    },
-    {
-      name: '감자맛탕',
-      age: 29,
-      distance: '경기도 (1km)',
-      job: '회사원',
-      hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: '../../assets/sample-profile2.jpg',
-      userId: 2,
-    },
-    {
-      name: '감자맛탕',
-      age: 29,
-      distance: '경기도 (1km)',
-      job: '회사원',
-      hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: '../../assets/sample-profile2.jpg',
-      userId: 3,
-    },
-    {
-      name: '감자맛탕',
-      age: 29,
-      distance: '경기도 (1km)',
-      job: '회사원',
-      hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: '../../assets/sample-profile2.jpg',
-      userId: 4,
-    },
-    {
-      name: '감자맛탕',
-      age: 29,
-      distance: '경기도 (1km)',
-      job: '회사원',
-      hashtags: ['커피', 'INTP', '헬스', '카페'],
-      image: '../../assets/sample-profile2.jpg',
-      userId: 5,
-    },
-  ];
-}

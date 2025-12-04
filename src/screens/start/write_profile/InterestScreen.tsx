@@ -185,7 +185,6 @@ const localStyles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 8,
     borderColor: '#D9D9D9',
-    paddingHorizontal: 10,
   },
   buttonText: {
     fontSize: 13,
