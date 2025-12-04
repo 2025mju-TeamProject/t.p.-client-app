@@ -15,6 +15,27 @@ export interface ProfileResponse {
   profile_image: string;
 }
 
+export interface DetailProfileResponse {
+  user_id: number;
+  nickname: string;
+  gender: string;
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+  birthday_time_unknown: boolean;
+  location_city: string;
+  location_distrinct: string;
+  latitude: number;
+  longitude: number;
+  job: string;
+  hobbies: string[];
+  mbti: string;
+  profile_text: string;
+  images: {id: number, image: string};
+}
+
 type scores = {
   saju: number;
   interest: number;
@@ -62,4 +83,9 @@ export async function getMatchingReportApi(
     },
   );
   return response.data.summary;
+}
+
+export async function getUserProfileApi(userId: number): Promise<DetailProfileResponse> {
+  const response = await apiClient.get(`/api/users/${userId}/`);
+  return response.data;
 }

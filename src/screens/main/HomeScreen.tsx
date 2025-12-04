@@ -32,6 +32,13 @@ function HomeScreen({ navigation }: any) {
 
   const [pressed, setPressed] = useState(false);
 
+  function navToDetail(page: number) {
+    navigation.navigate(ROUTES.DETAIL, {
+      profile: userList[page],
+      report: reportMap[userList[page].user_id],
+    });
+  }
+
   useEffect(() => {
     const fetchAll = async () => {
       if (!auth.accessToken) return;
@@ -41,6 +48,8 @@ function HomeScreen({ navigation }: any) {
         // 1) 추천 리스트 불러오기
         const users = await getRecommandProfileApi(auth.accessToken);
         setUserList(users);
+
+        hideLoading();
 
         // 2) 각 유저별로 한줄평 API 호출 (병렬)
         const entries = await Promise.all(
@@ -100,15 +109,13 @@ function HomeScreen({ navigation }: any) {
                 hashtags={item.info.comman_hobbies}
                 imagePath={item.profile_image}
                 mbti={item.mbti}
-                report={reportMap[item.user_id]}
-                onPress={() => navigation.navigate('Detail')}
+                report={reportMap[item.user_id] ?? '불러오는 중...'}
+                onPress={() => navToDetail(page)}
               />
 
             </ScrollView>
           ))}
         </PagerView>
-
-
     </View>
   );
 }
@@ -151,7 +158,6 @@ const styles = StyleSheet.create({
     color: '#9C9C9C',
     fontSize: 12,
     fontFamily: 'NanumSquareOTF',
-    fontWeight: '700',
     lineHeight: 14,
     marginBottom: 20,
   },

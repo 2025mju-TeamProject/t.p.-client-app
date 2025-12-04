@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -10,11 +10,50 @@ import {
 } from 'react-native';
 import ProfileTag from '../../components/profile/ProfileTag';
 import colors from '../../constants/colors';
+import { DetailProfileResponse, getUserProfileApi, ProfileResponse } from '../../api/profile';
+import { useLoading } from '../../context/LoadingContext';
+import { isApiError } from '../../api/auth';
 
 const windowWidth = Dimensions.get('window').width;
 
-function DetailCard() {
+type Props = {
+  profile: ProfileResponse;
+  report: string;
+}
+
+function DetailCard({ profile, report }: Props) {
+  const { showLoading, hideLoading } = useLoading();
+  const [detail, setDetail] = useState<DetailProfileResponse>();
   const imageList = getImages();
+
+  function addEmoji(item: string, defaultEmoji = '⭐'): string {
+    // 이미 앞에 이모지가 있는 경우 그대로 반환
+    if (/^[\p{Emoji}]/u.test(item)) return item;
+
+    // 매핑된 이모지가 있으면 붙이고, 없으면 기본 이모지 사용
+    const clean = item.trim(); // 안전하게 trim
+    const emoji = emojiMap[clean] ?? defaultEmoji;
+
+    return `${emoji} ${clean}`;
+  }
+
+  useEffect(() => {
+    async function getProfile() {
+      showLoading();
+      try {
+        const response = await getUserProfileApi(profile.user_id)
+        setDetail(response)
+      } catch (error) {
+        if(isApiError(error)) {
+          console.log('프로필 조회 실패 : ', error.status)
+        }
+      } finally {
+        hideLoading();
+      }
+    }
+
+    getProfile();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -29,18 +68,16 @@ function DetailCard() {
 
       {/*태그*/}
       <View style={[styles.section, { marginTop: 20 }]}>
-        <ProfileTag text={'궁합점수 80점'} />
-        <ProfileTag text={'IT 개발직'} />
+        <ProfileTag text={profile.location} />
+        <ProfileTag text={profile.job} />
+        <ProfileTag text={profile.mbti} />
       </View>
 
       {/*이름, 사는곳*/}
       <View style={[styles.section, { marginTop: 20 }]}>
         <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'black' }}>
-          감자맛탕 29세
+          {`${profile.nickname} ${profile.age}세`}
         </Text>
-      </View>
-      <View style={[styles.section, { marginTop: 10 }]}>
-        <Text style={{ fontSize: 14 }}>경기도 용인시 / 회사원 / INTJ</Text>
       </View>
 
       {/*쿠피의 한 줄평*/}
@@ -56,12 +93,7 @@ function DetailCard() {
             </Text>
           </View>
 
-          <Text style={{ fontSize: 14, marginTop: 14, letterSpacing: 2 }}>
-            감자깡은 사교적이고 자유로운 기운이 강해 처음엔 나와 속도가 다를 수
-            있지만, 그 밝고 활발한 에너지가 내 삶에 새로운 활력을 줄 것 같아요.
-            감자깡은 따뜻하고 포용적인 마음이 커서, 때로는 내 감정을 더 깊게
-            바라보게 하고 서로의 차이 속에서 성장할 수 있을 것 같아요.
-          </Text>
+          <Text style={{ fontSize: 14, marginTop: 14, letterSpacing: 2 }}>{report}</Text>
         </View>
       </View>
 
@@ -82,7 +114,7 @@ function DetailCard() {
                 color: colors.pink,
               }}
             >
-              62
+              { Math.ceil(profile.total_score) }
             </Text>
             <Text style={[styles.title, { marginLeft: 3 }]}>점</Text>
           </View>
@@ -96,14 +128,7 @@ function DetailCard() {
       </View>
 
       <View style={[styles.section, { marginTop: 18 }]}>
-        <Text style={styles.text}>
-          안녕하세요, 감자맛탕입니다. 고양이 털에 묻은 그래픽 디자이너이며,
-          주말엔 캠핑을 즐기는 '갑술' 여자입니다. 갑술의 성향처럼 편안한
-          사람들과 어울리는 것을 좋아해요. LP판을 들으며 마시는 커피 한 잔의
-          여유를 아는 그런… 가끔은 말수가 적어도 이해해주실 수 있나요? 그렇다면,
-          긍정적이고 따뜻한 세상을 함께 만들어가요. 유머가 조금 섞인, 친근한
-          대화로 시작해볼까요?
-        </Text>
+        <Text style={styles.text}>{detail?.profile_text}</Text>
       </View>
       {/*나에 대해*/}
 
@@ -113,21 +138,9 @@ function DetailCard() {
       </View>
 
       <View style={[styles.section, { marginTop: 18 }]}>
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
-        <ProfileTag text={'농구'} />
+        {detail !== null && detail?.hobbies.map(item => (
+          <ProfileTag text={addEmoji(item)} />
+        ))}
       </View>
       {/*관심사 키워드*/}
 
@@ -206,3 +219,66 @@ function getImages() {
     { image: require('../../../assets/sample-profile2.jpg') },
   ];
 }
+
+function changeTag(text: string) {
+
+}
+
+const emojiMap: Record<string, string> = {
+  골프: '🏌️',
+  축구: '⚽',
+  농구: '🏀',
+  러닝: '🏃',
+  서핑: '🏄',
+  스키: '🎿',
+  야구: '⚾',
+  자전거: '🚴',
+  스킨스쿠버: '🐬',
+  요가: '🧘',
+  헬스: '💪',
+  크로스핏: '🏋️‍♂️',
+  클라이밍: '🧗‍♀️',
+  테니스: '🎾',
+  프리다이빙: '🥽',
+  필라테스: '💃',
+
+  낚시: '🎣',
+  드라이브: '🚗',
+  등산: '🥾',
+  산책: '🚶',
+  '맛집 투어': '🍝',
+  '스포츠 관람': '🏅',
+  여행: '✈️',
+  캠핑: '🏕️',
+  '파인 다이닝': '🍽️',
+
+  게임: '🎮',
+  공연: '🎭',
+  노래: '🎤',
+  댄스: '💃',
+  그림: '👨‍🎨',
+  글쓰기: '✍️',
+  독서: '📚',
+  웹툰: '🖼️',
+  덕질: '👑',
+  악기: '🎸',
+  사진: '📸',
+  전시회: '🖼️',
+  술: '🍷',
+  애니메이션: '🎞️',
+  영화: '🎬',
+  예능: '📺',
+
+  반려동물: '🐕',
+  봉사활동: '🙌',
+  인테리어: '🛠️',
+  자기개발: '📈',
+  뷰티: '💄',
+  '외국어 공부': '📜',
+  쇼핑: '🛍️',
+  자동차: '🚗',
+  패션: '👗',
+  SNS: '📱',
+};
+
+

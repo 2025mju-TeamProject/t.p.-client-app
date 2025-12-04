@@ -8,15 +8,17 @@ import IconButton from '../../../components/buttons/IconButton';
 import MenuModal from '../../../components/modals/MenuModal';
 import colors from '../../../constants/colors';
 import TwoOptionModal from '../../../components/modals/TwoOptionModal';
+import { ProfileResponse } from '../../../api/profile';
 
 type option = {
   text: string;
   onClick: () => void;
 };
 
-function DetailScreen({ navigation }: any) {
+function DetailScreen({ navigation, route }: any) {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+  const params = route.params;
   const modalOption: Array<option> = [
     {
       text: '신고',
@@ -59,7 +61,7 @@ function DetailScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <DetailCard />
+      <DetailCard profile={params.profile} report={params.report} />
 
       <View style={styles.backIcon}>
         <IconButton

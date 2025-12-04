@@ -16,6 +16,11 @@
 		C10FC87AD7E849B98FDE684F /* NanumSquareL.otf in Resources */ = {isa = PBXBuildFile; fileRef = 555C0046964A4EC0A8EE7460 /* NanumSquareL.otf */; };
 		BEE4F9D755544305A72E8EBA /* NanumSquareR.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4CE0F3E06EC4FC9B0C8D49D /* NanumSquareR.otf */; };
 		7329F384D8AB467790A5E505 /* SCDream7.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28C2E0B016D04C9D96263755 /* SCDream7.otf */; };
+		F47A5FC020F4445BBABAC123 /* SCDream4.otf in Resources */ = {isa = PBXBuildFile; fileRef = 68ACD4685453447CB40871CB /* SCDream4.otf */; };
+		1241C01A76844D6D85CB1B8F /* SCDream5.otf in Resources */ = {isa = PBXBuildFile; fileRef = B505231F6DAC4AE9A6DE26A9 /* SCDream5.otf */; };
+		F9FEBEC9521D4B50BE95C296 /* SCDream6.otf in Resources */ = {isa = PBXBuildFile; fileRef = 71B63EBA99BE438290EE0A02 /* SCDream6.otf */; };
+		54BCC26A53BD49CDB39B292E /* TmoneyRoundWindExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FD93541B4F2C438C872DDE81 /* TmoneyRoundWindExtraBold.otf */; };
+		5A7A9B7F60AC441F87B1117D /* TmoneyRoundWindRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = CE6C0DDFA00041C08321DB4F /* TmoneyRoundWindRegular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +39,11 @@
 		555C0046964A4EC0A8EE7460 /* NanumSquareL.otf */ = {isa = PBXFileReference; name = "NanumSquareL.otf"; path = "../assets/fonts/NanumSquareL.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		E4CE0F3E06EC4FC9B0C8D49D /* NanumSquareR.otf */ = {isa = PBXFileReference; name = "NanumSquareR.otf"; path = "../assets/fonts/NanumSquareR.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		28C2E0B016D04C9D96263755 /* SCDream7.otf */ = {isa = PBXFileReference; name = "SCDream7.otf"; path = "../assets/fonts/SCDream7.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		68ACD4685453447CB40871CB /* SCDream4.otf */ = {isa = PBXFileReference; name = "SCDream4.otf"; path = "../assets/fonts/SCDream4.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B505231F6DAC4AE9A6DE26A9 /* SCDream5.otf */ = {isa = PBXFileReference; name = "SCDream5.otf"; path = "../assets/fonts/SCDream5.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		71B63EBA99BE438290EE0A02 /* SCDream6.otf */ = {isa = PBXFileReference; name = "SCDream6.otf"; path = "../assets/fonts/SCDream6.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FD93541B4F2C438C872DDE81 /* TmoneyRoundWindExtraBold.otf */ = {isa = PBXFileReference; name = "TmoneyRoundWindExtraBold.otf"; path = "../assets/fonts/TmoneyRoundWindExtraBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CE6C0DDFA00041C08321DB4F /* TmoneyRoundWindRegular.otf */ = {isa = PBXFileReference; name = "TmoneyRoundWindRegular.otf"; path = "../assets/fonts/TmoneyRoundWindRegular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +126,11 @@
 				555C0046964A4EC0A8EE7460 /* NanumSquareL.otf */,
 				E4CE0F3E06EC4FC9B0C8D49D /* NanumSquareR.otf */,
 				28C2E0B016D04C9D96263755 /* SCDream7.otf */,
+				68ACD4685453447CB40871CB /* SCDream4.otf */,
+				B505231F6DAC4AE9A6DE26A9 /* SCDream5.otf */,
+				71B63EBA99BE438290EE0A02 /* SCDream6.otf */,
+				FD93541B4F2C438C872DDE81 /* TmoneyRoundWindExtraBold.otf */,
+				CE6C0DDFA00041C08321DB4F /* TmoneyRoundWindRegular.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -188,6 +203,11 @@
 				C10FC87AD7E849B98FDE684F /* NanumSquareL.otf in Resources */,
 				BEE4F9D755544305A72E8EBA /* NanumSquareR.otf in Resources */,
 				7329F384D8AB467790A5E505 /* SCDream7.otf in Resources */,
+				F47A5FC020F4445BBABAC123 /* SCDream4.otf in Resources */,
+				1241C01A76844D6D85CB1B8F /* SCDream5.otf in Resources */,
+				F9FEBEC9521D4B50BE95C296 /* SCDream6.otf in Resources */,
+				54BCC26A53BD49CDB39B292E /* TmoneyRoundWindExtraBold.otf in Resources */,
+				5A7A9B7F60AC441F87B1117D /* TmoneyRoundWindRegular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
