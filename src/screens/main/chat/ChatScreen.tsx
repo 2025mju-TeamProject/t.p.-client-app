@@ -35,13 +35,14 @@ type Chat = {
 
 function ChatScreen({ navigation, route }: any) {
   const { chatId } = route.params;
-  const oppoId = 22;
+  const oppoId = 20;
   const myId = 23;
   const { accessToken } = useAuth();
   const ws = useRef<WebSocket | null>(null);
-  const [text, setText] = useState('');
+  const [assistText, setAssisText] = useState<string[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
+  const [isAssistantVisible, setIsAssistantVisible] = useState<boolean>(false);
   const [content, setContent] = useState<Chat[]>([]);
   const modalOption: Array<option> = [
     {
@@ -112,11 +113,12 @@ function ChatScreen({ navigation, route }: any) {
   }, [chatId, accessToken]);
 
   useEffect(() => {
-    if (!accessToken || !content.length) return;
+    if (!content.length) return;
 
-    loadMessages(accessToken);
-    scrollToBottom();
-  }, [content, accessToken]);
+    setTimeout(() => {
+      scrollToBottom();
+    }, 0);
+  }, [content]);
 
   function showMenu() {
     setIsMenuVisible(true);
@@ -134,6 +136,12 @@ function ChatScreen({ navigation, route }: any) {
   function closeModal() {
     closeMenu();
     setIsModalVisible(false);
+  }
+
+  function handleAssistant() {
+    if(isAssistantVisible) { setIsAssistantVisible(false); }
+    else setIsAssistantVisible(true);
+    scrollToBottom();
   }
 
   function blockUser() {
@@ -174,7 +182,7 @@ function ChatScreen({ navigation, route }: any) {
     };
 
     ws.current.send(JSON.stringify(payload));
-  };
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -222,7 +230,52 @@ function ChatScreen({ navigation, route }: any) {
             ))}
         </ScrollView>
 
-        <ChatInput onSend={sendMessage} />
+        {isAssistantVisible === true && (
+          <View style={styles.assistSection}>
+            <View style={styles.assistContainer}>
+              <View
+                style={{
+                  width: '100%',
+                  height: 23,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <View
+                  style={{ width: 78, height: 3, backgroundColor: '#C8C8C8' }}
+                />
+              </View>
+              <TouchableOpacity style={styles.section}>
+                <Text style={styles.optionText}>{assistText[0]}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.section}>
+                <Text style={styles.optionText}>{assistText[1]}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.section}>
+                <Text style={styles.optionText}>{assistText[2]}</Text>
+              </TouchableOpacity>
+              <View
+                style={{ width: '100%', height: 23, justifyContent: 'center' }}
+              >
+                <Text
+                  style={{
+                    fontSize: 10,
+                    color: '#8F8F8F',
+                    paddingHorizontal: 24,
+                    borderBottomWidth: 0,
+                  }}
+                >
+                  메세지를 클릭하면, 자동으로 복사돼요.
+                </Text>
+              </View>
+            </View>
+          </View>
+        )}
+
+        <ChatInput
+          onPress={handleAssistant}
+          onSend={sendMessage}
+        />
       </KeyboardAvoidingView>
 
       {/*채팅방 나가기 모달*/}
@@ -298,5 +351,34 @@ const styles = StyleSheet.create({
   chat: {
     height: 100,
     backgroundColor: colors.primary,
+  },
+  assistSection: {
+    width: '100%',
+    height: 207,
+    //backgroundColor: '#CACACA',
+    paddingHorizontal: 24,
+    marginVertical: 20,
+  },
+  assistContainer: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 22,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#EDEDED',
+  },
+  section: {
+    width: '100%',
+    height: 53,
+    borderBottomWidth: 1,
+    borderBottomColor: '#EDEDED',
+    paddingHorizontal: 24,
+    justifyContent: 'center',
+  },
+  optionText: {
+    fontSize: 12,
+    fontFamily: 'NanumSquareB',
+    color: 'black',
   },
 });

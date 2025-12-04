@@ -32,3 +32,14 @@ export async function getMessage(oppoId: number, auth: string): Promise<Array<Ch
 
   return response.data;
 }
+
+export async function getAssistant(oppoId: number, auth: string): Promise<Array<string>> {
+  const response = await apiClient.get(`/chat/api/messages/${oppoId}/`, {
+    headers: {
+      Authorization: `Bearer ${auth}`,
+    }
+  })
+
+  return response.data;
+}
+

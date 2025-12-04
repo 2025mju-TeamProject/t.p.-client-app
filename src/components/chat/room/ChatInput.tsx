@@ -5,18 +5,20 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Text
+  Text, Image
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Feather";
 
 type Props = {
+  onPress: () => void;
   onSend: (text: string) => void;
 };
 
 const INPUT_HEIGHT = 48;
 
-function ChatInput({ onSend }: Props) {
+function ChatInput({ onPress, onSend }: Props) {
   const [text, setText] = useState("");
+  const wingImage = require('../../../../assets/cupi_wings_right.png');
 
   function handleSend() {
     onSend(text);
@@ -27,8 +29,8 @@ function ChatInput({ onSend }: Props) {
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         {/* 왼쪽 아이콘 */}
-        <TouchableOpacity style={styles.iconWrapper}>
-          <Ionicons name="image" size={22} color="black" />
+        <TouchableOpacity style={styles.iconWrapper} onPress={onPress}>
+          <Image source={wingImage} style={{width: 30, height: 30}} />
         </TouchableOpacity>
 
         {/* 텍스트 입력창 */}
