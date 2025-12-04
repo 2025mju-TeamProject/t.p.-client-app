@@ -49,8 +49,6 @@ function HomeScreen({ navigation }: any) {
         const users = await getRecommandProfileApi(auth.accessToken);
         setUserList(users);
 
-        hideLoading();
-
         // 2) 각 유저별로 한줄평 API 호출 (병렬)
         const entries = await Promise.all(
           users.map(async (u) => {

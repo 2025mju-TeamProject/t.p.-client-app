@@ -138,7 +138,7 @@ function DetailCard({ profile, report }: Props) {
       </View>
 
       <View style={[styles.section, { marginTop: 18 }]}>
-        {detail !== null && detail?.hobbies.map(item => (
+        {detail?.hobbies !== null && detail?.hobbies.map(item => (
           <ProfileTag text={addEmoji(item)} />
         ))}
       </View>
