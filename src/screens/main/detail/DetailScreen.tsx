@@ -9,11 +9,14 @@ import MenuModal from '../../../components/modals/MenuModal';
 import colors from '../../../constants/colors';
 import TwoOptionModal from '../../../components/modals/TwoOptionModal';
 import { ProfileResponse } from '../../../api/profile';
-import { sendHeartApi } from '../../../api/interacion';
+import { sendHeartApi, blockUserApi } from '../../../api/interacion';
 import { useAuth } from '../../../context/AuthContext';
 import { isApiError } from '../../../api/auth';
-import OneOptionModal from '../../../components/modals/OneOptionModal';
 import AlertModal from '../../../components/modals/AlertModal';
+import ReportModal from '../../../components/modals/ReportModal';
+import SendChatModal from '../../../components/modals/SendChatModal';
+import { sendMessage } from '../../../api/chat';
+import { useLoading } from '../../../context/LoadingContext';
 
 type option = {
   text: string;
@@ -21,26 +24,40 @@ type option = {
 };
 
 function DetailScreen({ navigation, route }: any) {
+  const [chat, setChat] = useState<string>('');
   const [modalPicker, setModalPicker] = useState<
-    null | 'ignore' | 'heart' | 'heart_success' | 'heart_already_success' | 'chat' | 'report' | 'report_success'
+    | null
+    | 'ignore'
+    | 'ignore_success'
+    | 'heart'
+    | 'heart_success'
+    | 'heart_already_success'
+    | 'chat'
+    | 'chat_success'
+    | 'report'
+    | 'report_success'
   >(null);
   const successMessage: Record<string, string> = {
     heart_success: '하트를 보냈습니다.',
     heart_already_success: '이미 하트를 보냈습니다.',
     report_success: '신고가 접수되었습니다.',
+    chat_success: '채팅을 보냈습니다.',
+    ignore_success: '차단되었습니다.',
     ignore: '오류가 발생했습니다.',
     heart: '오류가 발생했습니다.',
     chat: '오류가 발생했습니다.',
     report: '오류가 발생했습니다.',
-  }
+  };
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const params = route.params;
-  const { accessToken } = useAuth()
+  const oppoId = params.profile.user_id;
+  const { accessToken } = useAuth();
+  const { showLoading, hideLoading } = useLoading();
   const modalOption: Array<option> = [
     {
       text: '신고',
       onClick: () => {
-        pickModal('report')
+        pickModal('report');
       },
     },
     {
@@ -55,13 +72,16 @@ function DetailScreen({ navigation, route }: any) {
     setIsMenuVisible(false);
     if (
       modalType !== 'ignore' &&
+      modalType !== 'ignore_success' &&
       modalType !== 'heart' &&
       modalType !== 'heart_success' &&
       modalType !== 'heart_already_success' &&
       modalType !== 'chat' &&
+      modalType !== 'chat_success' &&
       modalType !== 'report_success' &&
       modalType !== 'report'
-    ) return
+    )
+      return;
 
     setModalPicker(modalType!);
   }
@@ -71,29 +91,61 @@ function DetailScreen({ navigation, route }: any) {
     setModalPicker(null);
   }
 
-  function blockUser() {
-    setModalPicker(null)
+  async function blockUser() {
+    setModalPicker(null);
     setIsMenuVisible(false);
+    if (!accessToken) return;
 
-    //todo 차단 api 연결
+    try {
+      const response = await blockUserApi(oppoId, accessToken);
+      if(response) {
+        pickModal('ignore_success');
+      }
+    } catch (error) {
+      if (isApiError(error)) {
+        console.log(error);
+      }
+    }
   }
 
   async function sendHeart() {
-    if(!accessToken) return
+    if (!accessToken) return;
 
     try {
-      const response = await sendHeartApi(params.profile.user_id, accessToken)
-      if(response === '하트를 보냈습니다.') {
-        pickModal('heart_success')
-      } else if(response === '하트를 취소했습니다.') {
-        await sendHeartApi(params.profile.user_id, accessToken)
-        pickModal('heart_already_success')
+      const response = await sendHeartApi(oppoId, accessToken);
+      if (response === '하트를 보냈습니다.') {
+        pickModal('heart_success');
+      } else if (response === '하트를 취소했습니다.') {
+        await sendHeartApi(oppoId, accessToken);
+        pickModal('heart_already_success');
       }
-
     } catch (error) {
-      if(isApiError(error)) {
+      if (isApiError(error)) {
         console.log(error);
       }
+    }
+  }
+
+  async function reportUser() {
+    pickModal('report_success');
+  }
+
+  async function startChat() {
+    if (!accessToken || !chat) return;
+
+    pickModal(null);
+    showLoading()
+    try {
+      const response = await sendMessage(chat, oppoId, accessToken);
+      console.log(response);
+
+      pickModal('chat_success');
+    } catch (error) {
+      if (isApiError(error)) {
+        console.log(error);
+      }
+    } finally {
+      hideLoading();
     }
   }
 
@@ -135,7 +187,7 @@ function DetailScreen({ navigation, route }: any) {
           iconName={'chatbox-sharp'}
           color={colors.white}
           size={30}
-          onClick={() => {}}
+          onClick={() => setModalPicker('chat')}
         />
       </View>
 
@@ -165,10 +217,38 @@ function DetailScreen({ navigation, route }: any) {
       >
         <TwoOptionModal
           title={`\'하트\'를 보낼까요?`}
-          subTitle={'하트를 보내면 상대방에게 알림이 가고\n상대방은 회원님의 프로필을 볼 수 있어요!'}
+          subTitle={
+            '하트를 보내면 상대방에게 알림이 가고\n상대방은 회원님의 프로필을 볼 수 있어요!'
+          }
           optionText1={'보내기'}
           optionText2={'취소'}
           onClick1={sendHeart}
+          onClick2={closeModal}
+        />
+      </Modal>
+
+      {/*채팅 모달*/}
+      <Modal
+        isVisible={modalPicker === 'chat'}
+        onBackdropPress={closeModal}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+      >
+        <SendChatModal
+          setText={(value) => setChat(value)}
+          onClick={startChat}
+        />
+      </Modal>
+
+      {/*신고 모달*/}
+      <Modal
+        isVisible={modalPicker === 'report'}
+        onBackdropPress={closeModal}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+      >
+        <ReportModal
+          onClick1={reportUser}
           onClick2={closeModal}
         />
       </Modal>
@@ -178,7 +258,9 @@ function DetailScreen({ navigation, route }: any) {
         isVisible={
           modalPicker === 'heart_success' ||
           modalPicker === 'heart_already_success' ||
-          modalPicker === 'report_success'
+          modalPicker === 'report_success' ||
+          modalPicker === 'ignore_success' ||
+          modalPicker === 'chat_success'
         }
         onBackdropPress={closeModal}
       >
