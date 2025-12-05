@@ -6,7 +6,7 @@ import {
   clearTokens,
   getRefreshToken, saveTokens,
 } from '../../utils/localTokens';
-import { HasProfileApi } from '../../api/profile';
+import { hasProfileApi } from '../../api/profile';
 import { VerifyTokenApi, RefreshTokenApi } from '../../api/token';
 import { useAuth } from '../../context/AuthContext';
 
@@ -28,7 +28,7 @@ function StartScreen({ navigation }: any) {
       const newAccessToken = await RefreshTokenApi(refreshToken);
 
       // 3) 새 access 토큰으로 프로필 존재 여부 체크
-      const hasProfile = await HasProfileApi(newAccessToken);
+      const hasProfile = await hasProfileApi(newAccessToken);
 
       // 4) 토큰 저장 (재발급 성공했을 때만)
       await saveTokens({ access: newAccessToken, refresh: refreshToken });
