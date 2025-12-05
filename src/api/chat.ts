@@ -24,41 +24,60 @@ export async function sendMessage(
   oppoId: string,
   auth: string,
 ): Promise<void> {
-  const response = await apiClient.post(`/chat/api/message/${oppoId}/`, {
-    message: message,
-    headers: {
-      Authorization: `Bearer ${auth}`,
+  const response = await apiClient.post(
+    `/chat/api/send-messages/${oppoId}/`,
+    { message: message },
+    {
+      headers: {
+        Authorization: `Bearer ${auth}`,
+      },
     },
-  });
+  );
+
+  //return response.data.message;
 }
 
-export async function getMessage(oppoId: number, auth: string): Promise<Array<ChatResponse>> {
-  const response = await apiClient.get(`/chat/api/history-messages/${oppoId}/`, {
-    headers: {
-      Authorization: `Bearer ${auth}`,
-    }
-  })
+export async function getMessage(
+  oppoId: number,
+  auth: string,
+): Promise<Array<ChatResponse>> {
+  const response = await apiClient.get(
+    `/chat/api/history-messages/${oppoId}/`,
+    {
+      headers: {
+        Authorization: `Bearer ${auth}`,
+      },
+    },
+  );
 
   return response.data;
 }
 
-export async function getAssistant(oppoId: number, auth: string): Promise<Array<string>> {
-  const response = await apiClient.post(`/chat/api/suggestions/${oppoId}/`, {}, {
-    headers: {
-      Authorization: `Bearer ${auth}`,
-    }
-  })
+export async function getAssistant(
+  oppoId: number,
+  auth: string,
+): Promise<Array<string>> {
+  const response = await apiClient.post(
+    `/chat/api/suggestions/${oppoId}/`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${auth}`,
+      },
+    },
+  );
 
   return response.data.suggestions;
 }
 
-export async function getChatRooms(auth: string): Promise<Array<ChatRoomResponse>> {
+export async function getChatRooms(
+  auth: string,
+): Promise<Array<ChatRoomResponse>> {
   const response = await apiClient.get(`/chat/api/rooms/`, {
     headers: {
       Authorization: `Bearer ${auth}`,
-    }
+    },
   });
 
   return response.data;
 }
-

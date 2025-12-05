@@ -175,7 +175,7 @@ function LoginScreen({ navigation }: any) {
           secureTextEntry={true}
           value={passwd}
           style={styles.textInput}
-        ></TextInput>
+        />
       </View>
 
       {/*자동 로그인*/}

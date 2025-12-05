@@ -19,11 +19,7 @@ import { isApiError } from '../../../api/auth';
 function ProfileScreen({ navigation }: any) {
   const { showLoading, hideLoading } = useLoading();
   const [profile, setProfile] = useState<DetailProfileResponse>();
-
-  const user = {
-    nickname: '고구맛탕',
-    avatar: require('../../../../assets/sample-profile2.jpg'),
-  };
+  const [profileImage, setProfileImage] = useState<string>('');
 
   function goEdit() {
     navigation.navigate(ROUTES.PROFILE_EDIT, {
@@ -59,13 +55,17 @@ function ProfileScreen({ navigation }: any) {
     getProfile();
   }, []);
 
+  useEffect(() => {
+    setProfileImage(`http:3.35.223.187:8000${profile?.images[0].image}`)
+  }, [profile]);
+
   return (
     <ScrollView style={styles.container}>
       <Header title="프로필" />
 
       <View style={{ marginTop: 0 }}>
         <View style={styles.profileCard}>
-          <Image source={user.avatar} style={styles.avatar} />
+          <Image source={{uri: profileImage}} style={styles.avatar} />
           <Text style={styles.nickname}>{profile?.nickname}</Text>
         </View>
 

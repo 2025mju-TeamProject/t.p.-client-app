@@ -1,24 +1,17 @@
-import React, { useRef, useState, useEffect } from 'react';
-import {
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  BackHandler,
-} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import RecommendCard from '../../components/profile/RecommendCard';
 import PagerView from 'react-native-pager-view';
-import Icon from 'react-native-vector-icons/Octicons';
 import ROUTES from '../../constants/routes';
 import HomeHeader from '../../components/common/HeaderHomeScreen';
-import { getMatchingReportApi, getRecommandProfileApi, ProfileResponse } from '../../api/profile';
+import {
+  getMatchingReportApi,
+  getRecommandProfileApi,
+  ProfileResponse,
+} from '../../api/profile';
 import { useAuth } from '../../context/AuthContext';
 import { useLoading } from '../../context/LoadingContext';
-import { AxiosError } from 'axios';
 import { isApiError } from '../../api/auth';
 
 function HomeScreen({ navigation }: any) {
@@ -51,15 +44,21 @@ function HomeScreen({ navigation }: any) {
 
         // 2) 각 유저별로 한줄평 API 호출 (병렬)
         const entries = await Promise.all(
-          users.map(async (u) => {
+          users.map(async u => {
             try {
-              const report = await getMatchingReportApi(u.user_id, auth.accessToken!);
+              const report = await getMatchingReportApi(
+                u.user_id,
+                auth.accessToken!,
+              );
               return [u.user_id, report] as const;
             } catch (error) {
-              if(isApiError(error)) {
+              if (isApiError(error)) {
                 console.log(error.response);
               }
-              return [u.user_id, '쿠피가 한 줄평을 불러오지 못했어요.'] as const;
+              return [
+                u.user_id,
+                '쿠피가 한 줄평을 불러오지 못했어요.',
+              ] as const;
             }
           }),
         );
@@ -76,7 +75,6 @@ function HomeScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-
       <HomeHeader
         title="오늘 추천"
         subtitle="매일 오전 7시, 오후 7시에 소개해 드려요."
@@ -84,36 +82,34 @@ function HomeScreen({ navigation }: any) {
         hasAlarm={hasAlarm}
       />
 
-        <PagerView
-          ref={pageRef}
-          style={styles.pager}
-          initialPage={0}
-          onPageSelected={e => setPage(e.nativeEvent.position)}
-        >
-          {userList.map(item => (
-            <ScrollView
-              key={item.user_id}
-              style={styles.page}
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
-            >
-
-              {/* 프로필 카드 */}
-              <RecommendCard
-                name={item.nickname}
-                age={item.age}
-                distance={item.location}
-                job={item.job}
-                hashtags={item.info.comman_hobbies}
-                imagePath={item.profile_image}
-                mbti={item.mbti}
-                report={reportMap[item.user_id] ?? '불러오는 중...'}
-                onPress={() => navToDetail(page)}
-              />
-
-            </ScrollView>
-          ))}
-        </PagerView>
+      <PagerView
+        ref={pageRef}
+        style={styles.pager}
+        initialPage={0}
+        onPageSelected={e => setPage(e.nativeEvent.position)}
+      >
+        {userList.map(item => (
+          <ScrollView
+            key={item.user_id}
+            style={styles.page}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+          >
+            {/* 프로필 카드 */}
+            <RecommendCard
+              name={item.nickname}
+              age={item.age}
+              distance={item.location}
+              job={item.job}
+              hashtags={item.info?.comman_hobbies}
+              imagePath={item.profile_image}
+              mbti={item.mbti}
+              report={reportMap[item.user_id] ?? '불러오는 중...'}
+              onPress={() => navToDetail(page)}
+            />
+          </ScrollView>
+        ))}
+      </PagerView>
     </View>
   );
 }
