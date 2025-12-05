@@ -9,6 +9,11 @@ import MenuModal from '../../../components/modals/MenuModal';
 import colors from '../../../constants/colors';
 import TwoOptionModal from '../../../components/modals/TwoOptionModal';
 import { ProfileResponse } from '../../../api/profile';
+import { sendHeartApi } from '../../../api/interacion';
+import { useAuth } from '../../../context/AuthContext';
+import { isApiError } from '../../../api/auth';
+import OneOptionModal from '../../../components/modals/OneOptionModal';
+import AlertModal from '../../../components/modals/AlertModal';
 
 type option = {
   text: string;
@@ -16,47 +21,80 @@ type option = {
 };
 
 function DetailScreen({ navigation, route }: any) {
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [modalPicker, setModalPicker] = useState<
+    null | 'ignore' | 'heart' | 'heart_success' | 'heart_already_success' | 'chat' | 'report' | 'report_success'
+  >(null);
+  const successMessage: Record<string, string> = {
+    heart_success: '하트를 보냈습니다.',
+    heart_already_success: '이미 하트를 보냈습니다.',
+    report_success: '신고가 접수되었습니다.',
+    ignore: '오류가 발생했습니다.',
+    heart: '오류가 발생했습니다.',
+    chat: '오류가 발생했습니다.',
+    report: '오류가 발생했습니다.',
+  }
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const params = route.params;
+  const { accessToken } = useAuth()
   const modalOption: Array<option> = [
     {
       text: '신고',
       onClick: () => {
-        closeModal();
+        pickModal('report')
       },
     },
     {
       text: '차단',
       onClick: () => {
-        showModal();
+        pickModal('ignore');
       },
     },
   ];
 
-  function showMenu() {
-    setIsMenuVisible(true);
-  }
-
-  function closeMenu() {
+  function pickModal(modalType: string | null) {
     setIsMenuVisible(false);
-  }
+    if (
+      modalType !== 'ignore' &&
+      modalType !== 'heart' &&
+      modalType !== 'heart_success' &&
+      modalType !== 'heart_already_success' &&
+      modalType !== 'chat' &&
+      modalType !== 'report_success' &&
+      modalType !== 'report'
+    ) return
 
-  function showModal() {
-    closeMenu();
-    setIsModalVisible(true);
+    setModalPicker(modalType!);
   }
 
   function closeModal() {
-    closeMenu();
-    setIsModalVisible(false);
+    setIsMenuVisible(false);
+    setModalPicker(null);
   }
 
   function blockUser() {
-    setIsModalVisible(false);
+    setModalPicker(null)
     setIsMenuVisible(false);
 
     //todo 차단 api 연결
+  }
+
+  async function sendHeart() {
+    if(!accessToken) return
+
+    try {
+      const response = await sendHeartApi(params.profile.user_id, accessToken)
+      if(response === '하트를 보냈습니다.') {
+        pickModal('heart_success')
+      } else if(response === '하트를 취소했습니다.') {
+        await sendHeartApi(params.profile.user_id, accessToken)
+        pickModal('heart_already_success')
+      }
+
+    } catch (error) {
+      if(isApiError(error)) {
+        console.log(error);
+      }
+    }
   }
 
   return (
@@ -79,7 +117,7 @@ function DetailScreen({ navigation, route }: any) {
           iconName={'ellipsis-horizontal-sharp'}
           color={colors.white}
           size={30}
-          onClick={showMenu}
+          onClick={() => setIsMenuVisible(true)}
         />
       </View>
 
@@ -88,7 +126,7 @@ function DetailScreen({ navigation, route }: any) {
           iconName={'heart'}
           color={colors.white}
           size={30}
-          onClick={() => {}}
+          onClick={() => setModalPicker('heart')}
         />
       </View>
 
@@ -103,8 +141,8 @@ function DetailScreen({ navigation, route }: any) {
 
       {/*모달*/}
       <Modal
-        isVisible={isModalVisible}
-        onBackdropPress={() => setIsModalVisible(false)}
+        isVisible={modalPicker === 'ignore'}
+        onBackdropPress={closeModal}
         animationIn="fadeInUp"
         animationOut="fadeOutDown"
       >
@@ -118,15 +156,51 @@ function DetailScreen({ navigation, route }: any) {
         />
       </Modal>
 
+      {/*하트 모달*/}
+      <Modal
+        isVisible={modalPicker === 'heart'}
+        onBackdropPress={closeModal}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+      >
+        <TwoOptionModal
+          title={`\'하트\'를 보낼까요?`}
+          subTitle={'하트를 보내면 상대방에게 알림이 가고\n상대방은 회원님의 프로필을 볼 수 있어요!'}
+          optionText1={'보내기'}
+          optionText2={'취소'}
+          onClick1={sendHeart}
+          onClick2={closeModal}
+        />
+      </Modal>
+
+      {/*알럿 모달*/}
+      <Modal
+        isVisible={
+          modalPicker === 'heart_success' ||
+          modalPicker === 'heart_already_success' ||
+          modalPicker === 'report_success'
+        }
+        onBackdropPress={closeModal}
+      >
+        <AlertModal
+          title={successMessage[modalPicker ?? 'ignore']}
+          optionText={'확인'}
+          onClick={closeModal}
+        />
+      </Modal>
+
       {/*메뉴*/}
       <Modal
         isVisible={isMenuVisible}
-        onBackdropPress={() => setIsModalVisible(false)}
+        onBackdropPress={() => pickModal(null)}
         animationIn="fadeInUp"
         animationOut="fadeOutDown"
         style={{ justifyContent: 'flex-end', marginBottom: 100 }}
       >
-        <MenuModal options={modalOption} cancle={closeMenu} />
+        <MenuModal
+          options={modalOption}
+          cancle={() => setIsMenuVisible(false)}
+        />
       </Modal>
     </View>
   );
