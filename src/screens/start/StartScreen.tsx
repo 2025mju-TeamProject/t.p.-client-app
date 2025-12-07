@@ -9,6 +9,8 @@ import {
 import { hasProfileApi } from '../../api/profile';
 import { VerifyTokenApi, RefreshTokenApi } from '../../api/token';
 import { useAuth } from '../../context/AuthContext';
+import { decodeJwt } from '../../utils/decoder';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function StartScreen({ navigation }: any) {
   const { login } = useAuth();
@@ -34,6 +36,9 @@ function StartScreen({ navigation }: any) {
       await saveTokens({ access: newAccessToken, refresh: refreshToken });
 
       if (hasProfile) {
+        const decoded = await decodeJwt(newAccessToken);
+        console.log(decoded?.payload.user_id);
+        await AsyncStorage.setItem('user_id', decoded?.payload.user_id)
         // 프로필 있음 → 로그인 상태로 메인 화면
         login(newAccessToken);
 
