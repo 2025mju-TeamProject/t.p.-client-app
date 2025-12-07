@@ -61,8 +61,8 @@ function WriteProfileScreen({ navigation }: any) {
     year: 0,
     month: 0,
     day: 0,
-    hour: 0,
-    minute: 0,
+    hour: -1,
+    minute: -1,
     birth_time_unknown: false,
     location_city: '',
     location_district: '',
@@ -176,7 +176,7 @@ function WriteProfileScreen({ navigation }: any) {
         const hasTime =
           profile.birth_time_unknown
             ? true
-            : profile.hour !== 0 && profile.minute !== 0;
+            : profile.hour >= 0 && profile.minute >= 0;
 
         return hasDate && hasTime;
 
