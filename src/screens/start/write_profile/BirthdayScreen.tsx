@@ -49,9 +49,9 @@ function BirthdayScreen({
 
   // 시
   const [hourValue, setHourValue] = useState<number | null>(null);
-  const hourItems = Array.from({ length: 23 }, (_, i) => ({
+  const hourItems = Array.from({ length: 24 }, (_, i) => ({
     label: `${i + 1}`,
-    value: i + 1,
+    value: i,
   }));
 
   // 분
