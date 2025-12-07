@@ -9,6 +9,8 @@ import { getHeartList, LikeListResponse } from '../../../api/interacion';
 import { useAuth } from '../../../context/AuthContext';
 import { isApiError } from '../../../api/auth';
 import { useFocusEffect } from '@react-navigation/native';
+import { getMatchingReportApi } from '../../../api/profile';
+import { formatRelativeTime } from '../../../utils/time'
 
 function LikeScreen({ navigation }: any) {
   const pageRef = useRef<PagerView>(null);
@@ -60,8 +62,17 @@ function LikeScreen({ navigation }: any) {
     pageRef.current.setPage(page);
   }
 
-  function navigateToDetail(userId: number) {
-    navigation.navigate(ROUTES.DETAIL);
+  async function navigateToDetail(userId: number) {
+    if(!accessToken) return;
+    showLoading();
+
+    try {
+      const report = await getMatchingReportApi(userId, accessToken);
+    } catch(error) {
+      if(isApiError(error)) {
+        console.log(error);
+      }
+    }
   }
 
   return (
@@ -111,9 +122,9 @@ function LikeScreen({ navigation }: any) {
               <ListItem
                 image={`http://3.35.223.187:8000${item.target_profile.image}`}
                 name={item.target_profile.nickname}
-                age={29}
-                tag={'29'}
-                time={'지금'}
+                age={item.target_profile.age}
+                tag={`${item.target_profile.location_city}·${item.target_profile.location_district}·${item.target_profile.mbti}`}
+                time={formatRelativeTime(item.created_at)}
                 // onClick={() => navigateToDetail(item.target_profile.user_id)}
               />
             )}
@@ -134,9 +145,9 @@ function LikeScreen({ navigation }: any) {
               <ListItem
                 image={`http://3.35.223.187:8000${item.target_profile.image}`}
                 name={item.target_profile.nickname}
-                age={29}
-                tag={'29'}
-                time={'지금'}
+                age={item.target_profile.age}
+                tag={`${item.target_profile.location_city} · ${item.target_profile.location_district} · ${item.target_profile.mbti}`}
+                time={formatRelativeTime(item.created_at)}
                 // onClick={() => navigateToDetail(item.target_profile.user_id)}
               />
             )}
