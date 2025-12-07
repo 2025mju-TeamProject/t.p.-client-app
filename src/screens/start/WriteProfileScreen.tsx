@@ -25,7 +25,7 @@ import axios from 'axios';
 import { getAccessToken } from '../../utils/localTokens';
 import { useLoading } from '../../context/LoadingContext';
 import { useAuth } from '../../context/AuthContext';
-import { decodeJwt } from '@utils/decoder';
+import { decodeJwt } from '../../utils/decoder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const messages = [
@@ -210,7 +210,7 @@ function WriteProfileScreen({ navigation }: any) {
       const api = apiClient;
       let response;
       try {
-        setModalVisible(true);
+        //setModalVisible(true);
 
         const accessToken = await getAccessToken()
         const formData = new FormData();
@@ -261,6 +261,7 @@ function WriteProfileScreen({ navigation }: any) {
         });
 
       } catch (error: any) {
+        console.log(error)
         if (axios.isAxiosError(error)) {
           console.log('프로필 작성 실패:', error.response?.status);
         } else {
