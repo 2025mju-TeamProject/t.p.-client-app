@@ -1,16 +1,58 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ROUTES from '../../../constants/routes';
 import LikeHeader from '../../../components/common/HeaderLikeScreen';
+import { useLoading } from '../../../context/LoadingContext';
+import { getHeartList, LikeListResponse } from '../../../api/interacion';
+import { useAuth } from '../../../context/AuthContext';
+import { isApiError } from '../../../api/auth';
+import { useFocusEffect } from '@react-navigation/native';
 
 function LikeScreen({ navigation }: any) {
   const pageRef = useRef<PagerView>(null);
   const [page, setPage] = useState<number>(0);
+  const { showLoading, hideLoading } = useLoading()
+  const { accessToken } = useAuth()
 
-  const receiveItems: Array<listProps> = getItems();
-  const sendItems: Array<listProps> = getItems();
+  const [receiveItems, setReceiveItems] = useState<LikeListResponse[]>([])
+  const [sendItems, setSendItems] = useState<LikeListResponse[]>([])
+
+  useFocusEffect(
+    useCallback(() => {
+      if(!accessToken) return;
+
+      async function getHeartList() {
+        const received = await loadLikeItems(false)
+        const sent = await loadLikeItems(true)
+
+        if(received !== undefined) setReceiveItems(received)
+        if(sent !== undefined) setSendItems(sent)
+
+      }
+
+      getHeartList()
+      return () => {}
+    }, [])
+  )
+
+  async function loadLikeItems(isMine: boolean) {
+    if (!accessToken) return;
+
+    showLoading();
+    try {
+      const response = await getHeartList(accessToken, isMine);
+
+      return response;
+    } catch (error) {
+      if(isApiError(error)) {
+        console.log(error);
+      }
+    } finally {
+      hideLoading();
+    }
+  }
 
   function changePage(page: number) {
     if (!pageRef.current) return;
@@ -67,12 +109,12 @@ function LikeScreen({ navigation }: any) {
             data={receiveItems}
             renderItem={({ item }) => (
               <ListItem
-                image={item.image}
-                name={item.name}
-                age={item.age}
-                tag={item.tag}
-                time={item.time}
-                onClick={() => navigateToDetail(0)}
+                image={`http://3.35.223.187:8000${item.target_profile.image}`}
+                name={item.target_profile.nickname}
+                age={29}
+                tag={'29'}
+                time={'지금'}
+                // onClick={() => navigateToDetail(item.target_profile.user_id)}
               />
             )}
             ListFooterComponent={
@@ -90,12 +132,12 @@ function LikeScreen({ navigation }: any) {
             data={sendItems}
             renderItem={({ item }) => (
               <ListItem
-                image={item.image}
-                name={item.name}
-                age={item.age}
-                tag={item.tag}
-                time={item.time}
-                onClick={() => navigateToDetail(0)}
+                image={`http://3.35.223.187:8000${item.target_profile.image}`}
+                name={item.target_profile.nickname}
+                age={29}
+                tag={'29'}
+                time={'지금'}
+                // onClick={() => navigateToDetail(item.target_profile.user_id)}
               />
             )}
             ListFooterComponent={
@@ -177,24 +219,12 @@ type listProps = {
 export function ListItem({ image, name, age, tag, time, onClick = () => {} }: listProps) {
   return (
     <TouchableOpacity style={styles.listContainer} onPress={onClick}>
-      <Image style={{ width: 54, height: 54, borderRadius: 50 }} source={image} />
+      <Image style={{ width: 54, height: 54, borderRadius: 50 }} source={{uri: image}} />
       <View style={{ marginLeft: 10, flex: 1 }}>
         <Text style={{ fontSize: 14, fontWeight: 700 }}>{name} · {age}세</Text>
         <Text style={{ fontSize: 12, color: '#828282' }}>{tag}</Text>
       </View>
       <Text style={{ fontSize: 10, color: '#828282' }}>{time}</Text>
     </TouchableOpacity>
-  );
-}
-
-function getItems() {
-  return new Array<listProps>(
-    {
-      image: require('../../../../assets/sample-profile2.jpg'),
-      name: '감자맛탕',
-      age: 29,
-      tag: '경기 용인시 / 회사원 / INTJ',
-      time: '지금'
-    }
   );
 }

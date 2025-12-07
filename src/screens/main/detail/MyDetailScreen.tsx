@@ -14,7 +14,7 @@ function MyProfileScreen({ navigation, route }: Props) {
   const myProfile: ProfileResponse = {
     user_id: profile.user_id,
     nickname: profile.nickname,
-    age: 23,
+    age: profile.age,
     mbti: 'INTP',
     job: profile.job,
     gender: profile.gender,
