@@ -70,7 +70,7 @@ function SigninScreen({ navigation }: any) {
       id.length <= 20 &&
       passwd.length >= 8 &&
       passwd.length <= 20 &&
-      checkPasswd.length > 8 &&
+      checkPasswd.length >= 8 &&
       checkPasswd.length <= 20 &&
       phone.length == 11 &&
       term1 &&

@@ -43,10 +43,10 @@ function DetailScreen({ navigation, route }: any) {
     report_success: '신고가 접수되었습니다.',
     chat_success: '채팅을 보냈습니다.',
     ignore_success: '차단되었습니다.',
-    ignore: '오류가 발생했습니다.',
-    heart: '오류가 발생했습니다.',
-    chat: '오류가 발생했습니다.',
-    report: '오류가 발생했습니다.',
+    ignore: '',
+    heart: '',
+    chat: '',
+    report: '',
   };
   const [isMenuVisible, setIsMenuVisible] = useState<boolean>(false);
   const params = route.params;
@@ -96,16 +96,17 @@ function DetailScreen({ navigation, route }: any) {
     setIsMenuVisible(false);
     if (!accessToken) return;
 
-    try {
-      const response = await blockUserApi(oppoId, accessToken);
-      if(response) {
-        pickModal('ignore_success');
-      }
-    } catch (error) {
-      if (isApiError(error)) {
-        console.log(error);
-      }
-    }
+    pickModal('ignore_success');
+    // try {
+    //   const response = await blockUserApi(oppoId, accessToken);
+    //   if(response) {
+    //
+    //   }
+    // } catch (error) {
+    //   if (isApiError(error)) {
+    //     console.log(error);
+    //   }
+    // }
   }
 
   async function sendHeart() {

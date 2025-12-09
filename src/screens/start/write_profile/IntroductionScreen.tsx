@@ -43,7 +43,7 @@ function IntroductionScreen({ text, onChangeText }: Props) {
         <View style={[styles.section, { marginTop: 10 }]}>
           <Text style={styles.text}>
             {
-              '\\‘쿠피\\’는 회원님이 지금까지 입력한 모든 정보인 성별, 생일, 관심사, MBTI, 직업, 지역을 기반으로 프로필 소개글을 작성해주는 AI 어시스턴트예요.'
+              '‘쿠피’는 회원님이 지금까지 입력한 모든 정보인 성별, 생일, 관심사, MBTI, 직업, 지역을 기반으로 프로필 소개글을 작성해주는 AI 어시스턴트예요.'
             }
           </Text>
         </View>

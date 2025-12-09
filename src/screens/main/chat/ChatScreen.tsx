@@ -220,7 +220,7 @@ function ChatScreen({ navigation, route }: any) {
             </TouchableOpacity>
 
             <Image
-              source={require('../../../../assets/sample-profile2.jpg')}
+              source={{uri: `http://3.35.223.187:8000${roomInfo.other_image}`}}
               style={styles.profileImage}
             />
             <Text style={styles.headerText}>{roomInfo.other_nickname}</Text>

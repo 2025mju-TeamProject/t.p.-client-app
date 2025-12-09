@@ -8,6 +8,10 @@ export interface LikeListResponse {
     user_id: number;
     nickname: string;
     image: string;
+    age: number;
+    location_city: string;
+    location_district: string;
+    mbti: string;
   }
 }
 

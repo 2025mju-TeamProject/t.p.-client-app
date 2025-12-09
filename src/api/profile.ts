@@ -19,6 +19,7 @@ export interface DetailProfileResponse {
   user_id: number;
   nickname: string;
   gender: string;
+  age: number;
   year: number;
   month: number;
   day: number;

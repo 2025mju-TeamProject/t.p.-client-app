@@ -25,7 +25,7 @@ import axios from 'axios';
 import { getAccessToken } from '../../utils/localTokens';
 import { useLoading } from '../../context/LoadingContext';
 import { useAuth } from '../../context/AuthContext';
-import { decodeJwt } from '@utils/decoder';
+import { decodeJwt } from '../../utils/decoder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const messages = [
@@ -61,8 +61,8 @@ function WriteProfileScreen({ navigation }: any) {
     year: 0,
     month: 0,
     day: 0,
-    hour: 0,
-    minute: 0,
+    hour: -1,
+    minute: -1,
     birth_time_unknown: false,
     location_city: '',
     location_district: '',
@@ -176,7 +176,7 @@ function WriteProfileScreen({ navigation }: any) {
         const hasTime =
           profile.birth_time_unknown
             ? true
-            : profile.hour !== 0 && profile.minute !== 0;
+            : profile.hour >= 0 && profile.minute >= 0;
 
         return hasDate && hasTime;
 
@@ -210,7 +210,7 @@ function WriteProfileScreen({ navigation }: any) {
       const api = apiClient;
       let response;
       try {
-        setModalVisible(true);
+        //setModalVisible(true);
 
         const accessToken = await getAccessToken()
         const formData = new FormData();
@@ -261,6 +261,7 @@ function WriteProfileScreen({ navigation }: any) {
         });
 
       } catch (error: any) {
+        console.log(error)
         if (axios.isAxiosError(error)) {
           console.log('프로필 작성 실패:', error.response?.status);
         } else {

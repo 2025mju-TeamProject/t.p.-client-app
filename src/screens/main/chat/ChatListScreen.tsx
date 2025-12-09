@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import ChatListItem from '../../../components/chat/ChatListItem';
 import ROUTES from '../../../constants/routes';
@@ -6,6 +6,7 @@ import colors from '../../../constants/colors';
 import Header from '../../../components/common/Header';
 import { ChatRoomResponse, getChatRooms } from '../../../api/chat';
 import { useAuth } from '../../../context/AuthContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 function ChatListScreen({ navigation }: any) {
   const [chatList, setChatList] = useState<ChatRoomResponse[]>([]);
@@ -16,6 +17,16 @@ function ChatListScreen({ navigation }: any) {
 
     loadChatRooms(accessToken);
   }, [accessToken]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!accessToken) return;
+
+      loadChatRooms(accessToken);
+
+      return () => {}
+    }, [])
+  )
 
   async function loadChatRooms(auth: string) {
     const data = await getChatRooms(auth);
